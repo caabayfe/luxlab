@@ -44,6 +44,11 @@ function runSkill(skillName: string, incidentNumber: string): string {
         executionRequests: [{ payload: { incident_number: incidentNumber }, capabilityId: id, meta: { skillConfigId: skillConfigId(id) } }],
         mode: 'sync',
     })
+    // Refusals before execution (e.g. the caller lacks the skill's execution role) come back at the top level
+    if (result && result.status === 'error' && !result.capabilities) {
+        gs.error(`LuxLab skill "${skillName}" was refused: ${JSON.stringify(result)}`)
+        throw new Error(`"${skillName}" could not run: ${result.message || 'refused by the platform'}. The skill runs as itil, so your user needs the itil role.`)
+    }
     const capability = ((result && result.capabilities) || {})[id] || {}
     if (capability.status === 'error') {
         gs.error(`LuxLab skill "${skillName}" failed: ${JSON.stringify(capability)}`)
