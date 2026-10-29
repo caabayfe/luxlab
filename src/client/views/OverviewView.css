@@ -1,0 +1,31 @@
+.lux-overview__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.lux-overview__updated {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 400;
+    color: var(--lux-muted);
+}
+
+.lux-overview__columns {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 12px;
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    .lux-overview__columns {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}

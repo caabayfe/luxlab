@@ -1,0 +1,57 @@
+/* Horizon theme tokens with fallbacks so the page also renders outside the platform shell */
+.luxlab {
+    --lux-bg: rgb(var(--now-color_background--primary, 255, 255, 255));
+    --lux-surface: rgb(var(--now-color_background--secondary, 246, 247, 249));
+    --lux-border: rgb(var(--now-color_border--primary, 218, 221, 226));
+    --lux-text: rgb(var(--now-color_text--primary, 22, 27, 34));
+    --lux-muted: rgb(var(--now-color_text--secondary, 97, 105, 117));
+    --lux-radius: var(--now-static-border-radius--md, 8px);
+    --lux-space: var(--now-static-space--lg, 16px);
+
+    min-height: 100vh;
+    background: var(--lux-bg);
+    color: var(--lux-text);
+    font-family: var(--now-font-family, 'Lato', sans-serif);
+}
+
+.luxlab__main {
+    padding: var(--lux-space) calc(var(--lux-space) * 1.5);
+}
+
+.lux-panel {
+    background: var(--lux-surface);
+    border: 1px solid var(--lux-border);
+    border-radius: var(--lux-radius);
+    padding: var(--lux-space);
+}
+
+.lux-panel__title {
+    margin: 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.lux-panel__subtitle {
+    margin: 2px 0 0;
+    font-size: 0.8rem;
+    color: var(--lux-muted);
+}
+
+.lux-priority {
+    display: inline-block;
+    min-width: 28px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-align: center;
+    color: #fff;
+}
+
+.lux-priority--1 { background: #c62828; }
+.lux-priority--2 { background: #ef6c00; }
+.lux-priority--3 { background: #f9a825; color: #222; }
+.lux-priority--4 { background: #1e88e5; }
+.lux-priority--5 { background: #78909c; }

@@ -1,0 +1,7 @@
+{
+    "scope": "x_everi_luxlab",
+    "scopeId": "fb5abdbad5284c47ba44798f6f5ad965",
+    "name": "LuxLab",
+    "tsconfigPath": "./src/server/tsconfig.json",
+    "packageSourceCodeOnInstance": true
+}

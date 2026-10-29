@@ -1,0 +1,73 @@
+.lux-header {
+    padding: var(--lux-space) calc(var(--lux-space) * 1.5) 0;
+    border-bottom: 1px solid var(--lux-border);
+}
+
+.lux-header__top {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--lux-space);
+    margin-bottom: 12px;
+}
+
+.lux-header__brand {
+    display: flex;
+    flex-direction: column;
+}
+
+.lux-header__name {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: rgb(var(--now-color--primary-1, 41, 98, 255));
+}
+
+.lux-header__tagline {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--lux-muted);
+}
+
+.lux-clocks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.lux-clock {
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 10px;
+    padding: 6px 12px;
+    border: 1px solid var(--lux-border);
+    border-radius: var(--lux-radius);
+}
+
+.lux-clock--local {
+    border-color: rgb(var(--now-color--primary-1, 41, 98, 255));
+}
+
+.lux-clock__city {
+    grid-column: 1 / -1;
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--lux-muted);
+}
+
+.lux-clock__time {
+    font-family: monospace;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.lux-clock__offset {
+    align-self: center;
+    font-size: 0.7rem;
+    color: var(--lux-muted);
+}

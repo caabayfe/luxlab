@@ -1,0 +1,33 @@
+.lux-briefing__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.lux-briefing__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.lux-briefing__tool {
+    padding: 12px;
+    border: 1px solid var(--lux-border);
+    border-radius: var(--lux-radius);
+    background: var(--lux-bg);
+}
+
+.lux-briefing__title {
+    margin: 0 0 4px;
+    font-size: 0.9rem;
+}
+
+.lux-briefing__description {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--lux-muted);
+}

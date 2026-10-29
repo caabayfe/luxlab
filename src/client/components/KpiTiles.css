@@ -1,0 +1,53 @@
+.lux-kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 12px;
+    margin-bottom: var(--lux-space);
+}
+
+.lux-kpi__value {
+    margin: 8px 0 2px;
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.lux-kpi--warning .lux-kpi__value { color: #ef6c00; }
+.lux-kpi--critical .lux-kpi__value { color: #c62828; }
+.lux-kpi--positive .lux-kpi__value { color: #2e7d32; }
+
+.lux-kpi__caption {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--lux-muted);
+}
+
+.lux-kpi__priorities {
+    margin-top: 12px;
+}
+
+.lux-kpi__bar {
+    display: flex;
+    height: 4px;
+    overflow: hidden;
+    border-radius: 2px;
+    background: var(--lux-border);
+}
+
+.lux-kpi__segment {
+    display: block;
+    height: 100%;
+}
+
+.lux-kpi__legend {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+    font-size: 0.7rem;
+    color: var(--lux-muted);
+}
+
+.lux-kpi__legend-item--active {
+    font-weight: 700;
+    color: var(--lux-text);
+}
