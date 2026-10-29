@@ -20,3 +20,12 @@ Acl({
     roles: [luxlabUser],
     description: 'LuxLab users can read incident replay events.',
 })
+
+Acl({
+    $id: Now.ID['replay-action-read-acl'],
+    type: 'record',
+    table: 'x_everi_luxlab_replay_action',
+    operation: 'read',
+    roles: [luxlabUser],
+    description: 'LuxLab users can read the follow-ups proposed for incident replays.',
+})

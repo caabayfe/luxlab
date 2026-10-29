@@ -210,3 +210,90 @@
         grid-template-columns: minmax(0, 1fr);
     }
 }
+
+/* Replay AI: blameless review and follow-ups */
+.lux-ai {
+    display: grid;
+    gap: 12px;
+}
+
+.lux-ai__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--lux-space);
+}
+
+.lux-ai__review {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.lux-ai__review h4 {
+    margin: 16px 0 4px;
+    font-size: 0.95rem;
+}
+
+.lux-ai__review ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.lux-ai__review p {
+    margin: 0 0 8px;
+}
+
+.lux-ai__follow-ups {
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.lux-ai__follow-up {
+    padding: 10px 0 10px 10px;
+    border-top: 1px solid var(--lux-border);
+    border-left: 3px solid transparent;
+    font-size: 0.9rem;
+}
+
+.lux-ai__follow-up p {
+    margin: 4px 0;
+}
+
+.lux-ai__follow-up--approved {
+    border-left-color: #43a047;
+}
+
+.lux-ai__follow-up-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+}
+
+.lux-ai__type {
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.lux-ai__type--problem { background: #e53935; }
+.lux-ai__type--knowledge { background: #1e88e5; }
+.lux-ai__type--action { background: #f9a825; }
+
+.lux-ai__rationale,
+.lux-ai__decision {
+    font-size: 0.8rem;
+    color: var(--lux-muted);
+}
+
+.lux-ai__actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+}

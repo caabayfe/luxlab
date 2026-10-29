@@ -39,6 +39,9 @@ export const x_everi_luxlab_replay = Table({
         event_count: IntegerColumn({ label: 'Events' }),
         phases: JsonColumn({ label: 'Phase minutes' }),
         error: StringColumn({ label: 'Error', maxLength: 1000 }),
+        review: StringColumn({ label: 'AI incident review', maxLength: 16000 }),
+        reviewed_on: DateTimeColumn({ label: 'Review written on' }),
+        follow_ups_on: DateTimeColumn({ label: 'Follow-ups suggested on' }),
     },
     index: [{ name: 'replay_incident', unique: true, element: 'incident' }],
 })

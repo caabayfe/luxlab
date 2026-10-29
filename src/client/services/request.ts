@@ -1,7 +1,8 @@
 // Shared fetch wrapper for the LuxLab scripted REST APIs
-export async function request<T>(url: string, method: 'GET' | 'POST' = 'GET'): Promise<T> {
+export async function request<T>(url: string, method: 'GET' | 'POST' = 'GET', body?: object): Promise<T> {
     const response = await fetch(url, {
         method,
+        body: body ? JSON.stringify(body) : undefined,
         headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json',

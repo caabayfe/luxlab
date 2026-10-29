@@ -46,6 +46,17 @@ Form({
                 },
             ],
         },
+        {
+            caption: 'Replay AI',
+            content: [
+                {
+                    layout: 'two-column',
+                    leftElements: [{ field: 'reviewed_on', type: 'table_field' }],
+                    rightElements: [{ field: 'follow_ups_on', type: 'table_field' }],
+                },
+                { layout: 'one-column', elements: [{ field: 'review', type: 'table_field' }] },
+            ],
+        },
     ],
 })
 
@@ -78,6 +89,40 @@ Form({
                         { field: 'from_value', type: 'table_field' },
                         { field: 'to_value', type: 'table_field' },
                         { field: 'detail', type: 'table_field' },
+                    ],
+                },
+            ],
+        },
+    ],
+})
+
+Form({
+    table: 'x_everi_luxlab_replay_action',
+    view: default_view,
+    sections: [
+        {
+            caption: 'Follow-up',
+            content: [
+                {
+                    layout: 'two-column',
+                    leftElements: [
+                        { field: 'replay', type: 'table_field' },
+                        { field: 'incident', type: 'table_field' },
+                        { field: 'type', type: 'table_field' },
+                        { field: 'state', type: 'table_field' },
+                    ],
+                    rightElements: [
+                        { field: 'decided_by', type: 'table_field' },
+                        { field: 'decided_on', type: 'table_field' },
+                        { field: 'problem', type: 'table_field' },
+                    ],
+                },
+                {
+                    layout: 'one-column',
+                    elements: [
+                        { field: 'title', type: 'table_field' },
+                        { field: 'description', type: 'table_field' },
+                        { field: 'rationale', type: 'table_field' },
                     ],
                 },
             ],

@@ -7,6 +7,7 @@ import { Replay } from '../../types'
 import { formatMinutes, formatTime } from '../../utils/format'
 import { recordUrl } from '../../utils/navigation'
 import PhaseBar from './PhaseBar'
+import ReplayAI from './ReplayAI'
 import Timeline from './Timeline'
 import './Replay.css'
 
@@ -80,6 +81,7 @@ export default function ReplayDetail({ service, incidentId, onBack }: ReplayDeta
                         </div>
                         <PhaseBar replay={replay} />
                     </section>
+                    {replay.status === 'ready' && <ReplayAI service={service} replay={replay} onChange={setReplay} />}
                     <Timeline events={replay.events} origin={replay.impactStart} />
                 </>
             )}

@@ -1,7 +1,7 @@
 import '@servicenow/sdk/global'
 import { RestApi } from '@servicenow/sdk/core'
 import { cockpitApiAcl } from './cockpit-api.now'
-import { candidates, getReplay, rebuildReplay } from '../../server/rest/replay-routes'
+import { candidates, decide, followUpReplay, getReplay, rebuildReplay, reviewReplay } from '../../server/rest/replay-routes'
 
 // URIs: /api/x_everi_luxlab/v1/replay/candidates, /api/x_everi_luxlab/v1/replay/{incident}
 export const replayApi = RestApi({
@@ -41,6 +41,33 @@ export const replayApi = RestApi({
             script: rebuildReplay,
             version: 1,
             shortDescription: 'Rebuild the replay from the incident history',
+        },
+        {
+            $id: Now.ID['replay-api-review'],
+            name: 'write review',
+            method: 'POST',
+            path: '/{incident}/review',
+            script: reviewReplay,
+            version: 1,
+            shortDescription: 'Write the blameless incident review with the LuxLab Incident Review Writer skill',
+        },
+        {
+            $id: Now.ID['replay-api-follow-ups'],
+            name: 'suggest follow-ups',
+            method: 'POST',
+            path: '/{incident}/follow-ups',
+            script: followUpReplay,
+            version: 1,
+            shortDescription: 'Propose problems, knowledge and actions with the LuxLab Follow-up Advisor skill',
+        },
+        {
+            $id: Now.ID['replay-api-decide'],
+            name: 'decide follow-up',
+            method: 'POST',
+            path: '/{incident}/follow-ups/{action}',
+            script: decide,
+            version: 1,
+            shortDescription: 'Approve or dismiss a proposed follow-up (LuxLab managers only)',
         },
     ],
 })

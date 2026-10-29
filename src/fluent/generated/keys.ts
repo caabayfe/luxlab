@@ -37,6 +37,86 @@ declare global {
                         table: 'sys_ws_version'
                         id: '7377f76c414d4df3ac50ef2529d27f8f'
                     }
+                    follow_up_advisor_incident_number_input: {
+                        table: 'sys_one_extend_definition_attribute'
+                        id: '9ff63d7ee3fb4df084252d87e5d39d3e'
+                    }
+                    follow_up_advisor_prompt_v1: {
+                        table: 'sys_generative_ai_config'
+                        id: 'b36cd5df9e074da4ad7d99c4625414e0'
+                    }
+                    follow_up_advisor_skill: {
+                        table: 'sys_one_extend_capability'
+                        id: '190360efeb2f47efb449f012b48a5baf'
+                    }
+                    follow_up_advisor_skill__output_error: {
+                        table: 'sys_one_extend_definition_attribute'
+                        id: 'd1d00b633cb14c9594b7a522501ad532'
+                    }
+                    follow_up_advisor_skill__output_errorcode: {
+                        table: 'sys_one_extend_definition_attribute'
+                        id: '503b1a31e5fc4e0a82733d707ceb3f63'
+                    }
+                    follow_up_advisor_skill__output_provider: {
+                        table: 'sys_one_extend_definition_attribute'
+                        id: '179066006cbb4dff83a889ce92007264'
+                    }
+                    follow_up_advisor_skill__output_response: {
+                        table: 'sys_one_extend_definition_attribute'
+                        id: 'e8f4cf4aa83e45fabb872b7470c75195'
+                    }
+                    follow_up_advisor_skill__output_status: {
+                        table: 'sys_one_extend_definition_attribute'
+                        id: '892c52389cb749e68b1ebd853dc5df37'
+                    }
+                    follow_up_advisor_uiaction: {
+                        table: 'sys_ui_action'
+                        id: 'cb265c90e273440c9add9938f90dbfc4'
+                    }
+                    follow_up_advisor_user_access: {
+                        table: 'sys_security_acl'
+                        id: '37c034ac38eb402da01e7900ccf7717b'
+                    }
+                    incident_review_writer_incident_number_input: {
+                        table: 'sys_one_extend_definition_attribute'
+                        id: 'e10fc4fd09674ebbb431c1fa0c9bb9c7'
+                    }
+                    incident_review_writer_prompt_v1: {
+                        table: 'sys_generative_ai_config'
+                        id: 'ab72e875ca864345b1102aea4821d4e1'
+                    }
+                    incident_review_writer_skill: {
+                        table: 'sys_one_extend_capability'
+                        id: '27c932b1fbbe47659e6b0bdea0f45737'
+                    }
+                    incident_review_writer_skill__output_error: {
+                        table: 'sys_one_extend_definition_attribute'
+                        id: '206bf2ec77214a6e867e1e7b60d1b19e'
+                    }
+                    incident_review_writer_skill__output_errorcode: {
+                        table: 'sys_one_extend_definition_attribute'
+                        id: '3501d00b37b14bcfb1357064ab160799'
+                    }
+                    incident_review_writer_skill__output_provider: {
+                        table: 'sys_one_extend_definition_attribute'
+                        id: 'ec7c6caacab943abb91b780905ab14d4'
+                    }
+                    incident_review_writer_skill__output_response: {
+                        table: 'sys_one_extend_definition_attribute'
+                        id: '8ba1ea1ed1cd4707b2a1b5ff462ee265'
+                    }
+                    incident_review_writer_skill__output_status: {
+                        table: 'sys_one_extend_definition_attribute'
+                        id: '33ce9c6c17d243debcd94f73a506d7e5'
+                    }
+                    incident_review_writer_uiaction: {
+                        table: 'sys_ui_action'
+                        id: '723843cb8b3d4a0eb47d6e566bafa681'
+                    }
+                    incident_review_writer_user_access: {
+                        table: 'sys_security_acl'
+                        id: '5c84bfc1231e4b70b12f1ec42b070ee5'
+                    }
                     'luxlab-menu': {
                         table: 'sys_app_application'
                         id: '175b7404209f494b947ee7a052bc32d9'
@@ -49,9 +129,17 @@ declare global {
                         table: 'sys_app_module'
                         id: '7acb31b79c4a4583a210fdbc677f4bb5'
                     }
+                    'luxlab-replay-ai-si': {
+                        table: 'sys_script_include'
+                        id: '390b5cb55d774557bb36d31f950a1fc7'
+                    }
                     package_json: {
                         table: 'sys_module'
                         id: '9a342eefd6294e2b926cf2f768c464e6'
+                    }
+                    'replay-action-read-acl': {
+                        table: 'sys_security_acl'
+                        id: '47114d1c83674fd28d67decf9622f5e5'
                     }
                     'replay-api': {
                         table: 'sys_ws_definition'
@@ -69,9 +157,21 @@ declare global {
                         table: 'sys_ws_query_parameter'
                         id: 'b683118bef2044f8b31e8a7f258137fe'
                     }
+                    'replay-api-decide': {
+                        table: 'sys_ws_operation'
+                        id: 'f87dd395126a4118b623feb202b49c2c'
+                    }
+                    'replay-api-follow-ups': {
+                        table: 'sys_ws_operation'
+                        id: '38f5d870deac43409c79527074504b49'
+                    }
                     'replay-api-get': {
                         table: 'sys_ws_operation'
                         id: 'af161908a8d64c0c80379d0a9425ab66'
+                    }
+                    'replay-api-review': {
+                        table: 'sys_ws_operation'
+                        id: '0e7eafde40134922a2e01eb11e66dfb5'
                     }
                     'replay-api-v1': {
                         table: 'sys_ws_version'
@@ -97,6 +197,14 @@ declare global {
                         table: 'sys_module'
                         id: '70751692ba864c7e9b9aae3499eb8f02'
                     }
+                    src_server_replay_ai_ts: {
+                        table: 'sys_module'
+                        id: '205d489efc1a4598b9b756e4ca006624'
+                    }
+                    'src_server_replay_ai-context_ts': {
+                        table: 'sys_module'
+                        id: 'fda3c807cbd54e8c8ff81e77a420d2df'
+                    }
                     src_server_replay_analysis_ts: {
                         table: 'sys_module'
                         id: '48e0fce46f734f7aa2fe8e160bdd712b'
@@ -104,6 +212,14 @@ declare global {
                     src_server_replay_candidates_ts: {
                         table: 'sys_module'
                         id: 'e4904319b9bf4a9bb5445d6dc137661b'
+                    }
+                    'src_server_replay_follow-ups_ts': {
+                        table: 'sys_module'
+                        id: '8aa5acdcb9584030aeaf886c85e66e29'
+                    }
+                    'src_server_replay_form-actions_ts': {
+                        table: 'sys_module'
+                        id: '1a6d86ba7c7b471aaf3c8f48cbfa409d'
                     }
                     src_server_replay_related_ts: {
                         table: 'sys_module'
@@ -128,6 +244,10 @@ declare global {
                     'src_server_rest_replay-routes_ts': {
                         table: 'sys_module'
                         id: '32471c280c314cbc82ddf0dc8fbcec79'
+                    }
+                    'src_server_script-includes_LuxLabReplayAI_js': {
+                        table: 'sys_module'
+                        id: 'bd2a6125c7ff47b5be1f004e4b10f5bb'
                     }
                 }
                 composite: [
@@ -154,6 +274,21 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice_set'
+                        id: '0015086c74bb484a887567a78efc5900'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'type'
+                        }
+                    },
+                    {
+                        table: 'sys_db_object'
+                        id: '00aa018c9be94b25ac830a999b0cf59e'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '01aa458a84f548e0a66bd8d4ced87066'
                         key: {
@@ -173,6 +308,26 @@ declare global {
                             }
                             element: '.end_split'
                             position: '10'
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
+                        id: '01c9927f08d14e80b23a2eb6887996e1'
+                        key: {
+                            document_key: {
+                                id: '73a84d4881e643b89d41fc15dce5efc7'
+                                key: {
+                                    name: 'View trigger'
+                                    skill_config: {
+                                        id: '4971dda0f2f7418e978d6266ceee35ee'
+                                        key: {
+                                            skill_id: '27c932b1fbbe47659e6b0bdea0f45737'
+                                        }
+                                    }
+                                    config_type: 'b89b1f0b7f821210076726d6ac86650e'
+                                }
+                            }
+                            variable: '5c5623df7f025210076726d6ac8665f9'
                         }
                     },
                     {
@@ -206,6 +361,23 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '049ea6c8f4a14ab29a56450f4a4e626d'
+                        key: {
+                            name: 'x_everi_luxlab_replay'
+                            element: 'reviewed_on'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_one_extend_capability_definition'
+                        id: '05504c0bddf24ed2beddda3199cf0028'
+                        key: {
+                            capability: '27c932b1fbbe47659e6b0bdea0f45737'
+                            api: 'a55c1c6f530221106b38ddeeff7b12b1'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '055688844e804edea536baab2e2324aa'
                         key: {
@@ -225,6 +397,36 @@ declare global {
                             }
                             element: 'occurred_at'
                             position: '2'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '05b18b5593fb4b928aea62227736409f'
+                        key: {
+                            sys_ui_section: {
+                                id: '617855159a184364af537c28a5e1b4e2'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_action'
+                                    caption: 'Follow-up'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'decided_on'
+                            position: '7'
+                        }
+                    },
+                    {
+                        table: 'sys_gen_ai_feature_mapping'
+                        id: '061f2b179c2849ab8512e4ba5e11d519'
+                        key: {
+                            feature_name: 'LuxLab Followup Advisor'
+                            document: '190360efeb2f47efb449f012b48a5baf'
                         }
                     },
                     {
@@ -288,6 +490,36 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '0923cbcc9261400fbcec45eacdd55989'
+                        key: {
+                            sys_ui_section: {
+                                id: 'ba787b65054c4fa98e432b844ca2a571'
+                                key: {
+                                    name: 'x_everi_luxlab_replay'
+                                    caption: 'Replay AI'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.split'
+                            position: '2'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '0bbe654152b64c3887622870d144db9b'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_db_object'
                         id: '0bbe9eceb77c4280a2bd8ac159e6ddb8'
                         key: {
@@ -303,6 +535,28 @@ declare global {
                             value: 'triage'
                             language: 'en'
                             dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '0c93deab5a9e4789b31de2f56ca442a6'
+                        key: {
+                            sys_ui_section: {
+                                id: '617855159a184364af537c28a5e1b4e2'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_action'
+                                    caption: 'Follow-up'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.split'
+                            position: '5'
                         }
                     },
                     {
@@ -385,11 +639,75 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '14fbe3c5e1a44bbe99373f1a6af8df37'
+                        key: {
+                            sys_ui_section: {
+                                id: '617855159a184364af537c28a5e1b4e2'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_action'
+                                    caption: 'Follow-up'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'description'
+                            position: '11'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '16d0a7fa2a9a41e6ad4cfb874420b231'
+                        key: {
+                            sys_ui_section: {
+                                id: '617855159a184364af537c28a5e1b4e2'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_action'
+                                    caption: 'Follow-up'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'incident'
+                            position: '2'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '1920990bacad436eb2ce2b8f0c57c701'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'state'
+                            value: 'proposed'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '1a9b70d2fa3c4615b2bdcb921a411b53'
                         key: {
                             name: 'x_everi_luxlab_replay'
                             element: 'resolved_at'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '1cbcdb73e9a14cd38b3664d04bf51ce1'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'decided_by'
                             language: 'en'
                         }
                     },
@@ -408,6 +726,65 @@ declare global {
                             name: 'x_everi_luxlab_replay_event'
                             element: 'phase'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '1d8c5e43e81b46ffafa1560492635033'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'decided_by'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '1e9d9834f2014b0a91e7aff6fae6b345'
+                        key: {
+                            sys_ui_section: {
+                                id: 'ba787b65054c4fa98e432b844ca2a571'
+                                key: {
+                                    name: 'x_everi_luxlab_replay'
+                                    caption: 'Replay AI'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'reviewed_on'
+                            position: '1'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '20b461ed9d0840a086664dd3327307d4'
+                        key: {
+                            sys_ui_section: {
+                                id: 'ba787b65054c4fa98e432b844ca2a571'
+                                key: {
+                                    name: 'x_everi_luxlab_replay'
+                                    caption: 'Replay AI'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'review'
+                            position: '5'
+                        }
+                    },
+                    {
+                        table: 'sys_agent_access_role_configuration'
+                        id: '214c9d9d957e44e8b7ba66375cb2afa2'
+                        key: {
+                            agent: '362aad95f29b4ac8a8aa0668a44005c4'
                         }
                     },
                     {
@@ -443,6 +820,18 @@ declare global {
                         }
                     },
                     {
+                        table: 'sn_nowassist_skill_config_status'
+                        id: '268e5d3ee690426482dc4606349d9b56'
+                        key: {
+                            skill_config: {
+                                id: '362aad95f29b4ac8a8aa0668a44005c4'
+                                key: {
+                                    skill_id: '190360efeb2f47efb449f012b48a5baf'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_user_role_contains'
                         id: '270a3b88acb9498cacb4dcd7d678925a'
                         key: {
@@ -470,12 +859,48 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_gen_ai_skill_config'
+                        id: '279529df170d4da8bc595f4230a733fc'
+                        key: {
+                            skill_id: '764ea60a20ce45c2a3b5db85f61c3bd1'
+                        }
+                    },
+                    {
+                        table: 'ua_table_licensing_config'
+                        id: '295722b0315f4d3bb2689e672550ad19'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '2b4079463ef140ec8c43c0fbc3b692b2'
                         key: {
                             name: 'x_everi_luxlab_replay_event'
                             element: 'source'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '2bdc7eab3c6e43758b18582242e264c3'
+                        key: {
+                            sys_ui_section: {
+                                id: 'ba787b65054c4fa98e432b844ca2a571'
+                                key: {
+                                    name: 'x_everi_luxlab_replay'
+                                    caption: 'Replay AI'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.begin_split'
+                            position: '0'
                         }
                     },
                     {
@@ -510,6 +935,44 @@ declare global {
                     },
                     {
                         table: 'sys_documentation'
+                        id: '2f8a63927fee45618c79f7689ef7bad3'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'incident'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '304f5032abcc4a1a93c22d41c2234608'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'state'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '3213306a93a649f78b98d6003beaf273'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'decided_on'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '32b1fdd6ed6b48c1bbc6c4449fe80f03'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'state'
+                            value: 'approved'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
                         id: '33b20d68c87f45d7a32a8010f52f10b2'
                         key: {
                             name: 'x_everi_luxlab_replay_event'
@@ -527,6 +990,21 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: '35c583e3e8cf43b2a19f0b9b0b1ba393'
+                        key: {
+                            name: 'x_everi_luxlab_replay'
+                            element: 'follow_ups_on'
+                        }
+                    },
+                    {
+                        table: 'sn_nowassist_skill_config'
+                        id: '362aad95f29b4ac8a8aa0668a44005c4'
+                        key: {
+                            skill_id: '190360efeb2f47efb449f012b48a5baf'
+                        }
+                    },
+                    {
                         table: 'sn_glider_source_artifact_m2m'
                         id: '36c6c1419a1d4ddd9ef5eea61b2ccfdc'
                         key: {
@@ -535,10 +1013,52 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '3714b20ba4c4411b96b421e374565ddc'
+                        key: {
+                            sys_ui_section: {
+                                id: '617855159a184364af537c28a5e1b4e2'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_action'
+                                    caption: 'Follow-up'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.begin_split'
+                            position: '0'
+                        }
+                    },
+                    {
                         table: 'sn_glider_source_artifact'
                         id: '38b601c434a04cc686667e4076f10ce2'
                         key: {
                             name: 'x_everi_luxlab_cockpit.do - BYOUI Files'
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
+                        id: '3977a44d03704189ada701a6c2332b92'
+                        key: {
+                            document_key: {
+                                id: '9d5b5c3e055247c6892df59a9123530a'
+                                key: {
+                                    name: '__delivery_step__'
+                                    skill_config: {
+                                        id: '362aad95f29b4ac8a8aa0668a44005c4'
+                                        key: {
+                                            skill_id: '190360efeb2f47efb449f012b48a5baf'
+                                        }
+                                    }
+                                    config_type: '7dfdff5893b64210aa5730f164891837'
+                                }
+                            }
+                            variable: '4fee37d893b64210aa5730f164891896'
                         }
                     },
                     {
@@ -743,6 +1263,13 @@ declare global {
                         }
                     },
                     {
+                        table: 'sn_nowassist_skill_config'
+                        id: '4971dda0f2f7418e978d6266ceee35ee'
+                        key: {
+                            skill_id: '27c932b1fbbe47659e6b0bdea0f45737'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '49fca2564bae461cac92ad249f00e0b5'
                         key: {
@@ -751,6 +1278,14 @@ declare global {
                             value: 'fixing'
                             language: 'en'
                             dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '4a95c50abd3241a396b1e3e4e6257800'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'decided_on'
                         }
                     },
                     {
@@ -796,6 +1331,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '4ea93c3432cb4c05a55434757dc19b7c'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'type'
+                            value: 'action'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_ui_form'
                         id: '50a9174a52944f169a7ae073f40026a5'
                         key: {
@@ -832,11 +1378,61 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_variable_value'
+                        id: '562ba7ce101d413ca9e7bccb5edb3f7c'
+                        key: {
+                            document_key: {
+                                id: 'fed63b9e36094f619a35e6659aee9cd8'
+                                key: {
+                                    name: '__delivery_step__'
+                                    skill_config: {
+                                        id: '4971dda0f2f7418e978d6266ceee35ee'
+                                        key: {
+                                            skill_id: '27c932b1fbbe47659e6b0bdea0f45737'
+                                        }
+                                    }
+                                    config_type: '7dfdff5893b64210aa5730f164891837'
+                                }
+                            }
+                            variable: '4fee37d893b64210aa5730f164891896'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '5695be9d9bc348b6ae8f6c4fc43cfb64'
                         key: {
                             name: 'x_everi_luxlab_replay'
                             element: 'minutes_to_resolve'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '58eaba8c7c5845e9a9a659efbe3b4771'
+                        key: {
+                            name: 'x_everi_luxlab_replay'
+                            element: 'reviewed_on'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '590f929420a7462d8abbee9065144feb'
+                        key: {
+                            sys_ui_section: {
+                                id: 'ba787b65054c4fa98e432b844ca2a571'
+                                key: {
+                                    name: 'x_everi_luxlab_replay'
+                                    caption: 'Replay AI'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'follow_ups_on'
+                            position: '3'
                         }
                     },
                     {
@@ -880,6 +1476,40 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_variable_value'
+                        id: '5cc7bd56f13e4187b63e8dad29270d95'
+                        key: {
+                            document_key: {
+                                id: 'fed63b9e36094f619a35e6659aee9cd8'
+                                key: {
+                                    name: '__delivery_step__'
+                                    skill_config: {
+                                        id: '4971dda0f2f7418e978d6266ceee35ee'
+                                        key: {
+                                            skill_id: '27c932b1fbbe47659e6b0bdea0f45737'
+                                        }
+                                    }
+                                    config_type: '7dfdff5893b64210aa5730f164891837'
+                                }
+                            }
+                            variable: 'ab5ef79893b64210aa5730f16489185a'
+                        }
+                    },
+                    {
+                        table: 'sys_generative_ai_prompt_config'
+                        id: '5ce66f8eff034357a2377fa714bd9021'
+                        key: {
+                            ai_config: 'ab72e875ca864345b1102aea4821d4e1'
+                        }
+                    },
+                    {
+                        table: 'sys_agent_access_role_configuration'
+                        id: '5d04ee6f3bb14a83806d828150389293'
+                        key: {
+                            agent: '4971dda0f2f7418e978d6266ceee35ee'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '5d0c7d0e6993445da0853c1489a8fb7b'
                         key: {
@@ -920,6 +1550,21 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_section'
+                        id: '617855159a184364af537c28a5e1b4e2'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            caption: 'Follow-up'
+                            view: {
+                                id: 'Default view'
+                                key: {
+                                    name: 'NULL'
+                                }
+                            }
+                            sys_domain: 'global'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '6287094ca3ba482587122f2530baff09'
                         deleted: true
@@ -940,6 +1585,13 @@ declare global {
                             }
                             element: 'event_count'
                             position: '4'
+                        }
+                    },
+                    {
+                        table: 'sys_gen_ai_skill_config'
+                        id: '62ac437147c64e998fa928d63969f964'
+                        key: {
+                            skill_id: 'e2a1eceaa50743a88051aa5a191bf5e5'
                         }
                     },
                     {
@@ -965,12 +1617,71 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: '63069a4185514b8c827ed5462458fdb1'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'state'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '6443c2a5353c4f8f8c6c9acbaacc26b7'
                         key: {
                             name: 'x_everi_luxlab_replay_event'
                             element: 'from_value'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_gen_ai_skill_applicability'
+                        id: '6583bb28b1d84cdf9a6a81846c400025'
+                        key: {
+                            skill_id: 'e2a1eceaa50743a88051aa5a191bf5e5'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '6696e8d09d0a440394f14ca7da54605d'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'description'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
+                        id: '66b39c817f3942cc8399696405459421'
+                        key: {
+                            document_key: {
+                                id: '9d5b5c3e055247c6892df59a9123530a'
+                                key: {
+                                    name: '__delivery_step__'
+                                    skill_config: {
+                                        id: '362aad95f29b4ac8a8aa0668a44005c4'
+                                        key: {
+                                            skill_id: '190360efeb2f47efb449f012b48a5baf'
+                                        }
+                                    }
+                                    config_type: '7dfdff5893b64210aa5730f164891837'
+                                }
+                            }
+                            variable: 'f09e3f9893b64210aa5730f16489189f'
+                        }
+                    },
+                    {
+                        table: 'sys_one_extend_resource_attribute_mapping'
+                        id: '6a8aee25eb3544e99033ba493ba8a410'
+                        key: {
+                            resource_mapping: {
+                                id: 'f6c888e6ebb04af797e1ad631d49bae3'
+                                key: {
+                                    parent_capability: '27c932b1fbbe47659e6b0bdea0f45737'
+                                    resource_capability: '51d095f77f211210210ca65c4d866591'
+                                    resource_name: 'GetReplay'
+                                }
+                            }
+                            resource_attribute_name: '0bd1117b7f211210210ca65c4d8665ed'
                         }
                     },
                     {
@@ -988,6 +1699,37 @@ declare global {
                         key: {
                             web_service_operation: '80648ede016b4e6bbc2fd411767a79b8'
                             web_service_query_parameter: 'b683118bef2044f8b31e8a7f258137fe'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '70c73b9539314f8685f7bac9e3697fd6'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'rationale'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '711904c3dd9543d58d335621ed4caec8'
+                        key: {
+                            sys_ui_section: {
+                                id: 'ba787b65054c4fa98e432b844ca2a571'
+                                key: {
+                                    name: 'x_everi_luxlab_replay'
+                                    caption: 'Replay AI'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.end_split'
+                            position: '4'
                         }
                     },
                     {
@@ -1022,6 +1764,20 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_gen_ai_strategy_mapping'
+                        id: '723ec8fac79b4d26913b9db040669a89'
+                        key: {
+                            strategy: 'CAPABILITY_EXECUTION'
+                            feature: {
+                                id: 'fe38f5d30ced43aaa38894dbae9f5747'
+                                key: {
+                                    feature_name: 'LuxLab Incident Review Writer'
+                                    document: '27c932b1fbbe47659e6b0bdea0f45737'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sn_glider_source_artifact_m2m'
                         id: '730bd06da273484a941dac0c2d4f9647'
                         key: {
@@ -1052,6 +1808,58 @@ declare global {
                         }
                     },
                     {
+                        table: 'sn_nowassist_skill_config_var_set'
+                        id: '73a84d4881e643b89d41fc15dce5efc7'
+                        key: {
+                            name: 'View trigger'
+                            skill_config: {
+                                id: '4971dda0f2f7418e978d6266ceee35ee'
+                                key: {
+                                    skill_id: '27c932b1fbbe47659e6b0bdea0f45737'
+                                }
+                            }
+                            config_type: 'b89b1f0b7f821210076726d6ac86650e'
+                        }
+                    },
+                    {
+                        table: 'sys_one_extend_definition_config'
+                        id: '73df47faf08841268f9cccc4f77a8859'
+                        key: {
+                            definition: {
+                                id: '05504c0bddf24ed2beddda3199cf0028'
+                                key: {
+                                    capability: '27c932b1fbbe47659e6b0bdea0f45737'
+                                    api: 'a55c1c6f530221106b38ddeeff7b12b1'
+                                }
+                            }
+                            capability: '27c932b1fbbe47659e6b0bdea0f45737'
+                        }
+                    },
+                    {
+                        table: 'sys_ux_form_action'
+                        id: '74d0c9d3cb4545d0938ffda9300d6677'
+                        key: {
+                            ui_action: 'cb265c90e273440c9add9938f90dbfc4'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '75b37740156d43a882ca15e703cfdff4'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'replay'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_gen_ai_skill'
+                        id: '764ea60a20ce45c2a3b5db85f61c3bd1'
+                        key: {
+                            skill_document: '190360efeb2f47efb449f012b48a5baf'
+                            skill_table: 'sys_one_extend_capability'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '76c3cd810aed4964b8d67e87a8c7fea0'
                         key: {
@@ -1074,11 +1882,54 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_agent_access_role_mapping'
+                        id: '77e280c11a974af283a79e632bcf1670'
+                        key: {
+                            agent_access_config: {
+                                id: '214c9d9d957e44e8b7ba66375cb2afa2'
+                                key: {
+                                    agent: '362aad95f29b4ac8a8aa0668a44005c4'
+                                }
+                            }
+                            role: {
+                                id: '51dc63b45fa046da93262f5135f5efbf'
+                                key: {
+                                    name: 'itil'
+                                }
+                            }
+                        }
+                    },
+                    {
+                        table: 'sn_nowassist_skill_config_var_set'
+                        id: '78300d812278477bbc6d6661720f2a17'
+                        key: {
+                            name: 'View trigger'
+                            skill_config: {
+                                id: '362aad95f29b4ac8a8aa0668a44005c4'
+                                key: {
+                                    skill_id: '190360efeb2f47efb449f012b48a5baf'
+                                }
+                            }
+                            config_type: 'b89b1f0b7f821210076726d6ac86650e'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '7a825046facb453cbdc95f5cbcc5de72'
                         key: {
                             name: 'x_everi_luxlab_replay_event'
                             element: 'phase'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '7c67e6c4f0f84cc7bd8ac121729bbc73'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'state'
+                            value: 'dismissed'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -1147,11 +1998,66 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '812eca2fc48b437983f555cc3657d5e2'
+                        key: {
+                            sys_ui_section: {
+                                id: '617855159a184364af537c28a5e1b4e2'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_action'
+                                    caption: 'Follow-up'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'decided_by'
+                            position: '6'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '828351fb35ac4bb1894d6c049f4727f3'
                         key: {
                             name: 'x_everi_luxlab_replay_event'
                             element: 'key_moment'
+                        }
+                    },
+                    {
+                        table: 'sys_one_extend_resource_attribute_mapping'
+                        id: '837075abda874f2681abbb3e61126a1c'
+                        key: {
+                            resource_mapping: {
+                                id: 'f6c888e6ebb04af797e1ad631d49bae3'
+                                key: {
+                                    parent_capability: '27c932b1fbbe47659e6b0bdea0f45737'
+                                    resource_capability: '51d095f77f211210210ca65c4d866591'
+                                    resource_name: 'GetReplay'
+                                }
+                            }
+                            resource_attribute_name: 'a3911d3b7f211210210ca65c4d86651b'
+                        }
+                    },
+                    {
+                        table: 'sys_agent_access_role_mapping'
+                        id: '8385216b349844f79cf49abb501aad29'
+                        key: {
+                            agent_access_config: {
+                                id: '5d04ee6f3bb14a83806d828150389293'
+                                key: {
+                                    agent: '4971dda0f2f7418e978d6266ceee35ee'
+                                }
+                            }
+                            role: {
+                                id: 'e5e1a778cf8347bdaa4039337b96bf06'
+                                key: {
+                                    name: 'itil'
+                                }
+                            }
                         }
                     },
                     {
@@ -1178,6 +2084,13 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_gen_ai_skill_applicability'
+                        id: '86a9f4b7bd494055b7d0d52a1828287b'
+                        key: {
+                            skill_id: '764ea60a20ce45c2a3b5db85f61c3bd1'
+                        }
+                    },
+                    {
                         table: 'sys_ux_lib_asset'
                         id: '872cf825122f4be6b3d803f8ffa33940'
                         key: {
@@ -1193,11 +2106,41 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_gen_ai_strategy_mapping'
+                        id: '88268b70367a422a8a71ec3b4d1ca158'
+                        key: {
+                            strategy: 'CAPABILITY_EXECUTION'
+                            feature: {
+                                id: '061f2b179c2849ab8512e4ba5e11d519'
+                                key: {
+                                    feature_name: 'LuxLab Followup Advisor'
+                                    document: '190360efeb2f47efb449f012b48a5baf'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sn_glider_source_artifact_m2m'
                         id: '89df9408022d4388ae6913633497163c'
                         key: {
                             application_file: '4615b83f00924dd1ad9e1a3aa7b38f8d'
                             source_artifact: '38b601c434a04cc686667e4076f10ce2'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '8b3f1134ab3b40dab608253c47e1289b'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'type'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '8b57bc2aa7324a88ae547e013ee791ee'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'problem'
                         }
                     },
                     {
@@ -1229,6 +2172,26 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_variable_value'
+                        id: '923ae9059f7849fa895e121f5682438d'
+                        key: {
+                            document_key: {
+                                id: '78300d812278477bbc6d6661720f2a17'
+                                key: {
+                                    name: 'View trigger'
+                                    skill_config: {
+                                        id: '362aad95f29b4ac8a8aa0668a44005c4'
+                                        key: {
+                                            skill_id: '190360efeb2f47efb449f012b48a5baf'
+                                        }
+                                    }
+                                    config_type: 'b89b1f0b7f821210076726d6ac86650e'
+                                }
+                            }
+                            variable: '5c5623df7f025210076726d6ac8665f9'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '936e3297111c4fee9f896044c67ce2c7'
                         key: {
@@ -1248,6 +2211,66 @@ declare global {
                             }
                             element: '.split'
                             position: '5'
+                        }
+                    },
+                    {
+                        table: 'sys_ux_form_action'
+                        id: '93a88a2801d84cd8ac11b1aee2a42180'
+                        key: {
+                            ui_action: '723843cb8b3d4a0eb47d6e566bafa681'
+                        }
+                    },
+                    {
+                        table: 'sys_one_extend_resource_attribute_mapping'
+                        id: '953dd7d745a045f582948c69dc5eb246'
+                        key: {
+                            resource_mapping: {
+                                id: 'b7da9aa891c14c699d6e5a8c8b0a6957'
+                                key: {
+                                    parent_capability: '190360efeb2f47efb449f012b48a5baf'
+                                    resource_capability: '51d095f77f211210210ca65c4d866591'
+                                    resource_name: 'GetReplay'
+                                }
+                            }
+                            resource_attribute_name: '0bd1117b7f211210210ca65c4d8665ed'
+                        }
+                    },
+                    {
+                        table: 'sys_one_extend_capability_definition'
+                        id: '954404eb5f6a455fbebd986f4279e2f1'
+                        key: {
+                            capability: '190360efeb2f47efb449f012b48a5baf'
+                            api: 'a55c1c6f530221106b38ddeeff7b12b1'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '956b63da6bf9412986fe81fcf3792337'
+                        key: {
+                            name: 'x_everi_luxlab_replay'
+                            element: 'review'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '97bed57624944298b42aabaea3f9302b'
+                        key: {
+                            sys_ui_section: {
+                                id: '617855159a184364af537c28a5e1b4e2'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_action'
+                                    caption: 'Follow-up'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'rationale'
+                            position: '12'
                         }
                     },
                     {
@@ -1282,6 +2305,53 @@ declare global {
                         }
                     },
                     {
+                        table: 'sn_nowassist_skill_config_var_set'
+                        id: '9d5b5c3e055247c6892df59a9123530a'
+                        key: {
+                            name: '__delivery_step__'
+                            skill_config: {
+                                id: '362aad95f29b4ac8a8aa0668a44005c4'
+                                key: {
+                                    skill_id: '190360efeb2f47efb449f012b48a5baf'
+                                }
+                            }
+                            config_type: '7dfdff5893b64210aa5730f164891837'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_form_section'
+                        id: '9d735e08879c4ac39ebfea8ab8b6a369'
+                        key: {
+                            sys_ui_form: {
+                                id: 'b81a7182e5d2429e8746cea611637783'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_action'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            sys_ui_section: {
+                                id: '617855159a184364af537c28a5e1b4e2'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_action'
+                                    caption: 'Follow-up'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '9e3ff37d4eb84eb3bf45c1a6cd29ba7e'
                         key: {
@@ -1304,6 +2374,36 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '9ec1eacad5854fdeadafec10e840dcf1'
+                        key: {
+                            sys_ui_section: {
+                                id: '617855159a184364af537c28a5e1b4e2'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_action'
+                                    caption: 'Follow-up'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'replay'
+                            position: '1'
+                        }
+                    },
+                    {
+                        table: 'sys_choice_set'
+                        id: '9f4cf5d0c6cc45ca8b10ae731d4f6f80'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'state'
+                        }
+                    },
+                    {
                         table: 'sys_ux_lib_asset'
                         id: 'a074b70932f449a08b114eaa3ce8c18b'
                         key: {
@@ -1316,6 +2416,14 @@ declare global {
                         key: {
                             name: 'x_everi_luxlab_replay_event'
                             element: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_one_extend_resource_mapping'
+                        id: 'a3ffb3af2d4e4a61aead71fcb2ce9854'
+                        key: {
+                            parent_capability: '190360efeb2f47efb449f012b48a5baf'
+                            resource_capability: '190360efeb2f47efb449f012b48a5baf'
                         }
                     },
                     {
@@ -1395,6 +2503,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: 'aa90fba4394a468f857747156be5b0e3'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'type'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: 'ab83610ff02a4ca8abd2bb121160b0cc'
                         key: {
@@ -1450,6 +2567,14 @@ declare global {
                     },
                     {
                         table: 'sys_dictionary'
+                        id: 'ad654965fe8c452aaf685195de8121a5'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'replay'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
                         id: 'aeb230bf8aa848d8a8d6727ac34eabd4'
                         key: {
                             name: 'x_everi_luxlab_replay_event'
@@ -1461,6 +2586,17 @@ declare global {
                         id: 'aed3a55c110e4ea78cdb89440df5ea74'
                         key: {
                             name: 'x_everi_luxlab/vendor-react-dom--55da69dc.js.map'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'b0033b0e84fc49e2a820b433a8187de7'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'type'
+                            value: 'problem'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -1529,6 +2665,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_one_extend_resource_mapping'
+                        id: 'b7da9aa891c14c699d6e5a8c8b0a6957'
+                        key: {
+                            parent_capability: '190360efeb2f47efb449f012b48a5baf'
+                            resource_capability: '51d095f77f211210210ca65c4d866591'
+                            resource_name: 'GetReplay'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: 'b80a709456d14bf7af5590072b74247c'
                         key: {
@@ -1551,6 +2696,20 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_form'
+                        id: 'b81a7182e5d2429e8746cea611637783'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            view: {
+                                id: 'Default view'
+                                key: {
+                                    name: 'NULL'
+                                }
+                            }
+                            sys_domain: 'global'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: 'ba3b914bcf1b4a789b0b93b9d2ecddc0'
                         key: {
@@ -1566,6 +2725,21 @@ declare global {
                             name: 'x_everi_luxlab_replay_event'
                             element: 'occurred_at'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_section'
+                        id: 'ba787b65054c4fa98e432b844ca2a571'
+                        key: {
+                            name: 'x_everi_luxlab_replay'
+                            caption: 'Replay AI'
+                            view: {
+                                id: 'Default view'
+                                key: {
+                                    name: 'NULL'
+                                }
+                            }
+                            sys_domain: 'global'
                         }
                     },
                     {
@@ -1595,6 +2769,23 @@ declare global {
                             }
                             element: '.split'
                             position: '4'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'bff92f0f9c2549559697d99f1f112f8b'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'title'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'c1cfecd9181b4bf9a56ca0ede713f820'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'title'
                         }
                     },
                     {
@@ -1717,6 +2908,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: 'cd5805a00a674981afbf75e550beb84b'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'problem'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: 'cd606e9e42414678b6b4d21a75a75a4c'
                         key: {
@@ -1739,11 +2939,77 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: 'ce4e4c9928714adfbed9dcfda386ad76'
+                        key: {
+                            sys_ui_section: {
+                                id: '617855159a184364af537c28a5e1b4e2'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_action'
+                                    caption: 'Follow-up'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'problem'
+                            position: '8'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'd0038115f7074ad8b727be5b7d7f7bd8'
+                        key: {
+                            name: 'x_everi_luxlab_replay'
+                            element: 'follow_ups_on'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: 'd011fb60b9694e869dbb9bf2461cdb8c'
+                        key: {
+                            sys_ui_section: {
+                                id: '617855159a184364af537c28a5e1b4e2'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_action'
+                                    caption: 'Follow-up'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'state'
+                            position: '4'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: 'd0283866fab242408750a4ba51eb782a'
                         key: {
                             name: 'x_everi_luxlab_replay'
                             element: 'handoffs'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: 'd0936b7a5c3949d293293ef20f3382ea'
+                        key: {
+                            sys_security_acl: '47114d1c83674fd28d67decf9622f5e5'
+                            sys_user_role: {
+                                id: '5c0007ba3bd44ee0b384483df02f5ceb'
+                                key: {
+                                    name: 'x_everi_luxlab.user'
+                                }
+                            }
                         }
                     },
                     {
@@ -1842,6 +3108,73 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_variable_value'
+                        id: 'd846bd5d5e224503b0ca515c22e2ee0f'
+                        key: {
+                            document_key: {
+                                id: 'fed63b9e36094f619a35e6659aee9cd8'
+                                key: {
+                                    name: '__delivery_step__'
+                                    skill_config: {
+                                        id: '4971dda0f2f7418e978d6266ceee35ee'
+                                        key: {
+                                            skill_id: '27c932b1fbbe47659e6b0bdea0f45737'
+                                        }
+                                    }
+                                    config_type: '7dfdff5893b64210aa5730f164891837'
+                                }
+                            }
+                            variable: 'f09e3f9893b64210aa5730f16489189f'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: 'd92a5e61b2224aaea8a871cde02f824a'
+                        key: {
+                            sys_ui_section: {
+                                id: '617855159a184364af537c28a5e1b4e2'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_action'
+                                    caption: 'Follow-up'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'type'
+                            position: '3'
+                        }
+                    },
+                    {
+                        table: 'sys_one_extend_definition_config'
+                        id: 'da78eec8d57746eaa39aabc5c94768a3'
+                        key: {
+                            definition: {
+                                id: '954404eb5f6a455fbebd986f4279e2f1'
+                                key: {
+                                    capability: '190360efeb2f47efb449f012b48a5baf'
+                                    api: 'a55c1c6f530221106b38ddeeff7b12b1'
+                                }
+                            }
+                            capability: '190360efeb2f47efb449f012b48a5baf'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'dacbfd1d393b49b08a961a77a01993f0'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'type'
+                            value: 'knowledge'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: 'db0057a9dde7439384983596faec32eb'
                         key: {
@@ -1869,6 +3202,14 @@ declare global {
                         key: {
                             name: 'x_everi_luxlab_replay'
                             element: 'incident'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'dcf808a5ba6f46d2bdc9fa6a63bcaa59'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'description'
                         }
                     },
                     {
@@ -1908,6 +3249,56 @@ declare global {
                             name: 'x_everi_luxlab_replay'
                             element: 'impact_start'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_form_section'
+                        id: 'e209f9838bb84a89ae0b53610672e6c3'
+                        key: {
+                            sys_ui_form: {
+                                id: '3d27a475f92045038ed0944d5643fb29'
+                                key: {
+                                    name: 'x_everi_luxlab_replay'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            sys_ui_section: {
+                                id: 'ba787b65054c4fa98e432b844ca2a571'
+                                key: {
+                                    name: 'x_everi_luxlab_replay'
+                                    caption: 'Replay AI'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'e28bc21d64f2459e978dad35e04d4aa6'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'NULL'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_gen_ai_skill'
+                        id: 'e2a1eceaa50743a88051aa5a191bf5e5'
+                        key: {
+                            skill_document: '27c932b1fbbe47659e6b0bdea0f45737'
+                            skill_table: 'sys_one_extend_capability'
                         }
                     },
                     {
@@ -1963,10 +3354,52 @@ declare global {
                         }
                     },
                     {
+                        table: 'sn_nowassist_skill_config_status'
+                        id: 'e526d4897f66486587d00c1fa12c90f9'
+                        key: {
+                            skill_config: {
+                                id: '4971dda0f2f7418e978d6266ceee35ee'
+                                key: {
+                                    skill_id: '27c932b1fbbe47659e6b0bdea0f45737'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'ua_table_licensing_config'
                         id: 'e5e7f0fc494d4a47aff0dabd30e1438e'
                         key: {
                             name: 'x_everi_luxlab_replay'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: 'e6e1778e624f40e6a26ec886ba5ed882'
+                        key: {
+                            sys_ui_section: {
+                                id: '617855159a184364af537c28a5e1b4e2'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_action'
+                                    caption: 'Follow-up'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'title'
+                            position: '10'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'e7f45ad0dc0742f08176df9f2d2a9cad'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'rationale'
                         }
                     },
                     {
@@ -1975,6 +3408,15 @@ declare global {
                         key: {
                             name: 'x_everi_luxlab_replay'
                             element: 'NULL'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'eacdf44091ed48879de1d4ca3c0594ac'
+                        key: {
+                            name: 'x_everi_luxlab_replay'
+                            element: 'review'
                             language: 'en'
                         }
                     },
@@ -1989,6 +3431,14 @@ declare global {
                                     name: 'x_everi_luxlab.user'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'ebb60edc11d242dd9608f35682fc71ce'
+                        key: {
+                            name: 'x_everi_luxlab_replay_action'
+                            element: 'incident'
                         }
                     },
                     {
@@ -2053,6 +3503,29 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_one_extend_resource_attribute_mapping'
+                        id: 'f1906ab927cd4e2b9f8f6843b82d98c0'
+                        key: {
+                            resource_mapping: {
+                                id: 'b7da9aa891c14c699d6e5a8c8b0a6957'
+                                key: {
+                                    parent_capability: '190360efeb2f47efb449f012b48a5baf'
+                                    resource_capability: '51d095f77f211210210ca65c4d866591'
+                                    resource_name: 'GetReplay'
+                                }
+                            }
+                            resource_attribute_name: 'a3911d3b7f211210210ca65c4d86651b'
+                        }
+                    },
+                    {
+                        table: 'sys_one_extend_resource_mapping'
+                        id: 'f1b5ca478dd4465588ed3ded6212e92d'
+                        key: {
+                            parent_capability: '27c932b1fbbe47659e6b0bdea0f45737'
+                            resource_capability: '27c932b1fbbe47659e6b0bdea0f45737'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: 'f3c85e8a6f654d7faf89eb4152e6fad0'
                         deleted: true
@@ -2076,6 +3549,13 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_one_extend_resource_edge'
+                        id: 'f3ccdd3b4c0c4eb4ab1f6a843a5529b9'
+                        key: {
+                            internal_name: 'GetReplay__LuxLab Incident Review Writer'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: 'f6839cb0874e4987ab33dece0b8c3d6d'
                         key: {
@@ -2084,6 +3564,44 @@ declare global {
                             value: 'ready'
                             language: 'en'
                             dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_one_extend_resource_mapping'
+                        id: 'f6c888e6ebb04af797e1ad631d49bae3'
+                        key: {
+                            parent_capability: '27c932b1fbbe47659e6b0bdea0f45737'
+                            resource_capability: '51d095f77f211210210ca65c4d866591'
+                            resource_name: 'GetReplay'
+                        }
+                    },
+                    {
+                        table: 'sys_generative_ai_prompt_config'
+                        id: 'f783fa31dccf44a2bcc7757e7e09743b'
+                        key: {
+                            ai_config: 'b36cd5df9e074da4ad7d99c4625414e0'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: 'f8a724024c5b4d8489140431dbe09a68'
+                        key: {
+                            sys_ui_section: {
+                                id: '617855159a184364af537c28a5e1b4e2'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_action'
+                                    caption: 'Follow-up'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.end_split'
+                            position: '9'
                         }
                     },
                     {
@@ -2109,6 +3627,13 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_one_extend_resource_edge'
+                        id: 'fae38c76d0424ab0be2e86efa8d5762a'
+                        key: {
+                            internal_name: 'GetReplay__LuxLab Followup Advisor'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: 'fb7d1bdb49a4409da1055953feccbdd7'
                         key: {
@@ -2117,6 +3642,48 @@ declare global {
                             value: 'alert'
                             language: 'en'
                             dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_variable_value'
+                        id: 'fd7f3a2269ea4f928077b0d1b912b02f'
+                        key: {
+                            document_key: {
+                                id: '9d5b5c3e055247c6892df59a9123530a'
+                                key: {
+                                    name: '__delivery_step__'
+                                    skill_config: {
+                                        id: '362aad95f29b4ac8a8aa0668a44005c4'
+                                        key: {
+                                            skill_id: '190360efeb2f47efb449f012b48a5baf'
+                                        }
+                                    }
+                                    config_type: '7dfdff5893b64210aa5730f164891837'
+                                }
+                            }
+                            variable: 'ab5ef79893b64210aa5730f16489185a'
+                        }
+                    },
+                    {
+                        table: 'sys_gen_ai_feature_mapping'
+                        id: 'fe38f5d30ced43aaa38894dbae9f5747'
+                        key: {
+                            feature_name: 'LuxLab Incident Review Writer'
+                            document: '27c932b1fbbe47659e6b0bdea0f45737'
+                        }
+                    },
+                    {
+                        table: 'sn_nowassist_skill_config_var_set'
+                        id: 'fed63b9e36094f619a35e6659aee9cd8'
+                        key: {
+                            name: '__delivery_step__'
+                            skill_config: {
+                                id: '4971dda0f2f7418e978d6266ceee35ee'
+                                key: {
+                                    skill_id: '27c932b1fbbe47659e6b0bdea0f45737'
+                                }
+                            }
+                            config_type: '7dfdff5893b64210aa5730f164891837'
                         }
                     },
                 ]

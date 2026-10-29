@@ -1,6 +1,8 @@
 import { RESTAPIRequest, RESTAPIResponse } from '@servicenow/glide/sn_ws_int'
 import { listCandidates } from '../replay/candidates.ts'
 import { buildReplay, loadReplay, readableIncident } from '../replay/store.ts'
+import { decideFollowUp, suggestFollowUps, writeReview } from '../replay/ai.ts'
+import { canDecide } from '../replay/follow-ups.ts'
 
 function firstParam(request: RESTAPIRequest, name: string): string {
     const raw = request.queryParams[name]
@@ -27,5 +29,44 @@ export function rebuildReplay(request: RESTAPIRequest, response: RESTAPIResponse
     const incident = readableIncident(request.pathParams.incident)
     if (!incident) return notFound(response)
     buildReplay(incident)
+    response.setBody({ replay: loadReplay(incident) } as any)
+}
+
+function failed(response: RESTAPIResponse, status: number, e: any) {
+    response.setStatus(status)
+    response.setBody({ error: { message: (e && e.message) || String(e) } } as any)
+}
+
+// Skills can fail for reasons the user can act on (not published, quota), so the message is passed through
+function withIncident(request: RESTAPIRequest, response: RESTAPIResponse, action: (incident: any) => void) {
+    const incident = readableIncident(request.pathParams.incident)
+    if (!incident) return notFound(response)
+    try {
+        action(incident)
+    } catch (e) {
+        return failed(response, 500, e)
+    }
+    response.setBody({ replay: loadReplay(incident) } as any)
+}
+
+export function reviewReplay(request: RESTAPIRequest, response: RESTAPIResponse) {
+    withIncident(request, response, writeReview)
+}
+
+export function followUpReplay(request: RESTAPIRequest, response: RESTAPIResponse) {
+    withIncident(request, response, suggestFollowUps)
+}
+
+export function decide(request: RESTAPIRequest, response: RESTAPIResponse) {
+    if (!canDecide()) return failed(response, 403, 'Only LuxLab managers can decide on follow-ups')
+    const decision = String((request.body.data as any)?.decision || '')
+    if (decision !== 'approve' && decision !== 'dismiss') return failed(response, 400, 'decision must be approve or dismiss')
+    const incident = readableIncident(request.pathParams.incident)
+    if (!incident) return notFound(response)
+    try {
+        decideFollowUp(request.pathParams.action, decision === 'approve')
+    } catch (e) {
+        return failed(response, 400, e)
+    }
     response.setBody({ replay: loadReplay(incident) } as any)
 }

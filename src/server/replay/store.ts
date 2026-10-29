@@ -3,6 +3,7 @@ import { Analysis, TimelineEvent } from './types.ts'
 import { auditEvents, journalEvents, loadFacts, recordEvents } from './sources.ts'
 import { alertEvents, childEvents, commsEvents, slaEvents, taskEvents } from './related.ts'
 import { analyse } from './analysis.ts'
+import { canDecide, followUpsOf, ReplayActionDto } from './follow-ups.ts'
 
 const REPLAY = 'x_everi_luxlab_replay'
 const EVENT = 'x_everi_luxlab_replay_event'
@@ -36,6 +37,11 @@ export interface ReplayDto {
     phases: { [phase: string]: number }
     error: string
     events: ReplayEventDto[]
+    review: string
+    reviewedOn: string
+    followUpsOn: string
+    followUps: ReplayActionDto[]
+    canDecide: boolean
 }
 
 // Source tables like sys_audit are read without ACLs, so access is gated on the incident itself
@@ -176,5 +182,10 @@ export function loadReplay(incident: GlideRecordSecure<'incident'>): ReplayDto |
         phases: JSON.parse(replay.getValue('phases') || '{}'),
         error: replay.getValue('error') || '',
         events: eventsOf(replay.getUniqueValue()),
+        review: replay.getValue('review') || '',
+        reviewedOn: replay.getValue('reviewed_on') || '',
+        followUpsOn: replay.getValue('follow_ups_on') || '',
+        followUps: followUpsOf(replay.getUniqueValue()),
+        canDecide: canDecide(),
     }
 }

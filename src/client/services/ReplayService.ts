@@ -19,4 +19,19 @@ export class ReplayService {
         const { replay } = await request<{ replay: Replay }>(`${BASE_URL}/${incidentId}/build`, 'POST')
         return replay
     }
+
+    async review(incidentId: string) {
+        const { replay } = await request<{ replay: Replay }>(`${BASE_URL}/${incidentId}/review`, 'POST')
+        return replay
+    }
+
+    async suggestFollowUps(incidentId: string) {
+        const { replay } = await request<{ replay: Replay }>(`${BASE_URL}/${incidentId}/follow-ups`, 'POST')
+        return replay
+    }
+
+    async decide(incidentId: string, actionId: string, decision: 'approve' | 'dismiss') {
+        const { replay } = await request<{ replay: Replay }>(`${BASE_URL}/${incidentId}/follow-ups/${actionId}`, 'POST', { decision })
+        return replay
+    }
 }

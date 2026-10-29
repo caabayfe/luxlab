@@ -72,6 +72,20 @@ export interface ReplayEvent {
     keyMoment: boolean
 }
 
+export type FollowUpType = 'problem' | 'knowledge' | 'action'
+
+export interface ReplayFollowUp {
+    sysId: string
+    type: FollowUpType
+    title: string
+    description: string
+    rationale: string
+    state: 'proposed' | 'approved'
+    decidedBy: string
+    decidedOn: string
+    problem: { sysId: string; number: string } | null
+}
+
 export interface Replay {
     incident: { sysId: string; number: string; shortDescription: string; priority: string; majorState: string; group: string }
     status: 'ready' | 'failed'
@@ -87,4 +101,9 @@ export interface Replay {
     phases: { [phase in Phase]?: number }
     error: string
     events: ReplayEvent[]
+    review: string
+    reviewedOn: string
+    followUpsOn: string
+    followUps: ReplayFollowUp[]
+    canDecide: boolean
 }
