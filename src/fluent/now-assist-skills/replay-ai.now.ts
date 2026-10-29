@@ -38,6 +38,8 @@ const followUpsButtonScript = `(function () {
 export const incidentReviewWriter = NowAssistSkillConfig(
     {
         $id: Now.ID['incident_review_writer_skill'],
+        // Published in Skill Builder on 2026-10-29; declared here so installs keep it published
+        state: 'published',
         name: 'LuxLab Incident Review Writer',
         shortDescription: 'Writes a blameless incident review from an Incident Replay',
         description:
@@ -87,7 +89,8 @@ export const incidentReviewWriter = NowAssistSkillConfig(
                                 model: 'gpt-5.5',
                                 temperature: 0.2,
                                 maxTokens: 4000,
-                                promptState: 'draft',
+                                // Published prompts are frozen: change them by adding a new draft version
+                                promptState: 'published',
                                 prompt: (p) => `## Role
 You are a senior major incident manager who writes blameless post-incident reviews. Your task is to turn a reconstructed incident timeline into a review that helps the organisation learn.
 
@@ -120,6 +123,8 @@ Summary is 2 to 3 sentences. Key moments is a bulleted list "- **T+<offset>**: <
 export const followUpAdvisor = NowAssistSkillConfig(
     {
         $id: Now.ID['follow_up_advisor_skill'],
+        // Published in Skill Builder on 2026-10-29; declared here so installs keep it published
+        state: 'published',
         name: 'LuxLab Followup Advisor',
         shortDescription: 'Proposes problems, knowledge articles and actions from an Incident Replay',
         description:
@@ -169,7 +174,8 @@ export const followUpAdvisor = NowAssistSkillConfig(
                                 model: 'gpt-5.4-mini',
                                 temperature: 0.2,
                                 maxTokens: 2000,
-                                promptState: 'draft',
+                                // Published prompts are frozen: change them by adding a new draft version
+                                promptState: 'published',
                                 prompt: (p) => `## Role
 You are a problem manager reviewing a resolved incident. Your task is to propose the follow-up work that would stop it from recurring or make the next response faster.
 
