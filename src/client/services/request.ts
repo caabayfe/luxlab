@@ -12,7 +12,8 @@ export async function request<T>(url: string, method: 'GET' | 'POST' = 'GET', bo
 
     if (!response.ok) {
         const errorData = await response.json().catch(() => ({}))
-        throw new Error(errorData.error?.message || `HTTP error ${response.status}`)
+        // Platform errors use { error }, while errors set by our routes arrive wrapped in { result }
+        throw new Error(errorData.error?.message || errorData.result?.error?.message || `HTTP error ${response.status}`)
     }
 
     const { result } = await response.json()

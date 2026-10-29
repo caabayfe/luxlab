@@ -45,10 +45,16 @@ function runSkill(skillName: string, incidentNumber: string): string {
         mode: 'sync',
     })
     const capability = ((result && result.capabilities) || {})[id] || {}
+    if (capability.status === 'error') {
+        gs.error(`LuxLab skill "${skillName}" failed: ${JSON.stringify(capability)}`)
+        // 100004: the generative AI preprocessor found no active prompt, which means the skill is still a draft
+        if (String(capability.errorCode) === '100004') throw new Error(`"${skillName}" is not published yet. Publish it in Skill Builder and try again.`)
+        throw new Error(`"${skillName}" failed (error ${capability.errorCode}${capability.error ? `: ${capability.error}` : ''})`)
+    }
     const output = modelOutput(capability.response)
     if (!output) {
         gs.error(`LuxLab skill "${skillName}" returned no output: ${JSON.stringify(result)}`)
-        throw new Error(`"${skillName}" returned no output. Check that the skill is published in Skill Builder.`)
+        throw new Error(`"${skillName}" returned an empty answer`)
     }
     return output
 }
