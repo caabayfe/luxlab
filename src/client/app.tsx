@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { CockpitService } from './services/CockpitService'
-import { pushTab, tabFromUrl } from './utils/navigation'
-import { TabId } from './types'
+import { ReplayService } from './services/ReplayService'
+import { pushRoute, routeFromUrl } from './utils/navigation'
+import { Route, TabId } from './types'
 import Header from './components/Header'
 import OverviewView from './views/OverviewView'
 import ReplayView from './views/ReplayView'
@@ -9,28 +10,38 @@ import BriefingView from './views/BriefingView'
 import './app.css'
 
 export default function App() {
-    const [tab, setTab] = useState<TabId>(tabFromUrl)
-    const service = useMemo(() => new CockpitService(), [])
+    const [route, setRoute] = useState<Route>(routeFromUrl)
+    const cockpit = useMemo(() => new CockpitService(), [])
+    const replays = useMemo(() => new ReplayService(), [])
 
     // Browser back/forward
     useEffect(() => {
-        const onPopState = () => setTab(tabFromUrl())
+        const onPopState = () => setRoute(routeFromUrl())
         window.addEventListener('popstate', onPopState)
         return () => window.removeEventListener('popstate', onPopState)
     }, [])
 
-    const selectTab = useCallback((next: TabId) => {
-        pushTab(next)
-        setTab(next)
+    const navigate = useCallback((next: Route, label?: string) => {
+        pushRoute(next, label)
+        setRoute(next)
     }, [])
+
+    const selectTab = useCallback((tab: TabId) => navigate({ tab, incident: null }), [navigate])
 
     return (
         <div className="luxlab">
-            <Header tab={tab} onSelectTab={selectTab} />
+            <Header tab={route.tab} onSelectTab={selectTab} />
             <main className="luxlab__main">
-                {tab === 'overview' && <OverviewView service={service} onOpenBriefing={() => selectTab('briefing')} />}
-                {tab === 'replay' && <ReplayView />}
-                {tab === 'briefing' && <BriefingView />}
+                {route.tab === 'overview' && <OverviewView service={cockpit} onOpenBriefing={() => selectTab('briefing')} />}
+                {route.tab === 'replay' && (
+                    <ReplayView
+                        service={replays}
+                        incidentId={route.incident}
+                        onOpen={(incident, number) => navigate({ tab: 'replay', incident }, `Replay ${number}`)}
+                        onBack={() => selectTab('replay')}
+                    />
+                )}
+                {route.tab === 'briefing' && <BriefingView />}
             </main>
         </div>
     )

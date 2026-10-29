@@ -36,3 +36,54 @@ export interface AttentionPage {
 }
 
 export type TabId = 'overview' | 'replay' | 'briefing'
+
+export interface Route {
+    tab: TabId
+    incident: string | null
+}
+
+export type Phase = 'detection' | 'triage' | 'misrouted' | 'waiting' | 'fixing' | 'recovery'
+
+export interface ReplayCandidate {
+    sysId: string
+    number: string
+    shortDescription: string
+    priority: string
+    majorState: string
+    group: string
+    openedAt: string
+    resolvedAt: string
+    active: boolean
+    replayStatus: string
+    replayBuiltOn: string
+}
+
+export interface ReplayEvent {
+    sequence: number
+    occurredAt: string
+    source: string
+    kind: string
+    phase: Phase | ''
+    actor: string
+    summary: string
+    fromValue: string
+    toValue: string
+    detail: string
+    keyMoment: boolean
+}
+
+export interface Replay {
+    incident: { sysId: string; number: string; shortDescription: string; priority: string; majorState: string; group: string }
+    status: 'ready' | 'failed'
+    builtOn: string
+    impactStart: string
+    openedAt: string
+    resolvedAt: string
+    ongoing: boolean
+    minutesToResolve: number
+    reassignments: number
+    silentGaps: number
+    phases: { [phase in Phase]?: number }
+    error: string
+    events: ReplayEvent[]
+}

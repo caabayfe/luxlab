@@ -1,0 +1,212 @@
+/* Phase palette, shared by the bar, legend and timeline chips */
+.lux-phase--detection { background: #8e24aa; }
+.lux-phase--triage { background: #f9a825; }
+.lux-phase--misrouted { background: #e53935; }
+.lux-phase--waiting { background: #78909c; }
+.lux-phase--fixing { background: #43a047; }
+.lux-phase--recovery { background: #1e88e5; }
+
+.lux-replay-list__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--lux-space);
+    margin-bottom: 12px;
+}
+
+.lux-replay-list__items {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.lux-replay-list__item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    border-top: 1px solid var(--lux-border);
+}
+
+.lux-replay-list__text {
+    flex: 1;
+    min-width: 0;
+}
+
+.lux-replay-list__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 4px;
+    font-size: 0.75rem;
+    color: var(--lux-muted);
+}
+
+.lux-replay {
+    display: grid;
+    gap: 12px;
+}
+
+.lux-replay__toolbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.lux-replay__title {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.lux-replay__title a {
+    color: rgb(var(--now-color--primary-1, 41, 98, 255));
+}
+
+.lux-replay__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    margin: 16px 0;
+}
+
+.lux-replay__stat {
+    display: flex;
+    flex-direction: column;
+}
+
+.lux-replay__stat-value {
+    font-size: 1.6rem;
+    font-weight: 800;
+}
+
+.lux-replay__stat-label {
+    font-size: 0.75rem;
+    color: var(--lux-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.lux-phases__bar {
+    display: flex;
+    height: 14px;
+    overflow: hidden;
+    border-radius: 7px;
+    background: var(--lux-border);
+}
+
+.lux-phases__segment {
+    display: block;
+    height: 100%;
+}
+
+.lux-phases__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin: 10px 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 0.8rem;
+}
+
+.lux-phases__legend li {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.lux-phases__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.lux-phases__share {
+    color: var(--lux-muted);
+}
+
+.lux-timeline__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.lux-timeline {
+    margin: 12px 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.lux-timeline__event {
+    display: grid;
+    grid-template-columns: 130px minmax(0, 1fr);
+    gap: 12px;
+    padding: 8px 0 8px 10px;
+    border-top: 1px solid var(--lux-border);
+    border-left: 3px solid transparent;
+}
+
+.lux-timeline__event--key {
+    border-left-color: rgb(var(--now-color--primary-1, 41, 98, 255));
+    font-weight: 700;
+}
+
+.lux-timeline__event--gap {
+    border-left-color: #e53935;
+    background: repeating-linear-gradient(135deg, transparent, transparent 6px, rgba(229, 57, 53, 0.06) 6px, rgba(229, 57, 53, 0.06) 12px);
+}
+
+.lux-timeline__when {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.75rem;
+}
+
+.lux-timeline__offset {
+    font-family: monospace;
+    font-weight: 700;
+}
+
+.lux-timeline__time {
+    color: var(--lux-muted);
+}
+
+.lux-timeline__summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+
+.lux-timeline__phase {
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.lux-timeline__actor {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--lux-muted);
+}
+
+.lux-timeline__detail {
+    margin: 6px 0;
+    font-size: 0.85rem;
+    font-weight: 400;
+    white-space: pre-wrap;
+}
+
+@media (max-width: 600px) {
+    .lux-timeline__event {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
