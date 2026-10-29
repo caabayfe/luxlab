@@ -1,0 +1,45 @@
+.lux-markdown {
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.lux-markdown h4 {
+    margin: 16px 0 4px;
+    font-size: 0.95rem;
+}
+
+.lux-markdown h4:first-child {
+    margin-top: 0;
+}
+
+.lux-markdown p {
+    margin: 0 0 8px;
+}
+
+.lux-markdown ul,
+.lux-markdown ol {
+    margin: 0 0 8px;
+    padding-left: 20px;
+}
+
+.lux-markdown__table {
+    margin: 0 0 8px;
+    overflow-x: auto;
+}
+
+.lux-markdown table {
+    border-collapse: collapse;
+    font-size: 0.85rem;
+}
+
+.lux-markdown th,
+.lux-markdown td {
+    padding: 4px 8px;
+    border: 1px solid var(--lux-border);
+    text-align: left;
+    vertical-align: top;
+}
+
+.lux-markdown th {
+    background: var(--lux-surface);
+}

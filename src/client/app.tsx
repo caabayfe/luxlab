@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { CockpitService } from './services/CockpitService'
 import { ReplayService } from './services/ReplayService'
+import { BriefingService } from './services/BriefingService'
 import { pushRoute, routeFromUrl } from './utils/navigation'
 import { Route, TabId } from './types'
 import Header from './components/Header'
@@ -13,6 +14,7 @@ export default function App() {
     const [route, setRoute] = useState<Route>(routeFromUrl)
     const cockpit = useMemo(() => new CockpitService(), [])
     const replays = useMemo(() => new ReplayService(), [])
+    const briefing = useMemo(() => new BriefingService(), [])
 
     // Browser back/forward
     useEffect(() => {
@@ -41,7 +43,7 @@ export default function App() {
                         onBack={() => selectTab('replay')}
                     />
                 )}
-                {route.tab === 'briefing' && <BriefingView />}
+                {route.tab === 'briefing' && <BriefingView service={briefing} />}
             </main>
         </div>
     )

@@ -9,6 +9,30 @@ declare global {
                         table: 'sys_module'
                         id: '60135a3bfff84e1a921c9ef84a46266d'
                     }
+                    'briefing-api': {
+                        table: 'sys_ws_definition'
+                        id: 'beed88b082e94d398d5e9274814b2fa0'
+                    }
+                    'briefing-api-run': {
+                        table: 'sys_ws_operation'
+                        id: 'c12f9bfbcb16409eb9283a0b0639d263'
+                    }
+                    'briefing-api-tools': {
+                        table: 'sys_ws_operation'
+                        id: '7db3905037f04670b3e31b1597d897f8'
+                    }
+                    'briefing-api-trace': {
+                        table: 'sys_ws_operation'
+                        id: '3ae35386eedb4d5c84db5f011a1e9419'
+                    }
+                    'briefing-api-v1': {
+                        table: 'sys_ws_version'
+                        id: '0ea250c7da134ead8ec9da7f3f85841f'
+                    }
+                    'briefing-run-read-acl': {
+                        table: 'sys_security_acl'
+                        id: '8353b59b0a37412181517c523f86845d'
+                    }
                     'cockpit-api': {
                         table: 'sys_ws_definition'
                         id: '8378f6cf95b24fea9add07d8862ce5b4'
@@ -117,6 +141,10 @@ declare global {
                         table: 'sys_security_acl'
                         id: '5c84bfc1231e4b70b12f1ec42b070ee5'
                     }
+                    'luxlab-agent-runtime-si': {
+                        table: 'sys_script_include'
+                        id: '82a7b0d3406f4f2eb0f0d4c11ce824f3'
+                    }
                     'luxlab-menu': {
                         table: 'sys_app_application'
                         id: '175b7404209f494b947ee7a052bc32d9'
@@ -185,6 +213,14 @@ declare global {
                         table: 'sys_security_acl'
                         id: '4490410aa9a84c8e8e52fce2608bff28'
                     }
+                    src_server_briefing_agents_ts: {
+                        table: 'sys_module'
+                        id: 'a96aa59000fc4ea2ace067c6e12c99d3'
+                    }
+                    src_server_briefing_tools_ts: {
+                        table: 'sys_module'
+                        id: '04b6353a0b594d48a1292129bad76b33'
+                    }
                     src_server_cockpit_attention_ts: {
                         table: 'sys_module'
                         id: '299beb89febd4b54b62f81d15f76168e'
@@ -237,6 +273,10 @@ declare global {
                         table: 'sys_module'
                         id: '6f0932db08994b22b3712620b7ad9d45'
                     }
+                    'src_server_rest_briefing-routes_ts': {
+                        table: 'sys_module'
+                        id: '2f12aa59aec04163a9f572edda3d77ab'
+                    }
                     'src_server_rest_cockpit-routes_ts': {
                         table: 'sys_module'
                         id: 'deae9a4ec58d4ece97f3a5b3c140aff3'
@@ -244,6 +284,10 @@ declare global {
                     'src_server_rest_replay-routes_ts': {
                         table: 'sys_module'
                         id: '32471c280c314cbc82ddf0dc8fbcec79'
+                    }
+                    'src_server_script-includes_LuxLabAgentRuntime_js': {
+                        table: 'sys_module'
+                        id: '8580ac3c8e42414392f24cbe8e7199d4'
                     }
                     'src_server_script-includes_LuxLabReplayAI_js': {
                         table: 'sys_module'
@@ -370,6 +414,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '04ff5b004e4248efbab80523b36a154c'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'execution_ms'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_one_extend_capability_definition'
                         id: '05504c0bddf24ed2beddda3199cf0028'
                         key: {
@@ -427,6 +480,14 @@ declare global {
                         key: {
                             feature_name: 'LuxLab Followup Advisor'
                             document: '190360efeb2f47efb449f012b48a5baf'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '06739b72e6264385838a01965e9b83fc'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'conversation'
                         }
                     },
                     {
@@ -612,6 +673,36 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: '1201846e11b94e8ca3808e23dcd3c446'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'execution_ms'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '120b2098429648bca8cc3979e1f0bdd8'
+                        key: {
+                            sys_ui_section: {
+                                id: '1d7cf7d4cf4449c48334e84909be79f4'
+                                key: {
+                                    name: 'x_everi_luxlab_briefing_run'
+                                    caption: 'Run'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'execution_plan'
+                            position: '7'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '123808d3767f4303af782698ee9fc701'
                         key: {
@@ -658,6 +749,28 @@ declare global {
                             }
                             element: 'description'
                             position: '11'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '16389ca607574aec8b40b481171fe72b'
+                        key: {
+                            sys_ui_section: {
+                                id: '1d7cf7d4cf4449c48334e84909be79f4'
+                                key: {
+                                    name: 'x_everi_luxlab_briefing_run'
+                                    caption: 'Run'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'execution_ms'
+                            position: '9'
                         }
                     },
                     {
@@ -726,6 +839,21 @@ declare global {
                             name: 'x_everi_luxlab_replay_event'
                             element: 'phase'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_section'
+                        id: '1d7cf7d4cf4449c48334e84909be79f4'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            caption: 'Run'
+                            view: {
+                                id: 'Default view'
+                                key: {
+                                    name: 'NULL'
+                                }
+                            }
+                            sys_domain: 'global'
                         }
                     },
                     {
@@ -832,6 +960,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '26b667c55adf453e92fec6affce27c6e'
+                        key: {
+                            sys_ui_section: {
+                                id: '1d7cf7d4cf4449c48334e84909be79f4'
+                                key: {
+                                    name: 'x_everi_luxlab_briefing_run'
+                                    caption: 'Run'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.end_split'
+                            position: '10'
+                        }
+                    },
+                    {
                         table: 'sys_user_role_contains'
                         id: '270a3b88acb9498cacb4dcd7d678925a'
                         key: {
@@ -870,6 +1020,15 @@ declare global {
                         id: '295722b0315f4d3bb2689e672550ad19'
                         key: {
                             name: 'x_everi_luxlab_replay_action'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '297bc0720b4b4d03b503120b4f1c5b4d'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'agent'
+                            language: 'en'
                         }
                     },
                     {
@@ -926,11 +1085,53 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '2e66d43930994d9e9312c7d2ceb27abf'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'state'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_choice_set'
                         id: '2ebd95480ce140acb30ad60f86471620'
                         key: {
                             name: 'x_everi_luxlab_replay_event'
                             element: 'phase'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '2edd173320314796bacbc1d15f2fbfc6'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'state'
+                            value: 'failed'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '2f7e0b10be1e47ac9dda0dfe41f61092'
+                        key: {
+                            sys_ui_section: {
+                                id: '1d7cf7d4cf4449c48334e84909be79f4'
+                                key: {
+                                    name: 'x_everi_luxlab_briefing_run'
+                                    caption: 'Run'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.split'
+                            position: '5'
                         }
                     },
                     {
@@ -948,6 +1149,15 @@ declare global {
                         key: {
                             name: 'x_everi_luxlab_replay_action'
                             element: 'state'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '31a74964b61c498dbb2018d3b9dd10c6'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'tool'
                             language: 'en'
                         }
                     },
@@ -1005,11 +1215,42 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '3652ee4116a34e7fb4b1bd23acafa0c7'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'finished_on'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sn_glider_source_artifact_m2m'
                         id: '36c6c1419a1d4ddd9ef5eea61b2ccfdc'
                         key: {
                             application_file: '872cf825122f4be6b3d803f8ffa33940'
                             source_artifact: '38b601c434a04cc686667e4076f10ce2'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '36d2af62aa9e4b4b8a1cf93f4e18a7d6'
+                        key: {
+                            sys_ui_section: {
+                                id: '1d7cf7d4cf4449c48334e84909be79f4'
+                                key: {
+                                    name: 'x_everi_luxlab_briefing_run'
+                                    caption: 'Run'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'agent'
+                            position: '6'
                         }
                     },
                     {
@@ -1151,6 +1392,28 @@ declare global {
                     },
                     {
                         table: 'sys_ui_element'
+                        id: '40ebff7a60f1411089fa7929c5fcb38d'
+                        key: {
+                            sys_ui_section: {
+                                id: '1d7cf7d4cf4449c48334e84909be79f4'
+                                key: {
+                                    name: 'x_everi_luxlab_briefing_run'
+                                    caption: 'Run'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'output'
+                            position: '11'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
                         id: '413378237de4432e8e71d6d703604299'
                         key: {
                             sys_ui_section: {
@@ -1178,6 +1441,28 @@ declare global {
                             name: 'x_everi_luxlab_replay_event'
                             element: 'summary'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '445ff435f2a045d8bb2f3421b88a9990'
+                        key: {
+                            sys_ui_section: {
+                                id: '1d7cf7d4cf4449c48334e84909be79f4'
+                                key: {
+                                    name: 'x_everi_luxlab_briefing_run'
+                                    caption: 'Run'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'plan_state'
+                            position: '8'
                         }
                     },
                     {
@@ -1311,6 +1596,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '4b7fc343490e4672b5a321c27a0efdff'
+                        key: {
+                            sys_ui_section: {
+                                id: '1d7cf7d4cf4449c48334e84909be79f4'
+                                key: {
+                                    name: 'x_everi_luxlab_briefing_run'
+                                    caption: 'Run'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'state'
+                            position: '3'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '4b7fe4c8a6bb406c853ec3136d0e6d0d'
                         key: {
@@ -1339,6 +1646,28 @@ declare global {
                             value: 'action'
                             language: 'en'
                             dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '4f5ea6c827c94d03a4f9c09e00760273'
+                        key: {
+                            sys_ui_section: {
+                                id: '1d7cf7d4cf4449c48334e84909be79f4'
+                                key: {
+                                    name: 'x_everi_luxlab_briefing_run'
+                                    caption: 'Run'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'tool'
+                            position: '1'
                         }
                     },
                     {
@@ -1520,6 +1849,28 @@ declare global {
                     },
                     {
                         table: 'sys_ui_element'
+                        id: '5dd411e773344e5d8bc9d13e1b0034b1'
+                        key: {
+                            sys_ui_section: {
+                                id: '1d7cf7d4cf4449c48334e84909be79f4'
+                                key: {
+                                    name: 'x_everi_luxlab_briefing_run'
+                                    caption: 'Run'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'user'
+                            position: '2'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
                         id: '603f8f758371409aa1007a56cdc2cc42'
                         key: {
                             sys_ui_section: {
@@ -1592,6 +1943,13 @@ declare global {
                         id: '62ac437147c64e998fa928d63969f964'
                         key: {
                             skill_id: 'e2a1eceaa50743a88051aa5a191bf5e5'
+                        }
+                    },
+                    {
+                        table: 'ua_table_licensing_config'
+                        id: '62cd389286bb4e6eaf1fb69c67e4a712'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
                         }
                     },
                     {
@@ -2021,6 +2379,14 @@ declare global {
                     },
                     {
                         table: 'sys_dictionary'
+                        id: '81cc56faf0394725957ec73078a46b56'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'state'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
                         id: '828351fb35ac4bb1894d6c049f4727f3'
                         key: {
                             name: 'x_everi_luxlab_replay_event'
@@ -2120,6 +2486,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '88964868bf864f539859994cb1f03c10'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'plan_state'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sn_glider_source_artifact_m2m'
                         id: '89df9408022d4388ae6913633497163c'
                         key: {
@@ -2172,6 +2547,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: '922d2740113c4abea916765fd40672b6'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'finished_on'
+                        }
+                    },
+                    {
                         table: 'sys_variable_value'
                         id: '923ae9059f7849fa895e121f5682438d'
                         key: {
@@ -2189,6 +2572,14 @@ declare global {
                                 }
                             }
                             variable: '5c5623df7f025210076726d6ac8665f9'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '929d8ca155c945798af34962cc8fa666'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'error'
                         }
                     },
                     {
@@ -2245,10 +2636,27 @@ declare global {
                     },
                     {
                         table: 'sys_dictionary'
+                        id: '9554128e30f24196ba5f8c51573fac85'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'execution_plan'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
                         id: '956b63da6bf9412986fe81fcf3792337'
                         key: {
                             name: 'x_everi_luxlab_replay'
                             element: 'review'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '96115f9fc89c41e3ab94ac952410a7f3'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'user'
+                            language: 'en'
                         }
                     },
                     {
@@ -2419,11 +2827,29 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: 'a333a2de2e4248459db35613151004a5'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'NULL'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_one_extend_resource_mapping'
                         id: 'a3ffb3af2d4e4a61aead71fcb2ce9854'
                         key: {
                             parent_capability: '190360efeb2f47efb449f012b48a5baf'
                             resource_capability: '190360efeb2f47efb449f012b48a5baf'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'a4919a55897242cd84c47379f4010600'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'execution_plan'
+                            language: 'en'
                         }
                     },
                     {
@@ -2465,6 +2891,20 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_form'
+                        id: 'a6a9b2f4fa7841c581cbdb2deb6c3b07'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            view: {
+                                id: 'Default view'
+                                key: {
+                                    name: 'NULL'
+                                }
+                            }
+                            sys_domain: 'global'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: 'a7d0165b579149d5add8b641e34225f7'
                         key: {
@@ -2492,6 +2932,28 @@ declare global {
                             value: 'audit'
                             language: 'en'
                             dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: 'a969c3ca2ef14f399f3388b8b82fe7e9'
+                        key: {
+                            sys_ui_section: {
+                                id: '1d7cf7d4cf4449c48334e84909be79f4'
+                                key: {
+                                    name: 'x_everi_luxlab_briefing_run'
+                                    caption: 'Run'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'finished_on'
+                            position: '4'
                         }
                     },
                     {
@@ -2539,6 +3001,14 @@ declare global {
                             }
                             element: 'replay'
                             position: '1'
+                        }
+                    },
+                    {
+                        table: 'sys_choice_set'
+                        id: 'ac34f9a6697046198e0c163c41d5769f'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'state'
                         }
                     },
                     {
@@ -2637,12 +3107,33 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: 'b231cb33e07b4b15849f80391991878e'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'agent'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: 'b25742b56cae4b3290db420963a15d19'
                         key: {
                             name: 'x_everi_luxlab_replay_event'
                             element: 'detail'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: 'b305bdb70eb64bcf93d27ec5980b1991'
+                        key: {
+                            sys_security_acl: '8353b59b0a37412181517c523f86845d'
+                            sys_user_role: {
+                                id: '5c0007ba3bd44ee0b384483df02f5ceb'
+                                key: {
+                                    name: 'x_everi_luxlab.user'
+                                }
+                            }
                         }
                     },
                     {
@@ -2707,6 +3198,17 @@ declare global {
                                 }
                             }
                             sys_domain: 'global'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'b8cc4401ba47421da6e7228628253fac'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'state'
+                            value: 'completed'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -2883,6 +3385,15 @@ declare global {
                     },
                     {
                         table: 'sys_documentation'
+                        id: 'c6c74a660afa48f0abbf09e4bdbdd453'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'conversation'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
                         id: 'c7dbaca5f2084c02a415753bf145acbe'
                         key: {
                             name: 'x_everi_luxlab_replay'
@@ -2939,6 +3450,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'cde9f5ea82494042b04f9ddc4807302b'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'state'
+                            value: 'running'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: 'ce4e4c9928714adfbed9dcfda386ad76'
                         key: {
@@ -2958,6 +3480,14 @@ declare global {
                             }
                             element: 'problem'
                             position: '8'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'cfe923fcd5ef48a387a54f95ad889256'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'tool'
                         }
                     },
                     {
@@ -3010,6 +3540,28 @@ declare global {
                                     name: 'x_everi_luxlab.user'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: 'd29ec7ba56f84802bf787398708d2592'
+                        key: {
+                            sys_ui_section: {
+                                id: '1d7cf7d4cf4449c48334e84909be79f4'
+                                key: {
+                                    name: 'x_everi_luxlab_briefing_run'
+                                    caption: 'Run'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'conversation'
+                            position: '13'
                         }
                     },
                     {
@@ -3070,6 +3622,61 @@ declare global {
                     },
                     {
                         table: 'sys_ui_element'
+                        id: 'd67d106faa6146b1a37a30135b6b4bac'
+                        key: {
+                            sys_ui_section: {
+                                id: '1d7cf7d4cf4449c48334e84909be79f4'
+                                key: {
+                                    name: 'x_everi_luxlab_briefing_run'
+                                    caption: 'Run'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.begin_split'
+                            position: '0'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_form_section'
+                        id: 'd6b50a2342144dc9b7b7c16a5887a2c1'
+                        key: {
+                            sys_ui_form: {
+                                id: 'a6a9b2f4fa7841c581cbdb2deb6c3b07'
+                                key: {
+                                    name: 'x_everi_luxlab_briefing_run'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            sys_ui_section: {
+                                id: '1d7cf7d4cf4449c48334e84909be79f4'
+                                key: {
+                                    name: 'x_everi_luxlab_briefing_run'
+                                    caption: 'Run'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
                         id: 'd6bb3d8c7a9a46a2a7825edc3ba3ab1c'
                         key: {
                             sys_ui_section: {
@@ -3125,6 +3732,14 @@ declare global {
                                 }
                             }
                             variable: 'f09e3f9893b64210aa5730f16489189f'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'd8c0fa3fcbef473fa860ea1b792ac39c'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'plan_state'
                         }
                     },
                     {
@@ -3210,6 +3825,22 @@ declare global {
                         key: {
                             name: 'x_everi_luxlab_replay_action'
                             element: 'description'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'de1d022bdb334de8a162dcecc4e1f3c4'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'user'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'de5770d9ba484aefa6af84c25a4f1c16'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'NULL'
                         }
                     },
                     {
@@ -3354,6 +3985,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: 'e525ae1adbee4178b015b143eae073a7'
+                        key: {
+                            sys_ui_section: {
+                                id: '1d7cf7d4cf4449c48334e84909be79f4'
+                                key: {
+                                    name: 'x_everi_luxlab_briefing_run'
+                                    caption: 'Run'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'error'
+                            position: '12'
+                        }
+                    },
+                    {
                         table: 'sn_nowassist_skill_config_status'
                         id: 'e526d4897f66486587d00c1fa12c90f9'
                         key: {
@@ -3421,6 +4074,13 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_db_object'
+                        id: 'eae57e34fc8440feb4f174a71beec7fa'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                        }
+                    },
+                    {
                         table: 'sys_security_acl_role'
                         id: 'eb01618d571f4d9db07c142d0477ae2c'
                         key: {
@@ -3439,6 +4099,15 @@ declare global {
                         key: {
                             name: 'x_everi_luxlab_replay_action'
                             element: 'incident'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'ee2dfe2a8aad42daab66cdab8883afd2'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'error'
+                            language: 'en'
                         }
                     },
                     {
@@ -3556,6 +4225,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: 'f512ce37572f4295adcb66613aec8a34'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'output'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: 'f6839cb0874e4987ab33dece0b8c3d6d'
                         key: {
@@ -3642,6 +4319,15 @@ declare global {
                             value: 'alert'
                             language: 'en'
                             dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'fceb5952e1374cfdb093af6043c60a2e'
+                        key: {
+                            name: 'x_everi_luxlab_briefing_run'
+                            element: 'output'
+                            language: 'en'
                         }
                     },
                     {

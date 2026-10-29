@@ -29,3 +29,14 @@ Acl({
     roles: [luxlabUser],
     description: 'LuxLab users can read the follow-ups proposed for incident replays.',
 })
+
+// Runs are written by the briefing API; the API itself only returns a user's own runs
+Acl({
+    $id: Now.ID['briefing-run-read-acl'],
+    type: 'record',
+    table: 'x_everi_luxlab_briefing_run',
+    operation: 'read',
+    roles: [luxlabUser],
+    script: `answer = current.user == gs.getUserID() || gs.hasRole('x_everi_luxlab.manager');`,
+    description: 'LuxLab users can read their own Daily Briefing runs; managers can read all of them.',
+})

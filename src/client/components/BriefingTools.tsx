@@ -8,14 +8,14 @@ export interface BriefingTool {
     description: string
 }
 
-// Each tool becomes a Now Assist skill in Phase 4; until then the cards are informational
+// Overview teaser; the Daily Briefing tab runs each tool on its AI agent
 export const BRIEFING_TOOLS: BriefingTool[] = [
     { id: 'analyze-queue', title: 'Analyze My Queue', description: 'Queue health readout: workload mix, risks, patterns and next actions.' },
     { id: 'next-best-order', title: 'Next Best Work Order', description: 'Suggested order to work your tickets based on SLA, priority and impact.' },
     { id: 'stalled-work', title: 'Stalled Work Detector', description: 'Assigned work that is aging, on hold, or missing a recent update.' },
     { id: 'customer-impact', title: 'Customer Impact Brief', description: 'Active work grouped by customer, turned into impact and escalation notes.' },
-    { id: 'update-draft', title: 'Update Draft Assistant', description: 'Customer-facing updates and next-step notes for tickets that need communication.' },
-    { id: 'weekly-summary', title: 'Weekly Summary', description: 'Your operations week: resolved, opened and trends.' },
+    { id: 'update-draft', title: 'Update Draft Assistant', description: 'Customer-facing updates for tickets that have gone quiet.' },
+    { id: 'weekly-summary', title: 'Weekly Summary', description: 'This week against last week: opened incidents and what changed.' },
 ]
 
 export default function BriefingTools({ onOpen }: { onOpen: () => void }) {
@@ -24,7 +24,7 @@ export default function BriefingTools({ onOpen }: { onOpen: () => void }) {
             <div className="lux-briefing__head">
                 <div>
                     <h2 className="lux-panel__title">Daily briefing tools</h2>
-                    <p className="lux-panel__subtitle">AI tools powered by Now Assist skills. Coming in a later phase.</p>
+                    <p className="lux-panel__subtitle">Each tool runs a ServiceNow AI agent on your work.</p>
                 </div>
                 <Button label="Open" size="sm" variant="secondary" onClicked={onOpen} />
             </div>

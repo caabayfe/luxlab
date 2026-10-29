@@ -107,3 +107,35 @@ export interface Replay {
     followUps: ReplayFollowUp[]
     canDecide: boolean
 }
+
+export interface BriefingStep {
+    order: number
+    type: 'access_verification' | 'gen_ai' | 'agent' | 'tool' | string
+    status: string
+    name: string
+    thought: string
+    actions: string[]
+    ms: number
+    startedAt: string
+}
+
+export interface BriefingRun {
+    id: string
+    tool: string
+    state: 'running' | 'completed' | 'failed'
+    startedOn: string
+    finishedOn: string
+    output: string
+    error: string
+    planState: string
+    ms: number
+    steps: BriefingStep[]
+}
+
+export interface BriefingTool {
+    id: string
+    name: string
+    description: string
+    agentName: string
+    lastRun: BriefingRun | null
+}
