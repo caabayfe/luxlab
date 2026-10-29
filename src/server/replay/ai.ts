@@ -26,11 +26,14 @@ function skillConfigId(capability: string): string {
 
 // Skill responses arrive either as an object or as a JSON string carrying model_output
 function modelOutput(response: any): string {
-    if (response && typeof response === 'object') return String(response.model_output || '')
+    if (response && typeof response === 'object') {
+        return 'model_output' in response ? String(response.model_output || '') : JSON.stringify(response)
+    }
     if (typeof response !== 'string') return ''
     try {
+        // Only unwrap an envelope: a skill that answers in JSON (the follow-up advisor) parses too
         const parsed = JSON.parse(response)
-        return parsed && typeof parsed === 'object' ? String(parsed.model_output || '') : response
+        return parsed && typeof parsed === 'object' && 'model_output' in parsed ? String(parsed.model_output || '') : response
     } catch (e) {
         return response
     }
