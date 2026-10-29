@@ -45,11 +45,15 @@ function runSkill(skillName: string, incidentNumber: string): string {
         mode: 'sync',
     })
     // Refusals before execution (e.g. the caller lacks the skill's execution role) come back at the top level
-    if (result && result.status === 'error' && !result.capabilities) {
+    const capability = ((result && result.capabilities) || {})[id]
+    if (!capability && result && result.status === 'error') {
         gs.error(`LuxLab skill "${skillName}" was refused: ${JSON.stringify(result)}`)
-        throw new Error(`"${skillName}" could not run: ${result.message || 'refused by the platform'}. The skill runs as itil, so your user needs the itil role.`)
+        throw new Error(
+            `"${skillName}" could not run: ${result.message || 'refused by the platform'}. ` +
+                'Check that the skill is activated in Now Assist Admin and that you have the itil role.'
+        )
     }
-    const capability = ((result && result.capabilities) || {})[id] || {}
+    if (!capability) throw new Error(`"${skillName}" returned no result`)
     if (capability.status === 'error') {
         gs.error(`LuxLab skill "${skillName}" failed: ${JSON.stringify(capability)}`)
         // 100004: the generative AI preprocessor found no active prompt, which means the skill is still a draft
