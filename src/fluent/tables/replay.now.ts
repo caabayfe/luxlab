@@ -34,6 +34,7 @@ export const x_everi_luxlab_replay = Table({
         ongoing: BooleanColumn({ label: 'Still open', default: false }),
         minutes_to_resolve: IntegerColumn({ label: 'Minutes to resolve' }),
         reassignments: IntegerColumn({ label: 'Reassignments' }),
+        handoffs: IntegerColumn({ label: 'Handoffs' }),
         silent_gaps: IntegerColumn({ label: 'Silent gaps' }),
         event_count: IntegerColumn({ label: 'Events' }),
         phases: JsonColumn({ label: 'Phase minutes' }),

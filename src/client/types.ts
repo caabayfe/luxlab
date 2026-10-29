@@ -82,6 +82,7 @@ export interface Replay {
     ongoing: boolean
     minutesToResolve: number
     reassignments: number
+    handoffs: number
     silentGaps: number
     phases: { [phase in Phase]?: number }
     error: string

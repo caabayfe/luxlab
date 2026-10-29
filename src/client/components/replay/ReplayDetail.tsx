@@ -73,7 +73,8 @@ export default function ReplayDetail({ service, incidentId, onBack }: ReplayDeta
                         </p>
                         <div className="lux-replay__stats">
                             <Stat label={replay.ongoing ? 'Open for' : 'Time to resolve'} value={formatMinutes(replay.minutesToResolve)} />
-                            <Stat label="Reassignments" value={replay.reassignments} />
+                            <Stat label="Group reassignments" value={replay.reassignments} />
+                            <Stat label="Engineer handoffs" value={replay.handoffs} />
                             <Stat label="Silent gaps" value={replay.silentGaps} />
                             <Stat label="Events" value={replay.events.length} />
                         </div>

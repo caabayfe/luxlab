@@ -133,6 +133,28 @@ declare global {
                 composite: [
                     {
                         table: 'sys_ui_element'
+                        id: '00058a0503dd4a40bd887b57d8860fb2'
+                        key: {
+                            sys_ui_section: {
+                                id: 'b12d1675fbba4225b1e39b9f2e897fd9'
+                                key: {
+                                    name: 'x_everi_luxlab_replay'
+                                    caption: 'Analysis'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'silent_gaps'
+                            position: '3'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
                         id: '01aa458a84f548e0a66bd8d4ced87066'
                         key: {
                             sys_ui_section: {
@@ -151,6 +173,28 @@ declare global {
                             }
                             element: '.end_split'
                             position: '10'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '0209003bc1ef4b3d9cb0071b955d5fdc'
+                        key: {
+                            sys_ui_section: {
+                                id: 'b12d1675fbba4225b1e39b9f2e897fd9'
+                                key: {
+                                    name: 'x_everi_luxlab_replay'
+                                    caption: 'Analysis'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'phases'
+                            position: '7'
                         }
                     },
                     {
@@ -201,6 +245,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: '07eac5027d2743a1b43b95d40776409a'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: 'b12d1675fbba4225b1e39b9f2e897fd9'
@@ -646,6 +691,28 @@ declare global {
                     },
                     {
                         table: 'sys_ui_element'
+                        id: '490774d1ca474d74b2f1ad07080b9b56'
+                        key: {
+                            sys_ui_section: {
+                                id: 'b12d1675fbba4225b1e39b9f2e897fd9'
+                                key: {
+                                    name: 'x_everi_luxlab_replay'
+                                    caption: 'Analysis'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'error'
+                            position: '8'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
                         id: '49198c8faa6f4048826d91b41d62e162'
                         key: {
                             sys_ui_section: {
@@ -855,6 +922,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: '6287094ca3ba482587122f2530baff09'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: 'b12d1675fbba4225b1e39b9f2e897fd9'
@@ -942,6 +1010,15 @@ declare global {
                             }
                             element: 'actor'
                             position: '9'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '72380caa818e4a208aea070ff77f8de8'
+                        key: {
+                            name: 'x_everi_luxlab_replay'
+                            element: 'handoffs'
+                            language: 'en'
                         }
                     },
                     {
@@ -1251,6 +1328,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: 'a60ab0a65b4d4af684fbbc88d9165094'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: 'b12d1675fbba4225b1e39b9f2e897fd9'
@@ -1499,7 +1577,30 @@ declare global {
                     },
                     {
                         table: 'sys_ui_element'
+                        id: 'bd9a9c441cb246f4b39b21f1bb736908'
+                        key: {
+                            sys_ui_section: {
+                                id: 'b12d1675fbba4225b1e39b9f2e897fd9'
+                                key: {
+                                    name: 'x_everi_luxlab_replay'
+                                    caption: 'Analysis'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.split'
+                            position: '4'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
                         id: 'c26eadaea60b4a7292409bdf1b4e6d54'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: 'b12d1675fbba4225b1e39b9f2e897fd9'
@@ -1545,6 +1646,28 @@ declare global {
                         key: {
                             name: 'x_everi_luxlab_replay'
                             element: 'silent_gaps'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: 'c3660812394e47a890d5d35639ac3b9d'
+                        key: {
+                            sys_ui_section: {
+                                id: 'b12d1675fbba4225b1e39b9f2e897fd9'
+                                key: {
+                                    name: 'x_everi_luxlab_replay'
+                                    caption: 'Analysis'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'handoffs'
+                            position: '2'
                         }
                     },
                     {
@@ -1616,6 +1739,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: 'd0283866fab242408750a4ba51eb782a'
+                        key: {
+                            name: 'x_everi_luxlab_replay'
+                            element: 'handoffs'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: 'd3a661dc45fc40b39d588e9c3a1eec75'
                         key: {
@@ -1628,7 +1759,30 @@ declare global {
                     },
                     {
                         table: 'sys_ui_element'
+                        id: 'd54f46a3936346d281d2e6a2f6dc6147'
+                        key: {
+                            sys_ui_section: {
+                                id: 'b12d1675fbba4225b1e39b9f2e897fd9'
+                                key: {
+                                    name: 'x_everi_luxlab_replay'
+                                    caption: 'Analysis'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.end_split'
+                            position: '6'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
                         id: 'd6092e5f56bf489796c723dc2bf2a702'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: 'b12d1675fbba4225b1e39b9f2e897fd9'
@@ -1685,6 +1839,28 @@ declare global {
                             name: 'x_everi_luxlab_replay'
                             element: 'opened_at'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: 'db0057a9dde7439384983596faec32eb'
+                        key: {
+                            sys_ui_section: {
+                                id: 'b12d1675fbba4225b1e39b9f2e897fd9'
+                                key: {
+                                    name: 'x_everi_luxlab_replay'
+                                    caption: 'Analysis'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'event_count'
+                            position: '5'
                         }
                     },
                     {
@@ -1879,6 +2055,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: 'f3c85e8a6f654d7faf89eb4152e6fad0'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: 'b12d1675fbba4225b1e39b9f2e897fd9'

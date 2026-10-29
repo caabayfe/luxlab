@@ -3,6 +3,7 @@ import { Analysis, IncidentFacts, Phase, PhaseMinutes, PHASES, TimelineEvent } f
 
 const MINUTE_MS = 60 * 1000
 const STATE_ON_HOLD = '3'
+const STATE_RESOLVED = '6'
 const TRACKED = ['state', 'assignment_group', 'assigned_to']
 
 // Longest acceptable silence while an incident is open, by priority
@@ -46,13 +47,20 @@ function snapshotAt(start: Snapshot, changes: TimelineEvent[], at: number): Snap
     return snapshot
 }
 
-function phaseOf(snapshot: Snapshot, at: number, facts: IncidentFacts, finalGroup: string, end: number): Phase {
+interface Groups {
+    first: string
+    final: string
+}
+
+function phaseOf(snapshot: Snapshot, at: number, facts: IncidentFacts, groups: Groups, end: number): Phase {
     if (at < facts.openedAt) return 'detection'
     if (at >= end) return 'recovery'
-    if (snapshot.state === STATE_ON_HOLD) return 'waiting'
-    if (!snapshot.assigned_to) return 'triage'
-    if (finalGroup && snapshot.assignment_group && snapshot.assignment_group !== finalGroup) return 'misrouted'
-    return 'fixing'
+    // Resolved too early and later reopened: the gap is time spent waiting on confirmation
+    if (snapshot.state === STATE_ON_HOLD || snapshot.state === STATE_RESOLVED) return 'waiting'
+    const group = snapshot.assignment_group
+    // First-line handling is triage; any other group that did not resolve it was a wrong turn
+    if (group !== groups.final) return group === groups.first || !group ? 'triage' : 'misrouted'
+    return snapshot.assigned_to ? 'fixing' : 'triage'
 }
 
 function silentGaps(events: TimelineEvent[], facts: IncidentFacts, end: number): TimelineEvent[] {
@@ -91,7 +99,7 @@ export function analyse(facts: IncidentFacts, events: TimelineEvent[]): { events
 
     const start = initialSnapshot(facts, events)
     const changes = changesOf(events)
-    const finalGroup = snapshotAt(start, changes, end).assignment_group
+    const groups: Groups = { first: start.assignment_group, final: snapshotAt(start, changes, end).assignment_group }
 
     const phases = PHASES.reduce((all, phase) => ({ ...all, [phase]: 0 }), {} as PhaseMinutes)
     const boundaries = [impactStart, facts.openedAt, ...changes.map((change) => change.at), end]
@@ -99,7 +107,7 @@ export function analyse(facts: IncidentFacts, events: TimelineEvent[]): { events
         .sort((a, b) => a - b)
     for (let i = 0; i < boundaries.length - 1; i++) {
         const from = boundaries[i]
-        const phase = phaseOf(snapshotAt(start, changes, from), from, facts, finalGroup, end)
+        const phase = phaseOf(snapshotAt(start, changes, from), from, facts, groups, end)
         phases[phase] += (boundaries[i + 1] - from) / MINUTE_MS
     }
     if (facts.resolvedAt && facts.closedAt) phases.recovery = (facts.closedAt - facts.resolvedAt) / MINUTE_MS
@@ -108,7 +116,7 @@ export function analyse(facts: IncidentFacts, events: TimelineEvent[]): { events
     const all = events.concat(gaps).sort((a, b) => a.at - b.at)
     let firstAssignee = true
     for (const event of all) {
-        event.phase = phaseOf(snapshotAt(start, changes, event.at), event.at, facts, finalGroup, end)
+        event.phase = phaseOf(snapshotAt(start, changes, event.at), event.at, facts, groups, end)
         if (event.field === 'assigned_to' && event.toRaw && firstAssignee) {
             event.keyMoment = true
             firstAssignee = false
@@ -124,6 +132,7 @@ export function analyse(facts: IncidentFacts, events: TimelineEvent[]): { events
             ongoing,
             minutesToResolve: Math.round((end - facts.openedAt) / MINUTE_MS),
             reassignments: changes.filter((change) => change.field === 'assignment_group' && change.fromRaw).length,
+            handoffs: changes.filter((change) => change.field === 'assigned_to' && change.fromRaw && change.toRaw).length,
             silentGaps: gaps.length,
             phases,
         },

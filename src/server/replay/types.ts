@@ -41,6 +41,7 @@ export interface Analysis {
     ongoing: boolean
     minutesToResolve: number
     reassignments: number
+    handoffs: number
     silentGaps: number
     phases: PhaseMinutes
 }

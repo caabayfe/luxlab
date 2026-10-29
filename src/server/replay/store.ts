@@ -31,6 +31,7 @@ export interface ReplayDto {
     ongoing: boolean
     minutesToResolve: number
     reassignments: number
+    handoffs: number
     silentGaps: number
     phases: { [phase: string]: number }
     error: string
@@ -90,6 +91,7 @@ function saveAnalysis(replay: GlideRecord, analysis: Analysis, eventCount: numbe
     replay.setValue('ongoing', analysis.ongoing)
     replay.setValue('minutes_to_resolve', analysis.minutesToResolve)
     replay.setValue('reassignments', analysis.reassignments)
+    replay.setValue('handoffs', analysis.handoffs)
     replay.setValue('silent_gaps', analysis.silentGaps)
     replay.setValue('event_count', eventCount)
     replay.setValue('phases', JSON.stringify(analysis.phases))
@@ -169,6 +171,7 @@ export function loadReplay(incident: GlideRecordSecure<'incident'>): ReplayDto |
         ongoing: replay.getValue('ongoing') === '1',
         minutesToResolve: parseInt(replay.getValue('minutes_to_resolve'), 10) || 0,
         reassignments: parseInt(replay.getValue('reassignments'), 10) || 0,
+        handoffs: parseInt(replay.getValue('handoffs'), 10) || 0,
         silentGaps: parseInt(replay.getValue('silent_gaps'), 10) || 0,
         phases: JSON.parse(replay.getValue('phases') || '{}'),
         error: replay.getValue('error') || '',

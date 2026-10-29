@@ -32,6 +32,7 @@ Form({
                     layout: 'two-column',
                     leftElements: [
                         { field: 'reassignments', type: 'table_field' },
+                        { field: 'handoffs', type: 'table_field' },
                         { field: 'silent_gaps', type: 'table_field' },
                     ],
                     rightElements: [{ field: 'event_count', type: 'table_field' }],

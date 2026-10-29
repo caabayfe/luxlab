@@ -182,6 +182,12 @@
     var SW = group('Software');
     var HW = group('Hardware');
     var DB = group('Database');
+    var APPDEV = group('Application Development');
+
+    // Most recent Saturday 02:10 UTC at least two days back, for the weekend scenario
+    var saturday = new Date(now - 2 * DAY);
+    saturday.setUTCHours(2, 10, 0, 0);
+    while (saturday.getUTCDay() !== 6) saturday.setTime(saturday.getTime() - DAY);
 
     var scenarios = [
         {
@@ -252,6 +258,85 @@
                 { t: 74, note: 'Export completed. Validating totals with payroll.' },
                 { t: 95, set: { state: 6, close_code: 'Solution provided', close_notes: 'Payroll tablespace was full. Extended and export re-run before the bank cut-off.' }, comment: 'Payroll file delivered to the bank at 09:41.' },
                 { t: 95 + 4 * 60, set: { state: 7 } },
+            ],
+        },
+        {
+            // Pattern: change-induced outage, resolved too early, reopened by the business, fixed by rollback
+            title: 'Online checkout errors after Friday release',
+            description: 'Customers get HTTP 500 at payment step since the 18:00 release.',
+            caller: 'abel.tuter',
+            base: now - 5 * DAY,
+            resolvedAt: 214,
+            open: { impact: 1, urgency: 1, assignment_group: SD, state: 1, category: 'software' },
+            steps: [
+                { t: 6, set: { assigned_to: user('david.loo'), state: 2 }, note: 'Checkout failing for every card type. Release 4.12 went live at 18:00.' },
+                { t: 11, set: { major_incident_state: 'accepted' }, note: 'Major incident: revenue impacting.' },
+                { t: 14, set: { assignment_group: APPDEV, assigned_to: user('andrew.och') }, note: 'Routing to the release team.' },
+                { t: 20, comment: 'Checkout is failing for customers. Engineers are investigating. Next update in 30 minutes.' },
+                { t: 47, note: 'Payment service pods restarted; error rate dropped to zero.' },
+                { t: 52, set: { state: 6, close_code: 'Workaround provided', close_notes: 'Payment pods restarted.' }, comment: 'Checkout is working again.' },
+                { t: 118, set: { state: 2 }, comment: 'Checkout is failing again for many customers. Please reopen.' },
+                { t: 121, note: 'Errors returned 60 minutes after restart: memory leak in the 4.12 payment client. Restart only masked it.' },
+                { t: 126, task: { title: 'Roll back release 4.12 payment service', group: 'Application Development', closedAt: 198 } },
+                { t: 140, comment: 'We are rolling back the release. Next update in 30 minutes.' },
+                { t: 198, note: 'Rollback to 4.11 completed. Error rate zero for 15 minutes.' },
+                { t: 214, set: { state: 6, close_code: 'Resolved by change', close_notes: 'Release 4.12 rolled back (memory leak in payment client). Fix tracked in problem record.' }, comment: 'Checkout is stable after rolling back the release.' },
+                { t: 214 + 2 * 24 * 60, set: { state: 7 } },
+            ],
+        },
+        {
+            // Pattern: out-of-hours incident nobody picks up until the morning shift
+            title: 'Saturday night: warehouse scanners offline',
+            description: 'Handheld scanners in the Zaragoza warehouse cannot reach the WMS. Night shift picking stopped.',
+            caller: 'abel.tuter',
+            base: saturday.getTime(),
+            resolvedAt: 412,
+            open: { impact: 2, urgency: 1, assignment_group: HW, state: 1, category: 'hardware' },
+            steps: [
+                { t: 15, comment: 'Still no scanners, the whole night shift is idle.' },
+                { t: 95, comment: 'Calling the service desk number goes to voicemail. Please help.' },
+                { t: 383, set: { assigned_to: user('bow.ruggeri'), state: 2 }, note: 'Picked up by morning shift. On-call rota had no Saturday night entry for Hardware.' },
+                { t: 396, note: 'Warehouse Wi-Fi controller rebooted overnight after a power cut and lost its config. Restoring backup.' },
+                { t: 412, set: { state: 6, close_code: 'Solution provided', close_notes: 'Wi-Fi controller config restored from backup. Follow-up: on-call rota gap and UPS for the controller.' }, comment: 'Scanners are back online.' },
+                { t: 412 + 24 * 60, set: { state: 7 } },
+            ],
+        },
+        {
+            // Pattern: no group bouncing, but the ticket changes hands at every shift change
+            title: 'CRM search extremely slow for service agents',
+            description: 'Customer search in CRM takes 30-60 seconds for all agents.',
+            caller: 'abel.tuter',
+            base: now - 8 * DAY,
+            resolvedAt: 1530,
+            open: { impact: 2, urgency: 1, assignment_group: SW, state: 1, category: 'software' },
+            steps: [
+                { t: 20, set: { assigned_to: user('don.goodliffe'), state: 2 }, note: 'Reproduced. Search API p95 at 42s.' },
+                { t: 300, set: { assigned_to: user('beth.anglin') }, note: 'Handing over at end of shift. Ruled out network. Look at the search index next.' },
+                { t: 330, note: 'Picked up handover. Re-checking network before looking at the index.' },
+                { t: 610, set: { assigned_to: user('david.loo') }, note: 'Handing over. Index looks fine, maybe the database?' },
+                { t: 900, set: { assigned_to: user('don.goodliffe') }, note: 'Back on shift, taking it again. What was tried overnight?' },
+                { t: 1200, set: { assigned_to: user('beth.anglin') }, note: 'Handover: suspect the nightly re-index job is still running into business hours.' },
+                { t: 1260, note: 'Confirmed: re-index job now takes 14h after data growth and overlaps with business hours.' },
+                { t: 1530, set: { state: 6, close_code: 'Solution provided', close_notes: 'Re-index switched to incremental mode; full re-index moved to weekend.' }, comment: 'Search is back to under 2 seconds.' },
+                { t: 1530 + 24 * 60, set: { state: 7 } },
+            ],
+        },
+        {
+            // Pattern: priority underestimated at logging time, escalated only after an executive complaint
+            title: 'Building access badges rejected at HQ entrance',
+            description: 'Some employees cannot open the main entrance turnstiles with their badges.',
+            caller: 'abel.tuter',
+            base: now - 6 * DAY,
+            resolvedAt: 318,
+            open: { impact: 3, urgency: 3, assignment_group: SD, state: 1, category: 'hardware' },
+            steps: [
+                { t: 40, set: { assigned_to: user('beth.anglin'), state: 2 }, note: 'Low priority: reception is letting people in manually.' },
+                { t: 180, comment: 'Queue at reception is now 80 people, it is 9:00.' },
+                { t: 255, set: { impact: 1, urgency: 1 }, note: 'Escalated to P1 after the COO was blocked at the entrance. Badges issued after Monday are all rejected.' },
+                { t: 258, set: { assignment_group: HW, assigned_to: user('bow.ruggeri') }, note: 'Routing to Hardware: badge controller sync.' },
+                { t: 290, note: 'Badge controller stopped syncing with HR on Monday (expired service account password).' },
+                { t: 318, set: { state: 6, close_code: 'Solution provided', close_notes: 'Service account password rotated, badge sync re-run. Follow-up: monitor sync job and service account expiry.' }, comment: 'All badges work again.' },
+                { t: 318 + 24 * 60, set: { state: 7 } },
             ],
         },
     ];

@@ -96,7 +96,12 @@ function auditSummary(field: string, from: string, to: string): string {
     }
 }
 
+function isReopen(field: string, fromRaw: string, toRaw: string): boolean {
+    return field === 'state' && fromRaw === '6' && toRaw !== '7'
+}
+
 function isKeyChange(field: string, fromRaw: string, toRaw: string): boolean {
+    if (isReopen(field, fromRaw, toRaw)) return true
     if (field === 'assignment_group' || field === 'major_incident_state') return true
     // Escalations matter, de-escalations are noise
     if (field === 'priority') return parseInt(toRaw, 10) < parseInt(fromRaw, 10)
@@ -125,7 +130,7 @@ export function auditEvents(facts: IncidentFacts): TimelineEvent[] {
             source: 'audit',
             kind: initial ? `initial_${field}` : field,
             actor: audit.getValue('user') || '',
-            summary: auditSummary(field, fromValue, toValue),
+            summary: isReopen(field, fromRaw, toRaw) ? `Reopened: ${fromValue} → ${toValue}` : auditSummary(field, fromValue, toValue),
             field,
             fromRaw,
             toRaw,
