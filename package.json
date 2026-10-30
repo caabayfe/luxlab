@@ -22,8 +22,16 @@
         "typescript": "5.5.4"
     },
     "dependencies": {
+        "@servicenow/aiux": "^22.67.1",
         "@servicenow/react-components": "^0.1.8",
+        "lit": "^3.3.3",
         "react": "19.x",
         "react-dom": "19.x"
+    },
+    "aiux": {
+        "basename": "luxlab"
+    },
+    "engines": {
+        "node": ">=24.14.1"
     }
 }

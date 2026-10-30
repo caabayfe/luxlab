@@ -5,6 +5,143 @@ declare global {
         namespace Internal {
             interface Keys extends KeysRegistry {
                 explicit: {
+                    'aiux-acl|x-everi-luxlab-briefing-page|read|allow_if|x_everi_luxlab.user': {
+                        table: 'sys_security_acl'
+                        id: '7c36262f1b2f441d8d1c1b3ca98cf3b5'
+                    }
+                    'aiux-acl|x-everi-luxlab-home-page|read|allow_if|x_everi_luxlab.user': {
+                        table: 'sys_security_acl'
+                        id: '48ec5cf559984eca839737fa7bd0054a'
+                    }
+                    'aiux-acl|x-everi-luxlab-replay-detail-page|read|allow_if|x_everi_luxlab.user': {
+                        table: 'sys_security_acl'
+                        id: 'c74490f361a04251a630a45978008cab'
+                    }
+                    'aiux-acl|x-everi-luxlab-replay-page|read|allow_if|x_everi_luxlab.user': {
+                        table: 'sys_security_acl'
+                        id: 'ddd62c2670104823bb08ae956afb4673'
+                    }
+                    'aiux-color-swatch|luxlab': {
+                        table: 'sys_aix_color_swatch'
+                        id: 'c9037666bd32ad5efba402be1a227004'
+                        deleted: true
+                    }
+                    'aiux-dependency|format.js': {
+                        table: 'sys_aix_dependency'
+                        id: '99a937a682ac6e5f80bf9c4d49a833db'
+                    }
+                    'aiux-dependency|luxlab-agent-run.js': {
+                        table: 'sys_aix_dependency'
+                        id: '5e288d2b28b63e009b1884d80ed1bc25'
+                    }
+                    'aiux-dependency|luxlab-time.js': {
+                        table: 'sys_aix_dependency'
+                        id: 'c008481f193445d8b7ed9498beb463d8'
+                    }
+                    'aiux-experience-page-rel|x-everi-luxlab-briefing-page': {
+                        table: 'sys_aix_experience_page_rel'
+                        id: '1d4469bfb79b25b460a5d9ce8c0412a5'
+                    }
+                    'aiux-experience-page-rel|x-everi-luxlab-home-page': {
+                        table: 'sys_aix_experience_page_rel'
+                        id: '3b5c8257547e5f3fd57711921e4b1cda'
+                    }
+                    'aiux-experience-page-rel|x-everi-luxlab-replay-detail-page': {
+                        table: 'sys_aix_experience_page_rel'
+                        id: '991b30144d42955208751897c296b02a'
+                    }
+                    'aiux-experience-page-rel|x-everi-luxlab-replay-page': {
+                        table: 'sys_aix_experience_page_rel'
+                        id: 'cd3fccf4b3e49c48363d5d8a103fae04'
+                    }
+                    'aiux-experience-prop|appTailwindCss': {
+                        table: 'sys_aix_experience_properties'
+                        id: '7f5d9f884c951154b59361fceeb6f982'
+                    }
+                    'aiux-experience|luxlab': {
+                        table: 'sys_aix_experience'
+                        id: '9e7a6ff9681f697535d73523623f0def'
+                    }
+                    'aiux-layout-widget|lifecycle': {
+                        table: 'sys_aix_widget'
+                        id: '81df539ed41b8b754fa78a7c8c00834a'
+                    }
+                    'aiux-m2m-widget-dep|x-everi-luxlab-briefing-page|format.js': {
+                        table: 'sys_aix_m2m_widget_dependency'
+                        id: '3550adf0e79ac89812eb75e6c4cfd32b'
+                    }
+                    'aiux-m2m-widget-dep|x-everi-luxlab-briefing-page|luxlab-agent-run.js': {
+                        table: 'sys_aix_m2m_widget_dependency'
+                        id: '2409e51ddfb9df37978461636970bfe9'
+                    }
+                    'aiux-m2m-widget-dep|x-everi-luxlab-briefing-page|luxlab-time.js': {
+                        table: 'sys_aix_m2m_widget_dependency'
+                        id: '6eb7d350e73bc542b9dd40fe58070b6f'
+                    }
+                    'aiux-m2m-widget-dep|x-everi-luxlab-home-page|format.js': {
+                        table: 'sys_aix_m2m_widget_dependency'
+                        id: 'ec0d4fceeae65474d7af027c0e13e8d5'
+                    }
+                    'aiux-m2m-widget-dep|x-everi-luxlab-replay-detail-page|format.js': {
+                        table: 'sys_aix_m2m_widget_dependency'
+                        id: '95658c58d3393e4aa44b4c61a52b5f8c'
+                    }
+                    'aiux-m2m-widget-dep|x-everi-luxlab-replay-detail-page|luxlab-agent-run.js': {
+                        table: 'sys_aix_m2m_widget_dependency'
+                        id: '26d8a5b5ab23f31000616039d8a83e82'
+                    }
+                    'aiux-m2m-widget-dep|x-everi-luxlab-replay-detail-page|luxlab-time.js': {
+                        table: 'sys_aix_m2m_widget_dependency'
+                        id: '64e7e34a6105c5cc08081b7858a87417'
+                    }
+                    'aiux-m2m-widget-dep|x-everi-luxlab-replay-page|format.js': {
+                        table: 'sys_aix_m2m_widget_dependency'
+                        id: '032b24dfdae767cb1d1e57cfaac2ec1c'
+                    }
+                    'aiux-m2m-widget-dep|x-everi-luxlab-replay-page|luxlab-time.js': {
+                        table: 'sys_aix_m2m_widget_dependency'
+                        id: 'ce21ca2d2436a7ed2b1399cc48f9e67e'
+                    }
+                    'aiux-page-widget|x-everi-luxlab-briefing-page': {
+                        table: 'sys_aix_widget'
+                        id: '77274f8a742b5396551299bc7a4b98fd'
+                    }
+                    'aiux-page-widget|x-everi-luxlab-home-page': {
+                        table: 'sys_aix_widget'
+                        id: 'f70d65196b9d207d5a2760812f866daa'
+                    }
+                    'aiux-page-widget|x-everi-luxlab-replay-detail-page': {
+                        table: 'sys_aix_widget'
+                        id: '8b97e5f49edd05586c9ade4a5ee57bb7'
+                    }
+                    'aiux-page-widget|x-everi-luxlab-replay-page': {
+                        table: 'sys_aix_widget'
+                        id: '3eb1a679ea09ac12a40b1a05f2de9111'
+                    }
+                    'aiux-page|x-everi-luxlab-briefing-page': {
+                        table: 'sys_aix_page'
+                        id: '97562b2304ff3d8411799d04e851065a'
+                    }
+                    'aiux-page|x-everi-luxlab-home-page': {
+                        table: 'sys_aix_page'
+                        id: '03618f05ddf1f3064a10ad47fbd4c7cb'
+                    }
+                    'aiux-page|x-everi-luxlab-replay-detail-page': {
+                        table: 'sys_aix_page'
+                        id: 'ca937cd04350532e4d8215e3d4b64a08'
+                    }
+                    'aiux-page|x-everi-luxlab-replay-page': {
+                        table: 'sys_aix_page'
+                        id: '917854efc75f773d3efbdc31c8e43935'
+                    }
+                    'aiux-project|x_everi_luxlab': {
+                        table: 'sys_aix_project'
+                        id: '1999a76ccd3090eedefa0d99fc1fda2d'
+                    }
+                    'aiux-theme|luxlab': {
+                        table: 'sys_aix_theme'
+                        id: '936c48722b49e703017dd5ea535338a3'
+                    }
                     bom_json: {
                         table: 'sys_module'
                         id: '60135a3bfff84e1a921c9ef84a46266d'
@@ -867,6 +1004,19 @@ declare global {
                         key: {
                             name: 'x_everi_luxlab_replay'
                             element: 'resolved_at'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: '1d4c71da5cef42a9ae173451f67ee86f'
+                        key: {
+                            sys_security_acl: '7c36262f1b2f441d8d1c1b3ca98cf3b5'
+                            sys_user_role: {
+                                id: '5c0007ba3bd44ee0b384483df02f5ceb'
+                                key: {
+                                    name: 'x_everi_luxlab.user'
+                                }
+                            }
                         }
                     },
                     {
@@ -3632,6 +3782,19 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: 'b88d53974fd247739717b37b8a59c0b6'
+                        key: {
+                            sys_security_acl: '48ec5cf559984eca839737fa7bd0054a'
+                            sys_user_role: {
+                                id: '5c0007ba3bd44ee0b384483df02f5ceb'
+                                key: {
+                                    name: 'x_everi_luxlab.user'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: 'b8cc4401ba47421da6e7228628253fac'
                         key: {
@@ -3649,6 +3812,19 @@ declare global {
                             name: 'x_everi_luxlab_replay_action'
                             element: 'knowledge'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: 'b9a5ff790d23468d914cd8e0f4091dac'
+                        key: {
+                            sys_security_acl: 'ddd62c2670104823bb08ae956afb4673'
+                            sys_user_role: {
+                                id: '5c0007ba3bd44ee0b384483df02f5ceb'
+                                key: {
+                                    name: 'x_everi_luxlab.user'
+                                }
+                            }
                         }
                     },
                     {
@@ -3801,6 +3977,19 @@ declare global {
                             }
                             element: 'handoffs'
                             position: '2'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: 'c462d109e18649e79406dd973bb59789'
+                        key: {
+                            sys_security_acl: 'c74490f361a04251a630a45978008cab'
+                            sys_user_role: {
+                                id: '5c0007ba3bd44ee0b384483df02f5ceb'
+                                key: {
+                                    name: 'x_everi_luxlab.user'
+                                }
+                            }
                         }
                     },
                     {
@@ -4002,6 +4191,14 @@ declare global {
                                     name: 'x_everi_luxlab.user'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sn_glider_source_artifact_m2m'
+                        id: 'd16f89f979c14244a13195a86d46a026'
+                        key: {
+                            application_file: '1999a76ccd3090eedefa0d99fc1fda2d'
+                            source_artifact: 'dcebc911908d4f67aeb52170cafa506a'
                         }
                     },
                     {
@@ -4302,6 +4499,13 @@ declare global {
                         key: {
                             name: 'x_everi_luxlab_replay'
                             element: 'incident'
+                        }
+                    },
+                    {
+                        table: 'sn_glider_source_artifact'
+                        id: 'dcebc911908d4f67aeb52170cafa506a'
+                        key: {
+                            name: 'aiux-source 1999a76ccd3090eedefa0d99fc1fda2d'
                         }
                     },
                     {

@@ -1,0 +1,11 @@
+{
+  "name": "LuxLab Cockpit",
+  "basename": "luxlab",
+  "landing": "/home",
+  "development": {
+    "token": ""
+  },
+  "build": {
+    "exclude": ["**/*.test.js", "**/test/**"]
+  }
+}

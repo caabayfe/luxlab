@@ -1,0 +1,258 @@
+import {html, css, nothing} from 'lit';
+import {customElement, state} from 'lit/decorators.js';
+import {AIUXElement, decorators} from '@servicenow/aiux/aiux-components-core';
+import {i18n} from '@servicenow/aiux/aiux-services';
+import {navigate} from '@servicenow/aiux/aiux-client';
+import {api, recordUrl} from '../../../utils/api.js';
+import {
+  PHASES,
+  RECOVERY_COLOR,
+  formatMinutes,
+  phaseHint,
+  phaseLabel,
+  priorityBadge
+} from '../../../utils/format.js';
+import {setDocumentTitle} from '../../../utils/document-title.js';
+import '../../../components/luxlab-time.js';
+import './components/luxlab-replay-ai.js';
+import './components/luxlab-replay-timeline.js';
+
+const {acl, title} = decorators;
+
+@customElement('x-everi-luxlab-replay-detail-page')
+@title('Replay')
+@acl([{roles: ['x_everi_luxlab.user']}])
+export default class ReplayDetailPage extends AIUXElement {
+  @state() _replay = null;
+  @state() _busy = false;
+  @state() _error = '';
+
+  _prevLoaderData = null;
+
+  static styles = css`
+    :host {
+      display: block;
+    }
+  `;
+
+  // Only reads the stored replay; a first-time build is a write, so the browser starts it
+  static async loader(ctx) {
+    const incident = ctx.params.incident;
+    try {
+      const {replay} = await api(`/replay/${incident}`);
+      return {incident, replay, error: ''};
+    } catch (error) {
+      return {incident, replay: null, error: error.message || 'Unknown error'};
+    }
+  }
+
+  willUpdate() {
+    if (this.loaderData !== this._prevLoaderData) {
+      this._prevLoaderData = this.loaderData;
+      this._replay = this.loaderData?.replay || null;
+      this._error = this.loaderData?.error || '';
+    }
+  }
+
+  firstUpdated() {
+    this._titleFor(this._replay);
+    if (!this._replay && !this._error) this._rebuild();
+  }
+
+  _titleFor(replay) {
+    setDocumentTitle(
+      replay
+        ? i18n.getMessage('Replay {0}', replay.incident.number)
+        : i18n.getMessage('Replay')
+    );
+  }
+
+  async _rebuild() {
+    try {
+      this._busy = true;
+      this._error = '';
+      const {replay} = await api(`/replay/${this.loaderData.incident}/build`, {
+        method: 'POST'
+      });
+      this._replay = replay;
+      this._titleFor(replay);
+    } catch (error) {
+      this._error = i18n.getMessage('Could not load the replay: {0}', error.message);
+    } finally {
+      this._busy = false;
+    }
+  }
+
+  _renderStat(label, value) {
+    return html`<div class="flex flex-col rounded-box bg-base-200 px-4 py-2">
+      <span class="text-xl font-semibold text-text-primary">${value}</span>
+      <span class="text-xs text-text-tertiary">${label}</span>
+    </div>`;
+  }
+
+  // Where the time went between first impact and resolution
+  _renderPhases(replay) {
+    const phases = PHASES.map(phase => ({
+      ...phase,
+      minutes: replay.phases[phase.id] || 0
+    }));
+    const total = phases.reduce((sum, phase) => sum + phase.minutes, 0);
+    const recovery = replay.phases.recovery || 0;
+    if (!total) {
+      return html`<p class="text-sm text-text-tertiary">
+        ${i18n.getMessage('Not enough history to split this incident into phases.')}
+      </p>`;
+    }
+    return html`<div class="flex flex-col gap-2">
+      <div
+        class="flex h-3 overflow-hidden rounded-full bg-base-200"
+        role="img"
+        aria-label=${i18n.getMessage('Time spent per phase')}
+      >
+        ${phases.map(phase =>
+          phase.minutes
+            ? html`<span
+                style="width: ${(phase.minutes / total) * 100}%; background: ${phase.color}"
+                title="${phaseLabel(phase.id)}: ${formatMinutes(phase.minutes)}"
+              ></span>`
+            : nothing
+        )}
+      </div>
+      <ul class="flex flex-wrap gap-x-4 gap-y-1 text-sm text-text-secondary">
+        ${phases.map(
+          phase => html`<li class="flex items-center gap-1.5" title=${phaseHint(phase.id)}>
+            <span
+              class="inline-block h-2.5 w-2.5 rounded-full"
+              style="background: ${phase.color}"
+            ></span>
+            ${phaseLabel(phase.id)}
+            <strong class="font-semibold text-text-primary"
+              >${formatMinutes(phase.minutes)}</strong
+            >
+            <span class="text-xs text-text-tertiary"
+              >${Math.round((phase.minutes / total) * 100)}%</span
+            >
+          </li>`
+        )}
+        ${recovery > 0
+          ? html`<li
+              class="flex items-center gap-1.5"
+              title=${i18n.getMessage('Resolved until closed; not counted in time to resolve')}
+            >
+              <span
+                class="inline-block h-2.5 w-2.5 rounded-full"
+                style="background: ${RECOVERY_COLOR}"
+              ></span>
+              ${phaseLabel('recovery')}
+              <strong class="font-semibold text-text-primary"
+                >${formatMinutes(recovery)}</strong
+              >
+            </li>`
+          : nothing}
+      </ul>
+    </div>`;
+  }
+
+  _renderHeader(replay) {
+    const incident = replay.incident;
+    return html`<section class="aiux-card bg-base-100 shadow-sm" aria-labelledby="incident-title">
+      <div class="aiux-card-body gap-4">
+        <div class="flex flex-col gap-1">
+          <h1
+            id="incident-title"
+            class="flex flex-wrap items-center gap-2 text-xl font-bold text-text-primary"
+          >
+            <span class="aiux-badge aiux-badge-soft ${priorityBadge(incident.priority)}"
+              >P${incident.priority}</span
+            >
+            <a
+              class="aiux-link aiux-link-primary"
+              href=${recordUrl('incident', incident.sysId)}
+              target="_blank"
+              rel="noopener noreferrer"
+              >${incident.number}</a
+            >
+            <span class="font-normal break-words">${incident.shortDescription}</span>
+          </h1>
+          <p class="text-sm text-text-tertiary">
+            ${incident.majorState
+              ? html`${i18n.getMessage('Major incident ({0})', incident.majorState)} · `
+              : nothing}
+            ${i18n.getMessage('Impact from')}
+            <luxlab-time value=${replay.impactStart}></luxlab-time> ·
+            ${i18n.getMessage('built')}
+            <luxlab-time value=${replay.builtOn}></luxlab-time>
+          </p>
+        </div>
+        <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+          ${this._renderStat(
+            replay.ongoing
+              ? i18n.getMessage('Open for')
+              : i18n.getMessage('Time to resolve'),
+            formatMinutes(replay.minutesToResolve)
+          )}
+          ${this._renderStat(i18n.getMessage('Group reassignments'), replay.reassignments)}
+          ${this._renderStat(i18n.getMessage('Engineer handoffs'), replay.handoffs)}
+          ${this._renderStat(i18n.getMessage('Silent gaps'), replay.silentGaps)}
+          ${this._renderStat(i18n.getMessage('Events'), replay.events.length)}
+        </div>
+        ${this._renderPhases(replay)}
+      </div>
+    </section>`;
+  }
+
+  render() {
+    const replay = this._replay;
+    return html`<div class="mx-auto flex max-w-7xl flex-col gap-6 p-4 lg:p-8">
+      <div class="flex items-center justify-between gap-2">
+        <button
+          type="button"
+          class="aiux-btn aiux-btn-ghost aiux-btn-sm"
+          @click=${() => navigate('/replay')}
+        >
+          ← ${i18n.getMessage('All incidents')}
+        </button>
+        <button
+          type="button"
+          class="aiux-btn aiux-btn-outline aiux-btn-sm"
+          ?disabled=${this._busy}
+          @click=${() => this._rebuild()}
+        >
+          ${this._busy
+            ? html`<span class="aiux-loading aiux-loading-spinner aiux-loading-xs"></span>
+                ${i18n.getMessage('Rebuilding…')}`
+            : i18n.getMessage('Rebuild replay')}
+        </button>
+      </div>
+      ${this._error
+        ? html`<div class="aiux-alert aiux-alert-error aiux-alert-soft" role="alert">
+            ${this._error}
+          </div>`
+        : nothing}
+      ${!replay && this._busy
+        ? html`<div class="flex items-center gap-3 text-sm text-text-secondary" role="status">
+            <span class="aiux-loading aiux-loading-spinner aiux-loading-md"></span>
+            ${i18n.getMessage('Rebuilding the incident timeline')}
+          </div>`
+        : nothing}
+      ${replay?.status === 'failed'
+        ? html`<div class="aiux-alert aiux-alert-error aiux-alert-soft" role="alert">
+            <strong>${i18n.getMessage('Replay failed')}</strong> ${replay.error}
+          </div>`
+        : nothing}
+      ${replay
+        ? html`${this._renderHeader(replay)}
+          ${replay.status === 'ready'
+            ? html`<luxlab-replay-ai
+                .replay=${replay}
+                @luxlab-replay:change=${e => (this._replay = e.detail.replay)}
+              ></luxlab-replay-ai>`
+            : nothing}
+          <luxlab-replay-timeline
+            .events=${replay.events}
+            origin=${replay.impactStart}
+          ></luxlab-replay-timeline>`
+        : nothing}
+    </div>`;
+  }
+}
