@@ -12,6 +12,8 @@ export interface ReplayActionDto {
     decidedBy: string
     decidedOn: string
     problem: { sysId: string; number: string } | null
+    knowledge: { sysId: string; number: string } | null
+    article: string
 }
 
 export function canDecide(): boolean {
@@ -27,6 +29,7 @@ export function followUpsOf(replayId: string): ReplayActionDto[] {
     action.query()
     while (action.next()) {
         const problem = action.getValue('problem')
+        const knowledge = action.getValue('knowledge')
         actions.push({
             sysId: action.getUniqueValue(),
             type: action.getValue('type'),
@@ -37,6 +40,8 @@ export function followUpsOf(replayId: string): ReplayActionDto[] {
             decidedBy: action.getDisplayValue('decided_by'),
             decidedOn: action.getValue('decided_on') || '',
             problem: problem ? { sysId: problem, number: action.getDisplayValue('problem') } : null,
+            knowledge: knowledge ? { sysId: knowledge, number: action.getDisplayValue('knowledge') } : null,
+            article: action.getValue('article') || '',
         })
     }
     return actions

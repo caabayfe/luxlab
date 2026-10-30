@@ -36,5 +36,7 @@ export const x_everi_luxlab_replay_action = Table({
         decided_by: ReferenceColumn({ label: 'Decided by', referenceTable: 'sys_user' }),
         decided_on: DateTimeColumn({ label: 'Decided on' }),
         problem: ReferenceColumn({ label: 'Problem', referenceTable: 'problem' }),
+        article: StringColumn({ label: 'Draft article', maxLength: 16000 }),
+        knowledge: ReferenceColumn({ label: 'Knowledge article', referenceTable: 'kb_knowledge' }),
     },
 })

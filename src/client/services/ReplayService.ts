@@ -1,4 +1,4 @@
-import { Replay, ReplayCandidate } from '../types'
+import { BriefingRun, Replay, ReplayCandidate } from '../types'
 import { request } from './request'
 
 const BASE_URL = '/api/x_everi_luxlab/v1/replay'
@@ -28,6 +28,12 @@ export class ReplayService {
     async suggestFollowUps(incidentId: string) {
         const { replay } = await request<{ replay: Replay }>(`${BASE_URL}/${incidentId}/follow-ups`, 'POST')
         return replay
+    }
+
+    // Starts the Replay Analyst agent; follow it with BriefingService.trace
+    async startAgent(incidentId: string, kind: 'review' | 'follow-ups') {
+        const { run } = await request<{ run: BriefingRun }>(`${BASE_URL}/${incidentId}/agent/${kind}`, 'POST')
+        return run
     }
 
     async decide(incidentId: string, actionId: string, decision: 'approve' | 'dismiss') {

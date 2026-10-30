@@ -1,16 +1,18 @@
 import '@servicenow/sdk/global'
 import { ChoiceColumn, DateTimeColumn, Form, IntegerColumn, ReferenceColumn, StringColumn, Table, default_view } from '@servicenow/sdk/core'
 
-// One row per Daily Briefing tool run: links the user's run to the AI agent execution plan that answers it
+// One row per AI agent run started from LuxLab (Daily Briefing tools and the Replay Analyst):
+// links the user's run to the agent execution plan that answers it
 export const x_everi_luxlab_briefing_run = Table({
     name: 'x_everi_luxlab_briefing_run',
-    label: 'Briefing Run',
+    label: 'LuxLab Agent Run',
     display: 'tool',
     allowWebServiceAccess: true,
     schema: {
         tool: StringColumn({ label: 'Tool', maxLength: 40, mandatory: true }),
         user: ReferenceColumn({ label: 'User', referenceTable: 'sys_user', mandatory: true }),
         agent: StringColumn({ label: 'AI agent', maxLength: 32 }),
+        incident: ReferenceColumn({ label: 'Incident', referenceTable: 'incident' }),
         state: ChoiceColumn({
             label: 'State',
             dropdown: 'dropdown_without_none',
@@ -43,6 +45,7 @@ Form({
                     leftElements: [
                         { field: 'tool', type: 'table_field' },
                         { field: 'user', type: 'table_field' },
+                        { field: 'incident', type: 'table_field' },
                         { field: 'state', type: 'table_field' },
                         { field: 'finished_on', type: 'table_field' },
                     ],

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Alert } from '@servicenow/react-components/Alert'
 import Markdown from '../Markdown'
 import { BriefingService } from '../../services/BriefingService'
-import { BriefingRun, BriefingStep, BriefingTool } from '../../types'
+import { BriefingRun, BriefingStep } from '../../types'
 import { formatTime } from '../../utils/format'
 
 // Step statuses that are not failures: done, or still being worked
@@ -16,6 +16,7 @@ const STEP_LABELS: { [type: string]: string } = {
     gen_ai: 'Reasoning',
     agent: 'Agent',
     tool: 'Tool',
+    communicator: 'Answer',
 }
 
 function seconds(ms: number): string {
@@ -28,7 +29,7 @@ function Step({ step }: { step: BriefingStep }) {
         <li className={`lux-trace__step lux-trace__step--${step.type}${failed ? ' lux-trace__step--failed' : ''}`}>
             <div className="lux-trace__head">
                 <span className="lux-trace__type">{STEP_LABELS[step.type] || step.type}</span>
-                <span className="lux-trace__name">{step.type === 'gen_ai' ? step.actions.join(', ') || 'Final answer' : step.name}</span>
+                <span className="lux-trace__name">{step.type === 'gen_ai' ? step.actions.filter((action) => action !== 'FALLBACK').join(', ') || 'Preparing the answer' : step.name}</span>
                 <span className="lux-trace__meta">
                     {failed ? `${step.status} · ` : ''}
                     {seconds(step.ms)}
@@ -41,13 +42,16 @@ function Step({ step }: { step: BriefingStep }) {
 
 interface AgentRunProps {
     service: BriefingService
-    tool: BriefingTool
+    title: string
+    agentName: string
     run: BriefingRun
     onUpdate: (run: BriefingRun) => void
+    // Inside another panel: no own panel frame or title
+    embedded?: boolean
 }
 
 // Follows a run's execution plan until the agent answers, showing each step as it is written
-export default function AgentRun({ service, tool, run, onUpdate }: AgentRunProps) {
+export default function AgentRun({ service, title, agentName, run, onUpdate, embedded }: AgentRunProps) {
     const [polls, setPolls] = useState(0)
     const [error, setError] = useState<string | null>(null)
     const running = run.state === 'running'
@@ -72,19 +76,25 @@ export default function AgentRun({ service, tool, run, onUpdate }: AgentRunProps
     const status = running
         ? stuck
             ? 'Still running. Reopen the tool later to see the answer.'
-            : `Running ${tool.agentName}…`
+            : `Running ${agentName}…`
         : `${run.state === 'completed' ? 'Answered' : 'Stopped'} ${formatTime(run.finishedOn)}${run.ms ? ` · ${seconds(run.ms)}` : ''}`
 
     return (
-        <section className="lux-panel lux-run" aria-label={`${tool.name} run`}>
-            <div className="lux-run__head">
-                <div>
-                    <h3 className="lux-panel__title">{tool.name}</h3>
-                    <p className="lux-panel__subtitle">
-                        {tool.agentName} · {status}
-                    </p>
+        <section className={embedded ? 'lux-run lux-run--embedded' : 'lux-panel lux-run'} aria-label={`${title} run`}>
+            {embedded ? (
+                <p className="lux-panel__subtitle">
+                    {agentName} · {status}
+                </p>
+            ) : (
+                <div className="lux-run__head">
+                    <div>
+                        <h3 className="lux-panel__title">{title}</h3>
+                        <p className="lux-panel__subtitle">
+                            {agentName} · {status}
+                        </p>
+                    </div>
                 </div>
-            </div>
+            )}
             {error && <Alert status="warning" content={`Could not refresh the run: ${error}`} />}
             {run.error && <Alert status="critical" content={run.error} />}
             <div className="lux-run__body">

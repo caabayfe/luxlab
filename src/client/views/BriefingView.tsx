@@ -97,7 +97,7 @@ export default function BriefingView({ service }: { service: BriefingService }) 
                     </ul>
                 )}
             </section>
-            {current?.lastRun && <AgentRun service={service} tool={current} run={current.lastRun} onUpdate={updateRun} />}
+            {current?.lastRun && <AgentRun service={service} title={current.name} agentName={current.agentName} run={current.lastRun} onUpdate={updateRun} />}
         </div>
     )
 }

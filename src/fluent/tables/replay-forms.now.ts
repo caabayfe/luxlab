@@ -115,6 +115,7 @@ Form({
                         { field: 'decided_by', type: 'table_field' },
                         { field: 'decided_on', type: 'table_field' },
                         { field: 'problem', type: 'table_field' },
+                        { field: 'knowledge', type: 'table_field' },
                     ],
                 },
                 {
@@ -123,6 +124,7 @@ Form({
                         { field: 'title', type: 'table_field' },
                         { field: 'description', type: 'table_field' },
                         { field: 'rationale', type: 'table_field' },
+                        { field: 'article', type: 'table_field' },
                     ],
                 },
             ],

@@ -80,13 +80,30 @@ function replayOf(incident: GlideRecordSecure<'incident'>): GlideRecord {
     return replay
 }
 
-export function writeReview(incident: GlideRecordSecure<'incident'>): string {
-    const replay = replayOf(incident)
-    const review = runSkill(REVIEW_SKILL, incident.getValue('number'))
+function saveReviewOn(replay: GlideRecord, review: string) {
     replay.setValue('review', review)
     replay.setValue('reviewed_on', new GlideDateTime())
     replay.update()
+}
+
+export function writeReview(incident: GlideRecordSecure<'incident'>): string {
+    const replay = replayOf(incident)
+    const review = runSkill(REVIEW_SKILL, incident.getValue('number'))
+    saveReviewOn(replay, review)
     return review
+}
+
+function readableIncident(incidentNumber: string): GlideRecordSecure<'incident'> {
+    const incident = new GlideRecordSecure('incident')
+    if (!incidentNumber || !incident.get('number', incidentNumber.trim())) throw new Error(`Incident ${incidentNumber} not found or not readable`)
+    return incident
+}
+
+// Save tool of the LuxLab Replay Analyst agent
+export function saveReview(incidentNumber: string, review: string): string {
+    if (!review || !review.trim()) throw new Error('The review is empty')
+    saveReviewOn(replayOf(readableIncident(incidentNumber)), review.trim().substring(0, 16000))
+    return 'Review saved'
 }
 
 interface FollowUp {
@@ -94,6 +111,8 @@ interface FollowUp {
     title: string
     description: string
     rationale: string
+    // Draft knowledge article body (markdown) proposed with knowledge follow-ups
+    article: string
 }
 
 // The advisor answers in JSON, sometimes wrapped in a markdown fence
@@ -109,13 +128,12 @@ function parseFollowUps(output: string): FollowUp[] {
             title: String(item.title).substring(0, 160),
             description: String(item.description || '').substring(0, 4000),
             rationale: String(item.rationale || '').substring(0, 1000),
+            article: item.type === 'knowledge' ? String(item.article || '').substring(0, 16000) : '',
         }))
 }
 
 // Decided follow-ups are history; only undecided proposals are replaced
-export function suggestFollowUps(incident: GlideRecordSecure<'incident'>): FollowUp[] {
-    const replay = replayOf(incident)
-    const followUps = parseFollowUps(runSkill(FOLLOW_UP_SKILL, incident.getValue('number')))
+function saveFollowUpsOn(replay: GlideRecord, incident: GlideRecordSecure<'incident'>, followUps: FollowUp[]) {
     const stale = new GlideRecord(ACTION)
     stale.addQuery('replay', replay.getUniqueValue())
     stale.addQuery('state', 'proposed')
@@ -129,12 +147,33 @@ export function suggestFollowUps(incident: GlideRecordSecure<'incident'>): Follo
         action.setValue('title', followUp.title)
         action.setValue('description', followUp.description)
         action.setValue('rationale', followUp.rationale)
+        action.setValue('article', followUp.article)
         action.setValue('state', 'proposed')
         action.insert()
     })
     replay.setValue('follow_ups_on', new GlideDateTime())
     replay.update()
+}
+
+export function suggestFollowUps(incident: GlideRecordSecure<'incident'>): FollowUp[] {
+    const replay = replayOf(incident)
+    const followUps = parseFollowUps(runSkill(FOLLOW_UP_SKILL, incident.getValue('number')))
+    saveFollowUpsOn(replay, incident, followUps)
     return followUps
+}
+
+// Save tool of the LuxLab Replay Analyst agent; the agent passes the same JSON shape as the advisor skill
+export function saveFollowUps(incidentNumber: string, json: string): string {
+    const incident = readableIncident(incidentNumber)
+    let followUps: FollowUp[]
+    try {
+        followUps = parseFollowUps(json)
+    } catch (e) {
+        throw new Error('follow_ups must be a JSON object like {"followUps": [...]}')
+    }
+    if (!followUps.length) throw new Error('No valid follow-ups: each needs a type (problem, knowledge or action) and a title')
+    saveFollowUpsOn(replayOf(incident), incident, followUps)
+    return `${followUps.length} follow-ups saved for a LuxLab manager to approve`
 }
 
 function createProblem(action: GlideRecord): string {
@@ -148,12 +187,64 @@ function createProblem(action: GlideRecord): string {
     return id
 }
 
-// Approving a problem follow-up raises the problem record; other types are tracked as approved
+// The agent writes markdown; the article body field is HTML
+function markdownToHtml(markdown: string): string {
+    const escape = (text: string) => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    const inline = (text: string) => escape(text).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    const html: string[] = []
+    let list = ''
+    const close = () => {
+        if (list) html.push(`</${list}>`)
+        list = ''
+    }
+    markdown.split('\n').forEach((raw) => {
+        const line = raw.trim()
+        const bullet = line.match(/^[-*] (.*)$/)
+        const numbered = line.match(/^\d+[.)] (.*)$/)
+        if (bullet || numbered) {
+            const tag = bullet ? 'ul' : 'ol'
+            if (list !== tag) {
+                close()
+                html.push(`<${tag}>`)
+                list = tag
+            }
+            html.push(`<li>${inline((bullet || numbered)![1])}</li>`)
+            return
+        }
+        close()
+        if (!line) return
+        const heading = line.match(/^#{1,6}\s+(.*)$/)
+        html.push(heading ? `<h3>${inline(heading[1])}</h3>` : `<p>${inline(line)}</p>`)
+    })
+    close()
+    return html.join('\n')
+}
+
+// Draft article in the configured knowledge base, linked to the incident; publishing stays with the KB workflow
+function createKnowledgeDraft(action: GlideRecord): string {
+    const knowledgeBase = gs.getProperty('x_everi_luxlab.knowledge_base', '')
+    if (!knowledgeBase) throw new Error('Set the x_everi_luxlab.knowledge_base property to the knowledge base for draft articles')
+    const body = action.getValue('article') || `${action.getValue('description')}\n\n${action.getValue('rationale')}`
+    const article = new GlideRecordSecure('kb_knowledge')
+    article.initialize()
+    article.setValue('kb_knowledge_base', knowledgeBase)
+    article.setValue('short_description', action.getValue('title'))
+    article.setValue('text', markdownToHtml(body))
+    article.setValue('workflow_state', 'draft')
+    article.setValue('author', gs.getUserID())
+    article.setValue('source', action.getValue('incident'))
+    const id = article.insert()
+    if (!id) throw new Error('You are not allowed to create articles in the configured knowledge base')
+    return id
+}
+
+// Approving a problem follow-up raises the problem record and a knowledge one drafts the article; actions are tracked as approved
 export function decideFollowUp(actionId: string, approve: boolean): GlideRecord {
     const action = new GlideRecord(ACTION)
     if (!action.get(actionId)) throw new Error('Follow-up not found')
     if (action.getValue('state') !== 'proposed') throw new Error('This follow-up was already decided')
     if (approve && action.getValue('type') === 'problem') action.setValue('problem', createProblem(action))
+    if (approve && action.getValue('type') === 'knowledge') action.setValue('knowledge', createKnowledgeDraft(action))
     action.setValue('state', approve ? 'approved' : 'dismissed')
     action.setValue('decided_by', gs.getUserID())
     action.setValue('decided_on', new GlideDateTime())

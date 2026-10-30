@@ -84,6 +84,9 @@ export interface ReplayFollowUp {
     decidedBy: string
     decidedOn: string
     problem: { sysId: string; number: string } | null
+    knowledge: { sysId: string; number: string } | null
+    // Draft knowledge article body (markdown), proposed with knowledge follow-ups
+    article: string
 }
 
 export interface Replay {

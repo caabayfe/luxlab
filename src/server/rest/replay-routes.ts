@@ -3,6 +3,7 @@ import { listCandidates } from '../replay/candidates.ts'
 import { buildReplay, loadReplay, readableIncident } from '../replay/store.ts'
 import { decideFollowUp, suggestFollowUps, writeReview } from '../replay/ai.ts'
 import { canDecide } from '../replay/follow-ups.ts'
+import { AnalysisKind, startAnalysis } from '../replay/analyst.ts'
 
 function firstParam(request: RESTAPIRequest, name: string): string {
     const raw = request.queryParams[name]
@@ -69,4 +70,17 @@ export function decide(request: RESTAPIRequest, response: RESTAPIResponse) {
         return failed(response, 400, e)
     }
     response.setBody({ replay: loadReplay(incident) } as any)
+}
+
+// Starts the Replay Analyst agent; the client follows its steps through the briefing runs endpoint
+export function analyse(request: RESTAPIRequest, response: RESTAPIResponse) {
+    const kind = request.pathParams.kind as AnalysisKind
+    if (kind !== 'review' && kind !== 'follow-ups') return failed(response, 400, 'kind must be review or follow-ups')
+    const incident = readableIncident(request.pathParams.incident)
+    if (!incident) return notFound(response)
+    try {
+        response.setBody({ run: startAnalysis(incident, kind) } as any)
+    } catch (e) {
+        failed(response, 500, e)
+    }
 }

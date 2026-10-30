@@ -1,6 +1,6 @@
 import { gs, GlideDateTime, GlideRecord } from '@servicenow/glide'
 import { LuxLabAgentRuntime } from '@servicenow/glide/x_everi_luxlab'
-import { BRIEFING_TOOLS, BriefingTool, toolById } from './tools.ts'
+import { BRIEFING_TOOLS, toolById } from './tools.ts'
 
 export const RUN = 'x_everi_luxlab_briefing_run'
 
@@ -88,34 +88,43 @@ export function listTools(): BriefingToolDto[] {
     })
 }
 
-function startAgent(tool: BriefingTool): { planId: string; conversationId: string } {
+export interface AgentRunRequest {
+    // Briefing tool id, or replay-review / replay-follow-ups for the Replay Analyst
+    tool: string
+    agentId: string
+    agentName: string
+    objective: string
+    label: string
+    incident?: string
+}
+
+function startAgent(request: AgentRunRequest): { planId: string; conversationId: string } {
     const result = new LuxLabAgentRuntime().start({
-        agentId: tool.agentId,
-        objective: tool.objective(`${gs.getUserDisplayName()} (user name ${gs.getUserName()})`),
-        conversationLabel: `LuxLab briefing: ${tool.name}`,
-        // The briefing runs unattended: the agent must answer without asking follow-up questions
+        agentId: request.agentId,
+        objective: request.objective,
+        conversationLabel: `LuxLab: ${request.label}`,
+        // LuxLab runs are unattended: the agent must answer without asking follow-up questions
         canInteractWithUser: false,
     })
     if (!result) throw new Error('AI Agents are not licensed on this instance')
     if (result.status !== 'success' || !result.data || !result.data.executionPlanId) {
-        gs.error(`LuxLab briefing agent "${tool.agentName}" did not start: ${JSON.stringify(result)}`)
+        gs.error(`LuxLab agent "${request.agentName}" did not start: ${JSON.stringify(result)}`)
         const reason = (result.error && result.error.message) || 'the AI agent runtime refused the request'
-        throw new Error(`${tool.agentName} could not start: ${reason}. Check that the agent is active in AI Agent Studio.`)
+        throw new Error(`${request.agentName} could not start: ${reason}. Check that the agent is active in AI Agent Studio.`)
     }
     return { planId: result.data.executionPlanId, conversationId: result.data.conversationId || '' }
 }
 
-export function runTool(toolId: string): BriefingRunDto {
-    const tool = toolById(toolId)
-    if (!tool) throw new Error(`Unknown briefing tool ${toolId}`)
+export function startRun(request: AgentRunRequest): BriefingRunDto {
     const run = new GlideRecord(RUN)
     run.initialize()
-    run.setValue('tool', tool.id)
+    run.setValue('tool', request.tool)
     run.setValue('user', gs.getUserID())
-    run.setValue('agent', tool.agentId)
+    run.setValue('agent', request.agentId)
+    if (request.incident) run.setValue('incident', request.incident)
     run.setValue('state', 'running')
     try {
-        const started = startAgent(tool)
+        const started = startAgent(request)
         run.setValue('execution_plan', started.planId)
         run.setValue('conversation', started.conversationId)
     } catch (e) {
@@ -125,6 +134,18 @@ export function runTool(toolId: string): BriefingRunDto {
     }
     run.insert()
     return runDto(run)
+}
+
+export function runTool(toolId: string): BriefingRunDto {
+    const tool = toolById(toolId)
+    if (!tool) throw new Error(`Unknown briefing tool ${toolId}`)
+    return startRun({
+        tool: tool.id,
+        agentId: tool.agentId,
+        agentName: tool.agentName,
+        objective: tool.objective(`${gs.getUserDisplayName()} (user name ${gs.getUserName()})`),
+        label: `briefing ${tool.name}`,
+    })
 }
 
 function thoughtOf(output: any): { thought: string; actions: string[] } {

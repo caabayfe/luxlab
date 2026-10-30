@@ -297,3 +297,19 @@
     gap: 8px;
     margin-top: 6px;
 }
+
+.lux-ai__article {
+    margin-top: 6px;
+    font-size: 0.85rem;
+}
+
+.lux-ai__article summary {
+    cursor: pointer;
+    color: var(--lux-muted);
+}
+
+.lux-ai__article .lux-markdown {
+    margin-top: 6px;
+    padding: 8px 12px;
+    border-left: 3px solid #1e88e5;
+}

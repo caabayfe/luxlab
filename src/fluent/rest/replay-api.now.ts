@@ -1,7 +1,7 @@
 import '@servicenow/sdk/global'
 import { RestApi } from '@servicenow/sdk/core'
 import { cockpitApiAcl } from './cockpit-api.now'
-import { candidates, decide, followUpReplay, getReplay, rebuildReplay, reviewReplay } from '../../server/rest/replay-routes'
+import { analyse, candidates, decide, followUpReplay, getReplay, rebuildReplay, reviewReplay } from '../../server/rest/replay-routes'
 
 // URIs: /api/x_everi_luxlab/v1/replay/candidates, /api/x_everi_luxlab/v1/replay/{incident}
 export const replayApi = RestApi({
@@ -59,6 +59,15 @@ export const replayApi = RestApi({
             script: followUpReplay,
             version: 1,
             shortDescription: 'Propose problems, knowledge and actions with the LuxLab Follow-up Advisor skill',
+        },
+        {
+            $id: Now.ID['replay-api-analyse'],
+            name: 'start analyst',
+            method: 'POST',
+            path: '/{incident}/agent/{kind}',
+            script: analyse,
+            version: 1,
+            shortDescription: 'Start the LuxLab Replay Analyst agent to write the review (kind=review) or propose follow-ups (kind=follow-ups)',
         },
         {
             $id: Now.ID['replay-api-decide'],
