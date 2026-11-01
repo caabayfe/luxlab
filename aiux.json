@@ -6,6 +6,16 @@
     "token": ""
   },
   "build": {
-    "exclude": ["**/*.test.js", "**/test/**"]
-  }
+    "exclude": [
+      "**/*.test.js",
+      "**/test/**"
+    ]
+  },
+  "experienceAcls": [
+    {
+      "roles": [
+        "x_everi_luxlab.user"
+      ]
+    }
+  ]
 }

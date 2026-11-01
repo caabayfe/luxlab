@@ -5,6 +5,10 @@ declare global {
         namespace Internal {
             interface Keys extends KeysRegistry {
                 explicit: {
+                    'aiux-acl|experience:luxlab|read|allow_if|x_everi_luxlab.user': {
+                        table: 'sys_security_acl'
+                        id: '040f35ad641545fc99a3e2c8af21ff90'
+                    }
                     'aiux-acl|x-everi-luxlab-briefing-page|read|allow_if|x_everi_luxlab.user': {
                         table: 'sys_security_acl'
                         id: '7c36262f1b2f441d8d1c1b3ca98cf3b5'
@@ -5144,6 +5148,19 @@ declare global {
                                 }
                             }
                             config_type: '7dfdff5893b64210aa5730f164891837'
+                        }
+                    },
+                    {
+                        table: 'sys_security_acl_role'
+                        id: 'ff6899baa5e44a968e25d0757669f8c9'
+                        key: {
+                            sys_security_acl: '040f35ad641545fc99a3e2c8af21ff90'
+                            sys_user_role: {
+                                id: '5c0007ba3bd44ee0b384483df02f5ceb'
+                                key: {
+                                    name: 'x_everi_luxlab.user'
+                                }
+                            }
                         }
                     },
                 ]
