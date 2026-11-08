@@ -635,6 +635,7 @@ declare global {
                     'usage-api-rates': {
                         table: 'sys_ws_operation'
                         id: '0fbaa6c13e364c828263da9f33a5a6dc'
+                        deleted: true
                     }
                     'usage-api-v1': {
                         table: 'sys_ws_version'
@@ -997,6 +998,7 @@ declare global {
                     {
                         table: 'sys_documentation'
                         id: '0bd7f238ad964968826b61315ad1c028'
+                        deleted: true
                         key: {
                             name: 'x_everi_luxlab_setting'
                             element: 'NULL'
@@ -2699,6 +2701,7 @@ declare global {
                     {
                         table: 'sys_documentation'
                         id: '510a9b20385c4b6a84f2c4f4ce30e8fa'
+                        deleted: true
                         key: {
                             name: 'x_everi_luxlab_setting'
                             element: 'name'
@@ -2812,6 +2815,7 @@ declare global {
                     {
                         table: 'sys_dictionary'
                         id: '58a9fbe6ffbe4d9aa59d40a71eab4184'
+                        deleted: true
                         key: {
                             name: 'x_everi_luxlab_setting'
                             element: 'NULL'
@@ -3247,6 +3251,7 @@ declare global {
                     {
                         table: 'sys_db_object'
                         id: '6cf883ccfef440fa90ee8f9ec36e64a5'
+                        deleted: true
                         key: {
                             name: 'x_everi_luxlab_setting'
                         }
@@ -3845,6 +3850,7 @@ declare global {
                     {
                         table: 'ua_table_licensing_config'
                         id: '84e73f4dc2b44bafa0cc0e6fbe435fa8'
+                        deleted: true
                         key: {
                             name: 'x_everi_luxlab_setting'
                         }
@@ -3852,6 +3858,7 @@ declare global {
                     {
                         table: 'sys_dictionary'
                         id: '84fe7d014d9043ccac94b522de4628aa'
+                        deleted: true
                         key: {
                             name: 'x_everi_luxlab_setting'
                             element: 'name'
@@ -4861,6 +4868,7 @@ declare global {
                     {
                         table: 'sys_index'
                         id: 'b2a89b2eb4ec41c4bcb27cc154c072a5'
+                        deleted: true
                         key: {
                             logical_table_name: 'x_everi_luxlab_setting'
                             col_name_string: 'name'
@@ -5095,6 +5103,7 @@ declare global {
                     {
                         table: 'sys_documentation'
                         id: 'bd225824222745d78b69958ef6ae7267'
+                        deleted: true
                         key: {
                             name: 'x_everi_luxlab_setting'
                             element: 'value'
@@ -6466,6 +6475,7 @@ declare global {
                     {
                         table: 'sys_dictionary'
                         id: 'f3787eb4a1e1453fa8d8f8d1a5c05dff'
+                        deleted: true
                         key: {
                             name: 'x_everi_luxlab_setting'
                             element: 'value'

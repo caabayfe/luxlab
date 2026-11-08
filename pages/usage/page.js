@@ -12,23 +12,7 @@ const {acl, title} = decorators;
 const PERIODS = [7, 30, 90];
 
 function number(value) {
-  return new Intl.NumberFormat().format(value);
-}
-
-// 57300 -> 57.3k: token counts are only read as orders of magnitude
-function compact(value) {
-  return new Intl.NumberFormat(undefined, {notation: 'compact', maximumFractionDigits: 1}).format(
-    value
-  );
-}
-
-// Rates are typed with either decimal separator
-function decimal(value) {
-  return Number(String(value).trim().replace(',', '.'));
-}
-
-function rateValue(rate) {
-  return rate === null || rate === undefined ? '' : String(rate);
+  return new Intl.NumberFormat(undefined, {maximumFractionDigits: 1}).format(value);
 }
 
 @customElement('x-everi-luxlab-usage-page')
@@ -37,10 +21,6 @@ function rateValue(rate) {
 export default class UsagePage extends AIUXElement {
   @state() _usage = null;
   @state() _error = '';
-  @state() _agentRate = '';
-  @state() _skillRate = '';
-  @state() _saving = false;
-  @state() _notice = '';
 
   _prevLoaderData = null;
 
@@ -63,39 +43,13 @@ export default class UsagePage extends AIUXElement {
   willUpdate() {
     if (this.loaderData !== this._prevLoaderData) {
       this._prevLoaderData = this.loaderData;
-      this._setUsage(this.loaderData?.usage || null);
+      this._usage = this.loaderData?.usage || null;
       this._error = this.loaderData?.error || '';
     }
   }
 
   firstUpdated() {
     setDocumentTitle(i18n.getMessage('AI Usage'));
-  }
-
-  _setUsage(usage) {
-    this._usage = usage;
-    this._agentRate = rateValue(usage?.rates.agent);
-    this._skillRate = rateValue(usage?.rates.skill);
-  }
-
-  async _saveRates(e) {
-    e.preventDefault();
-    try {
-      this._saving = true;
-      this._error = '';
-      this._notice = '';
-      await api('/usage/rates', {
-        method: 'POST',
-        body: {agent: decimal(this._agentRate), skill: decimal(this._skillRate)}
-      });
-      const {usage} = await api(`/usage?${new URLSearchParams({days: String(this._usage.days)})}`);
-      this._setUsage(usage);
-      this._notice = i18n.getMessage('Assist rates saved.');
-    } catch (error) {
-      this._error = error.message || 'Unknown error';
-    } finally {
-      this._saving = false;
-    }
   }
 
   _renderStat(label, value) {
@@ -107,8 +61,6 @@ export default class UsagePage extends AIUXElement {
 
   _renderHeader(usage) {
     const runs = usage.rows.reduce((sum, row) => sum + row.runs, 0);
-    const calls = usage.rows.reduce((sum, row) => sum + row.llmCalls, 0);
-    const tokens = usage.rows.reduce((sum, row) => sum + row.inputTokens + row.outputTokens, 0);
     return html`<section class="aiux-card bg-base-100 shadow-sm" aria-labelledby="usage-title">
       <div class="aiux-card-body gap-4">
         <div class="flex flex-wrap items-start justify-between gap-4">
@@ -118,7 +70,7 @@ export default class UsagePage extends AIUXElement {
             </h1>
             <p class="text-sm text-text-tertiary">
               ${i18n.getMessage(
-                'What the LuxLab AI features use: agent and skill runs, the LLM calls they make and their tokens, read from the platform\'s generative AI log. Replays, response patterns and the cockpit use no AI.'
+                'The assists the platform metered for each LuxLab AI feature, read from its Now Assist usage log. Replays, response patterns and the cockpit use no AI.'
               )}
             </p>
           </div>
@@ -136,21 +88,39 @@ export default class UsagePage extends AIUXElement {
             )}
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-3">
           ${this._renderStat(i18n.getMessage('AI runs'), number(runs))}
-          ${this._renderStat(i18n.getMessage('LLM calls'), number(calls))}
-          ${this._renderStat(i18n.getMessage('Tokens'), compact(tokens))}
           ${this._renderStat(
-            i18n.getMessage('Estimated assists per month'),
-            usage.monthlyAssists === null ? i18n.getMessage('Set the rates') : number(usage.monthlyAssists)
+            i18n.getMessage('Assists in the last {0} days', String(usage.days)),
+            number(usage.assists)
           )}
+          ${this._renderStat(i18n.getMessage('Assists per month at this pace'), number(usage.monthlyAssists))}
         </div>
+        ${usage.trialAssists
+          ? html`<p class="text-xs text-text-tertiary">
+              ${i18n.getMessage(
+                '{0} of these assists were counted against a trial allowance rather than the licence.',
+                number(usage.trialAssists)
+              )}
+            </p>`
+          : nothing}
       </div>
     </section>`;
   }
 
-  _renderRow(row) {
-    const perRun = row.runs ? (row.inputTokens + row.outputTokens) / row.runs : 0;
+  _renderActions(row, smallMax) {
+    if (row.kind !== 'agent') return html`<span class="text-text-tertiary">—</span>`;
+    const overSmall = row.maxToolActions > smallMax;
+    return html`${i18n.getMessage('up to {0}', String(row.maxToolActions))}
+      <span class="block text-xs ${overSmall ? 'text-warning' : 'text-text-tertiary'}"
+        >${overSmall
+          ? i18n.getMessage('above the Small tier')
+          : i18n.getMessage('Small tier')}</span
+      >`;
+  }
+
+  _renderRow(row, smallMax) {
+    const unmetered = row.runs - row.metered;
     return html`<tr>
       <td>${row.feature}</td>
       <td>
@@ -168,23 +138,20 @@ export default class UsagePage extends AIUXElement {
               >${i18n.getMessage('{0} failed', String(row.failed))}</span
             >`
           : nothing}
-      </td>
-      <td class="text-right">
-        ${number(row.llmCalls)}
-        ${row.runs
+        ${unmetered
           ? html`<span class="block text-xs text-text-tertiary"
-              >${i18n.getMessage('{0} per run', (row.llmCalls / row.runs).toFixed(1))}</span
+              >${i18n.getMessage('{0} not metered', String(unmetered))}</span
             >`
           : nothing}
       </td>
+      <td class="text-right">${this._renderActions(row, smallMax)}</td>
       <td class="text-right">
-        ${compact(row.inputTokens)} / ${compact(row.outputTokens)}
-        <span class="block text-xs text-text-tertiary"
-          >${i18n.getMessage('{0} per run', compact(perRun))}</span
-        >
-      </td>
-      <td class="text-right">
-        ${row.estimatedAssists === null ? '—' : number(row.estimatedAssists)}
+        ${number(row.assists)}
+        ${row.metered
+          ? html`<span class="block text-xs text-text-tertiary"
+              >${i18n.getMessage('{0} per run', number(row.assists / row.metered))}</span
+            >`
+          : nothing}
       </td>
     </tr>`;
   }
@@ -209,13 +176,12 @@ export default class UsagePage extends AIUXElement {
                 <th>${i18n.getMessage('Feature')}</th>
                 <th>${i18n.getMessage('Run')}</th>
                 <th class="text-right">${i18n.getMessage('Runs')}</th>
-                <th class="text-right">${i18n.getMessage('LLM calls')}</th>
-                <th class="text-right">${i18n.getMessage('Tokens in / out')}</th>
-                <th class="text-right">${i18n.getMessage('Estimated assists')}</th>
+                <th class="text-right">${i18n.getMessage('Tool actions per run')}</th>
+                <th class="text-right">${i18n.getMessage('Assists')}</th>
               </tr>
             </thead>
             <tbody>
-              ${usage.rows.map(row => this._renderRow(row))}
+              ${usage.rows.map(row => this._renderRow(row, usage.smallMaxActions))}
             </tbody>
           </table>
         </div>
@@ -223,59 +189,30 @@ export default class UsagePage extends AIUXElement {
     </section>`;
   }
 
-  _renderRates(usage) {
-    const editable = usage.canSetRates;
-    return html`<section class="aiux-card bg-base-100 shadow-sm" aria-labelledby="usage-rates">
-      <form class="aiux-card-body gap-3" @submit=${this._saveRates}>
-        <div class="flex flex-col gap-1">
-          <h2 id="usage-rates" class="text-lg font-semibold text-text-primary">
-            ${i18n.getMessage('Assist rates')}
-          </h2>
-          <p class="max-w-3xl text-sm text-text-tertiary">
+  _renderHowCounted() {
+    return html`<section class="aiux-card bg-base-100 shadow-sm" aria-labelledby="usage-how">
+      <div class="aiux-card-body gap-2">
+        <h2 id="usage-how" class="text-lg font-semibold text-text-primary">
+          ${i18n.getMessage('How assists are counted')}
+        </h2>
+        <ul class="flex max-w-3xl list-disc flex-col gap-1 pl-5 text-sm text-text-secondary">
+          <li>
             ${i18n.getMessage(
-              'Assists are what Now Assist bills. Take the assists per AI agent run and per skill run from the rate card in your ServiceNow contract; the estimates are runs times rate. Only a licensed production instance reports actual assists.'
+              'A skill run costs a fixed number of assists set for that skill, whatever the prompt or answer length.'
             )}
-          </p>
-        </div>
-        <div class="flex flex-wrap items-end gap-3">
-          <label class="flex flex-col gap-1 text-sm">
-            <span class="text-text-secondary">${i18n.getMessage('Assists per agent run')}</span>
-            <input
-              class="aiux-input aiux-input-sm w-40"
-              type="text"
-              inputmode="decimal"
-              pattern="[0-9]+([.,][0-9]+)?"
-              required
-              ?disabled=${!editable || this._saving}
-              .value=${this._agentRate}
-              @input=${e => (this._agentRate = e.target.value)}
-            />
-          </label>
-          <label class="flex flex-col gap-1 text-sm">
-            <span class="text-text-secondary">${i18n.getMessage('Assists per skill run')}</span>
-            <input
-              class="aiux-input aiux-input-sm w-40"
-              type="text"
-              inputmode="decimal"
-              pattern="[0-9]+([.,][0-9]+)?"
-              required
-              ?disabled=${!editable || this._saving}
-              .value=${this._skillRate}
-              @input=${e => (this._skillRate = e.target.value)}
-            />
-          </label>
-          ${editable
-            ? html`<button type="submit" class="aiux-btn aiux-btn-sm aiux-btn-primary" ?disabled=${this._saving}>
-                ${this._saving
-                  ? html`<span class="aiux-loading aiux-loading-spinner aiux-loading-xs"></span>`
-                  : nothing}
-                ${i18n.getMessage('Save rates')}
-              </button>`
-            : html`<p class="text-xs text-text-tertiary">
-                ${i18n.getMessage('Only LuxLab managers can change the rates.')}
-              </p>`}
-        </div>
-      </form>
+          </li>
+          <li>
+            ${i18n.getMessage(
+              'An AI agent run is billed by its tool actions: up to 4 is Small (25 assists), 5 to 8 Medium (50), 9 to 20 Large (150). Orchestrator and answer steps do not count, and LLM calls and tokens do not change the price.'
+            )}
+          </li>
+          <li>
+            ${i18n.getMessage(
+              'Sub-production instances and AI Agent Studio tests consume assists too.'
+            )}
+          </li>
+        </ul>
+      </div>
     </section>`;
   }
 
@@ -285,11 +222,8 @@ export default class UsagePage extends AIUXElement {
       ${this._error
         ? html`<div class="aiux-alert aiux-alert-error aiux-alert-soft" role="alert">${this._error}</div>`
         : nothing}
-      ${this._notice
-        ? html`<div class="aiux-alert aiux-alert-success aiux-alert-soft" role="status">${this._notice}</div>`
-        : nothing}
       ${usage
-        ? html`${this._renderHeader(usage)} ${this._renderTable(usage)} ${this._renderRates(usage)}`
+        ? html`${this._renderHeader(usage)} ${this._renderTable(usage)} ${this._renderHowCounted()}`
         : nothing}
     </div>`;
   }
