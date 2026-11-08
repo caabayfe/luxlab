@@ -22,6 +22,11 @@ export default {
         icon: 'timeline',
         title: i18n.getMessage('Incident Replay'),
         action: {type: 'navigate', path: '/replay'}
+      },
+      {
+        icon: 'chart-pareto',
+        title: i18n.getMessage('Response Patterns'),
+        action: {type: 'navigate', path: '/patterns'}
       }
     ];
 

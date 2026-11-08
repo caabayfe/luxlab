@@ -1,5 +1,5 @@
-// Bridge for scripts that cannot import modules: the Replay AI skills' tool, the Replay Analyst agent's tools
-// and the incident form buttons
+// Bridge for scripts that cannot import modules: the Replay AI skills' tool, the Replay and Pattern Analyst agents' tools,
+// the incident form buttons and the response patterns job
 var LuxLabReplayAI = Class.create();
 
 // Same <scope>/<package>/<version>/<source path> form the SDK generates for REST routes; follow package.json's version
@@ -10,6 +10,7 @@ LuxLabReplayAI.prototype = {
         this._context = require(LUXLAB_MODULES + 'ai-context.ts');
         this._forms = require(LUXLAB_MODULES + 'form-actions.ts');
         this._ai = require(LUXLAB_MODULES + 'ai.ts');
+        this._patternAi = require(LUXLAB_MODULES + 'pattern-ai.ts');
     },
 
     // Data tool of both Replay AI skills
@@ -24,6 +25,20 @@ LuxLabReplayAI.prototype = {
 
     saveFollowUps: function (incidentNumber, followUpsJson) {
         return this._ai.saveFollowUps(String(incidentNumber || ''), String(followUpsJson || ''));
+    },
+
+    // Tools of the LuxLab Pattern Analyst agent
+    getPatternContext: function (patternId) {
+        return this._patternAi.patternContext(String(patternId || ''));
+    },
+
+    savePatternProposal: function (patternId, fixType, proposal) {
+        return this._patternAi.savePatternProposal(String(patternId || ''), String(fixType || ''), String(proposal || ''));
+    },
+
+    // Nightly response patterns job: replay what is missing for up to maxMs, then mine
+    refreshPatterns: function (maxMs) {
+        return require(LUXLAB_MODULES + 'patterns.ts').refreshPatterns(maxMs);
     },
 
     // Incident form buttons: run the skill, save the result on the replay, return an HTML message

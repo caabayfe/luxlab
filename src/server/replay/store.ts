@@ -5,6 +5,7 @@ import { alertEvents, childEvents, commsEvents, slaEvents, taskEvents } from './
 import { analyse } from './analysis.ts'
 import { canDecide, followUpsOf, ReplayActionDto } from './follow-ups.ts'
 import { applyPirCuration, PirDto, pirStatus } from './pir.ts'
+import { PatternLink, patternsOfIncident } from './pattern-store.ts'
 
 const REPLAY = 'x_everi_luxlab_replay'
 const EVENT = 'x_everi_luxlab_replay_event'
@@ -46,6 +47,7 @@ export interface ReplayDto {
     followUps: ReplayActionDto[]
     canDecide: boolean
     pir: PirDto | null
+    patterns: PatternLink[]
 }
 
 // Source tables like sys_audit are read without ACLs, so access is gated on the incident itself
@@ -199,5 +201,6 @@ export function loadReplay(incident: GlideRecordSecure<'incident'>): ReplayDto |
         followUps: followUpsOf(replay.getUniqueValue()),
         canDecide: canDecide(),
         pir: pirStatus(incident.getUniqueValue(), replay),
+        patterns: patternsOfIncident(incident.getUniqueValue()),
     }
 }

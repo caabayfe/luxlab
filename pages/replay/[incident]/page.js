@@ -316,6 +316,23 @@ export default class ReplayDetailPage extends AIUXElement {
     </div>`;
   }
 
+  // The response patterns this incident is evidence for
+  _renderPatterns(replay) {
+    if (!replay.patterns?.length) return nothing;
+    return html`<p class="flex flex-wrap items-center gap-2 text-sm text-text-tertiary">
+      ${i18n.getMessage('Part of a recurring pattern')}:
+      ${replay.patterns.map(
+        pattern => html`<button
+          type="button"
+          class="aiux-badge aiux-badge-warning aiux-badge-soft cursor-pointer"
+          @click=${() => navigate('/patterns', {query: {pattern: pattern.sysId}})}
+        >
+          ${pattern.title}
+        </button>`
+      )}
+    </p>`;
+  }
+
   _renderHeader(replay) {
     const incident = replay.incident;
     return html`<section class="aiux-card bg-base-100 shadow-sm" aria-labelledby="incident-title">
@@ -346,6 +363,7 @@ export default class ReplayDetailPage extends AIUXElement {
             ${i18n.getMessage('built')}
             <luxlab-time value=${replay.builtOn}></luxlab-time>
           </p>
+          ${this._renderPatterns(replay)}
         </div>
         <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
           ${this._renderStat(

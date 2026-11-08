@@ -12,12 +12,16 @@ const DEFAULT_GAP_MINUTES = 480
 
 // Events that only describe the incident, not someone acting on it
 // PIR notes are written after the fact, so they cannot break a silence either
-const PASSIVE_KINDS = ['sla_start', 'sla_breach', 'silent_gap', 'pir_note']
+export const PASSIVE_KINDS = ['sla_start', 'sla_breach', 'silent_gap', 'pir_note']
 
 interface Snapshot {
     state: string
     assignment_group: string
     assigned_to: string
+}
+
+export function gapLimitMinutes(priority: string): number {
+    return GAP_MINUTES[priority] || DEFAULT_GAP_MINUTES
 }
 
 export function formatMinutes(minutes: number): string {
@@ -71,7 +75,7 @@ function phaseOf(snapshot: Snapshot, at: number, facts: IncidentFacts, groups: G
 }
 
 function silentGaps(events: TimelineEvent[], facts: IncidentFacts, end: number): TimelineEvent[] {
-    const limit = (GAP_MINUTES[facts.priority] || DEFAULT_GAP_MINUTES) * MINUTE_MS
+    const limit = gapLimitMinutes(facts.priority) * MINUTE_MS
     const activity = events
         .filter((event) => !PASSIVE_KINDS.includes(event.kind) && event.at >= facts.openedAt && event.at <= end)
         .map((event) => event.at)
