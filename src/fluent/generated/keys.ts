@@ -358,6 +358,10 @@ declare global {
                         table: 'sys_ws_operation'
                         id: '6dc05438192244edb75a9c249f952ab6'
                     }
+                    'replay-api-pir-report': {
+                        table: 'sys_ws_operation'
+                        id: '9836c10ae71f4cdd9b384b57e791b1bc'
+                    }
                     'replay-api-review': {
                         table: 'sys_ws_operation'
                         id: '0e7eafde40134922a2e01eb11e66dfb5'
@@ -421,6 +425,10 @@ declare global {
                     'src_server_replay_form-actions_ts': {
                         table: 'sys_module'
                         id: '1a6d86ba7c7b471aaf3c8f48cbfa409d'
+                    }
+                    src_server_replay_markdown_ts: {
+                        table: 'sys_module'
+                        id: '1d4467ee52a24c16bf5561d63abc4757'
                     }
                     src_server_replay_pir_ts: {
                         table: 'sys_module'
@@ -1091,6 +1099,15 @@ declare global {
                         key: {
                             name: 'x_everi_luxlab_replay'
                             element: 'resolved_at'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '1b2ac2bcab16448f8a6c480fb8894a27'
+                        key: {
+                            name: 'x_everi_luxlab_replay'
+                            element: 'pir_report_on'
                             language: 'en'
                         }
                     },
@@ -2350,6 +2367,14 @@ declare global {
                     },
                     {
                         table: 'sys_dictionary'
+                        id: '571baf1acc624b3a8b83749a0fa53752'
+                        key: {
+                            name: 'x_everi_luxlab_replay'
+                            element: 'pir_report'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
                         id: '57dcdf85f7b64e3caaa5586ab7f283c0'
                         key: {
                             name: 'x_everi_luxlab_replay_event'
@@ -2646,6 +2671,15 @@ declare global {
                         key: {
                             name: 'x_everi_luxlab_replay_action'
                             element: 'state'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '633b8f779c9646aaa1117c88750455ce'
+                        key: {
+                            name: 'x_everi_luxlab_replay'
+                            element: 'pir_report'
+                            language: 'en'
                         }
                     },
                     {
@@ -3033,6 +3067,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: '78b65b82e54e43c3949ae911c5005386'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: 'fd85efe16b2e4487b0a778690cdd5cb4'
@@ -3928,6 +3963,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: 'ab38ea8d3bd54b8e874cfc06991add47'
+                        key: {
+                            sys_ui_section: {
+                                id: 'fd85efe16b2e4487b0a778690cdd5cb4'
+                                key: {
+                                    name: 'x_everi_luxlab_replay'
+                                    caption: 'Post incident review'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'pir_report_on'
+                            position: '5'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: 'ab83610ff02a4ca8abd2bb121160b0cc'
                         key: {
@@ -4335,6 +4392,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: 'c266f29e0fc1441c8d55a05451cd2303'
+                        key: {
+                            name: 'x_everi_luxlab_replay'
+                            element: 'pir_report_on'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: 'c26eadaea60b4a7292409bdf1b4e6d54'
                         deleted: true
@@ -4699,6 +4764,28 @@ declare global {
                             }
                             element: 'conversation'
                             position: '13'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: 'd2bff36b62d44265ad2fc1ecbe9f70e9'
+                        key: {
+                            sys_ui_section: {
+                                id: 'fd85efe16b2e4487b0a778690cdd5cb4'
+                                key: {
+                                    name: 'x_everi_luxlab_replay'
+                                    caption: 'Post incident review'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.end_split'
+                            position: '6'
                         }
                     },
                     {

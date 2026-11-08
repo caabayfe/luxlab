@@ -46,6 +46,9 @@ export const x_everi_luxlab_replay = Table({
         pir_id: StringColumn({ label: 'Post incident review', maxLength: 32 }),
         pir_pushed_on: DateTimeColumn({ label: 'Sent to PIR on' }),
         pir_pushed_count: IntegerColumn({ label: 'Events sent to PIR' }),
+        // The PIR report draft as it read back after LuxLab wrote it; a different draft means someone edited it there
+        pir_report: StringColumn({ label: 'Report sent to PIR', maxLength: 65000 }),
+        pir_report_on: DateTimeColumn({ label: 'Report sent to PIR on' }),
     },
     index: [{ name: 'replay_incident', unique: true, element: 'incident' }],
 })

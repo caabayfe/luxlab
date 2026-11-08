@@ -1,7 +1,17 @@
 import '@servicenow/sdk/global'
 import { RestApi } from '@servicenow/sdk/core'
 import { cockpitApiAcl } from './cockpit-api.now'
-import { analyse, candidates, decide, followUpReplay, getReplay, rebuildReplay, reviewReplay, sendToPir } from '../../server/rest/replay-routes'
+import {
+    analyse,
+    candidates,
+    decide,
+    followUpReplay,
+    getReplay,
+    rebuildReplay,
+    reviewReplay,
+    sendReportToPir,
+    sendToPir,
+} from '../../server/rest/replay-routes'
 
 // URIs: /api/x_everi_luxlab/v1/replay/candidates, /api/x_everi_luxlab/v1/replay/{incident}
 export const replayApi = RestApi({
@@ -77,6 +87,15 @@ export const replayApi = RestApi({
             script: sendToPir,
             version: 1,
             shortDescription: 'Rebuild the replay and send its key moments to the timeline of the post incident review',
+        },
+        {
+            $id: Now.ID['replay-api-pir-report'],
+            name: 'send report to pir',
+            method: 'POST',
+            path: '/{incident}/pir/report',
+            script: sendReportToPir,
+            version: 1,
+            shortDescription: 'Write the incident review into the post incident review draft (replace: true to overwrite text LuxLab did not write)',
         },
         {
             $id: Now.ID['replay-api-decide'],

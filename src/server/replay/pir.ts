@@ -2,6 +2,7 @@ import { gs, GlideDateTime, GlideRecord, GlideRecordSecure } from '@servicenow/g
 import { TimelineEvent } from './types.ts'
 import { epoch } from './sources.ts'
 import { blamelessSummary } from './analysis.ts'
+import { markdownToHtml } from './markdown.ts'
 
 // Post Incident Review of SOW Incident (sn_sow_inc). Its timeline is a JSON array on the PIR record, and regenerating it
 // rebuilds every system event but keeps CUSTOM_EVENT entries as they are (PIRManagerSNC._getCustomEvents), so LuxLab
@@ -35,12 +36,18 @@ interface PirEvent {
     [property: string]: any
 }
 
+// empty: nothing to lose; ours: still exactly what LuxLab wrote; other: the platform's starting summary or someone's edits
+export type ReportState = 'empty' | 'ours' | 'other'
+
 export interface PirDto {
     sysId: string
     state: string
     canWrite: boolean
     pushedOn: string
     pushedCount: number
+    canWriteReport: boolean
+    reportState: ReportState
+    reportOn: string
 }
 
 function refusal(message: string, status: number): Error {
@@ -151,6 +158,12 @@ export function applyPirCuration(incidentId: string, events: TimelineEvent[]): s
     return pir ? pir.getUniqueValue() : ''
 }
 
+function reportStateOf(pir: GlideRecord<'sn_sow_inc_post_incident_review'>, replay: GlideRecord): ReportState {
+    const draft = (pir.getValue('report_draft') || '').trim()
+    if (!draft) return 'empty'
+    return draft === (replay.getValue('pir_report') || '').trim() ? 'ours' : 'other'
+}
+
 export function pirStatus(incidentId: string, replay: GlideRecord): PirDto | null {
     if (!pirInstalled()) return null
     const pir = new GlideRecordSecure(PIR)
@@ -163,6 +176,10 @@ export function pirStatus(incidentId: string, replay: GlideRecord): PirDto | nul
         canWrite: pir.canWrite(),
         pushedOn: replay.getValue('pir_pushed_on') || '',
         pushedCount: parseInt(replay.getValue('pir_pushed_count'), 10) || 0,
+        // The report draft has its own write ACL, stricter than the record's
+        canWriteReport: pir.getElement('report_draft').canWrite(),
+        reportState: reportStateOf(pir, replay),
+        reportOn: replay.getValue('pir_report_on') || '',
     }
 }
 
@@ -222,19 +239,29 @@ function mergeTimeline(current: PirEvent[], selected: { [id: string]: { timestam
     return merged
 }
 
-// Sends the replay's key moments to the PIR timeline; the platform's PIR ACLs decide who may write (OOB: itil and up,
-// while the report_draft field is limited to major incident managers, the assignee and co-authors)
-export function pushToPir(incidentId: string): number {
+function draftPir(incidentId: string): GlideRecordSecure<'sn_sow_inc_post_incident_review'> {
     if (!pirInstalled()) throw refusal('Post incident reviews are not available on this instance', 409)
     const pir = new GlideRecordSecure(PIR)
     pir.addQuery('incident_ref', incidentId)
     pir.query()
     if (!pir.next()) throw refusal('There is no post incident review yet: it is created when the major incident is resolved and accepted', 409)
     if (pir.getValue('state') !== 'draft') throw refusal('The post incident review is already published', 409)
-    if (!pir.canWrite()) throw refusal('You are not allowed to edit this post incident review', 403)
+    return pir
+}
 
+function readyReplay(incidentId: string): GlideRecord {
     const replay = new GlideRecord(REPLAY)
     if (!replay.get('incident', incidentId) || replay.getValue('status') !== 'ready') throw refusal('The replay could not be built', 500)
+    return replay
+}
+
+// Sends the replay's key moments to the PIR timeline; the platform's PIR ACLs decide who may write (OOB: itil and up,
+// while the report_draft field is limited to major incident managers, the assignee and co-authors)
+export function pushToPir(incidentId: string): number {
+    const pir = draftPir(incidentId)
+    if (!pir.canWrite()) throw refusal('You are not allowed to edit this post incident review', 403)
+
+    const replay = readyReplay(incidentId)
     const selected = selectedEvents(replay.getUniqueValue())
     const events = mergeTimeline(timelineOf(pir), selected)
     pir.setValue('timeline_events', JSON.stringify({ events }))
@@ -246,4 +273,31 @@ export function pushToPir(incidentId: string): number {
     replay.setValue('pir_pushed_count', count)
     replay.update()
     return count
+}
+
+const REPORT_NOTE = '<p><em>Drafted by LuxLab Incident Replay from the incident replay. Review it before publishing.</em></p>'
+
+// Writes the incident review into the PIR report draft; text LuxLab did not write is only replaced when the user says so
+export function writePirReport(incidentId: string, replace: boolean): void {
+    const pir = draftPir(incidentId)
+    if (!pir.getElement('report_draft').canWrite()) {
+        throw refusal('Only major incident managers, the assigned engineer and co-authors can edit the report of this post incident review', 403)
+    }
+    const replay = readyReplay(incidentId)
+    const review = (replay.getValue('review') || '').trim()
+    if (!review) throw refusal('Write the incident review first', 409)
+    if (reportStateOf(pir, replay) === 'other' && !replace) {
+        throw refusal('The post incident review draft has text LuxLab did not write. Confirm to replace it.', 409)
+    }
+    // The PIR shows this draft with line breaks kept, so the markup carries no newlines between tags
+    pir.setValue('report_draft', `${markdownToHtml(review).replace(/\n/g, '')}${REPORT_NOTE}`)
+    if (!pir.update()) throw refusal('The post incident review could not be updated', 403)
+
+    // Kept as the platform stored it, since saving an HTML field can rewrite the markup
+    const written = new GlideRecord(PIR)
+    written.get('sys_id', pir.getUniqueValue())
+    replay.setValue('pir_id', pir.getUniqueValue())
+    replay.setValue('pir_report', written.getValue('report_draft') || '')
+    replay.setValue('pir_report_on', new GlideDateTime())
+    replay.update()
 }

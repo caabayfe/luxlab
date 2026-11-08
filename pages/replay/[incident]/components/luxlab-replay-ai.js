@@ -243,7 +243,7 @@ export class LuxlabReplayAi extends AIUXElement {
           <div class="flex flex-wrap items-start justify-between gap-2">
             <div>
               <h2 id="review-title" class="aiux-card-title text-base text-text-primary">
-                ${i18n.getMessage('Blameless review')}
+                ${i18n.getMessage('Incident review')}
               </h2>
               <p class="text-sm text-text-tertiary">
                 ${replay.reviewedOn

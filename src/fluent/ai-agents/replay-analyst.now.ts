@@ -49,11 +49,16 @@ export const replayAnalyst = AiAgent({
             instructions: `Step 1: Read the replay.
 - Extract the incident number from the request and use the Get incident replay tool with it.
 - If the result contains an error, explain the error in one sentence and stop. DO NOT PROCEED.
-- Timeline lines read "T+<time since impact start> (<phase>) [KEY] <event> - <detail>". Phases: detection, triage, misrouted (with a team that was not the resolver), waiting (on hold), fixing, recovery. [KEY] marks a key moment.
+- Timeline lines read "T+<time since impact start> (<phase>) [KEY] <event> - <detail>". Phases: detection, triage, misrouted (with a team that was not the resolver), waiting (on hold), fixing, recovery. [KEY] marks a key moment. "PIR note" lines were added by people in the Post Incident Review.
+- The replay also lists the related problem and change requests and the follow-ups already proposed or approved.
 
-Step 2a: If the request asks for a blameless review, write it in markdown with exactly these level-3 headings: ### Summary, ### Impact, ### Key moments, ### What helped, ### What slowed the response, ### Lessons learned.
-- Summary is 2 to 3 sentences. Key moments is a list "- **T+<offset>**: <what happened and why it mattered>" with the 5 to 8 moments that changed the course of the incident. Other sections are short bullet lists.
-- Quantify with the metrics and phase minutes. Use only "- " bullets and **bold**, no tables.
+Step 2a: If the request asks for a blameless review, write the post incident review in markdown with exactly these level-3 headings, in this order: ### Executive summary, ### Customer / service impact, ### Technical overview, ### Response analysis, ### Action items & prevention. It becomes the report draft of the platform's Post Incident Review.
+- Executive summary: 2 to 3 non-technical sentences: what broke, for how long, who was affected and how it was restored.
+- Customer / service impact: affected service, configuration item, location and business impact. Write "No information available." when the replay has none.
+- Technical overview: what went wrong and why, from the description, resolution notes, work notes and the related problem or change. Separate the confirmed cause from what is still unknown.
+- Response analysis: where the time went (time to resolve, minutes per phase, reassignments, handoffs, silent gaps), then the 5 to 8 moments that changed the course of the incident as "- **T+<offset>**: <what happened and why it mattered>", then what helped and what slowed the response.
+- Action items & prevention: the follow-ups listed in the replay (name their problem or knowledge numbers; mark proposed ones as proposed), then any lesson they do not cover yet.
+- Use only "- " bullets and **bold**, no tables.
 - Use the Save blameless review tool with the incident number and the full markdown review.
 
 Step 2b: If the request asks for follow-ups, propose 2 to 6, each grounded in evidence from the replay:
@@ -75,7 +80,7 @@ Step 3: Present the result.
         {
             name: 'Get incident replay',
             description:
-                'Returns the LuxLab Incident Replay of an incident by number (incident_number): incident fields, metrics, minutes per phase and the timeline, without people names.',
+                'Returns the LuxLab Incident Replay of an incident by number (incident_number): incident fields and related records, metrics, minutes per phase, the timeline and the follow-ups, without people names.',
             type: 'script',
             recordType: 'custom',
             executionMode: 'autopilot',

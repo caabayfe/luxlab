@@ -26,7 +26,9 @@ export default class ReplayDetailPage extends AIUXElement {
   @state() _replay = null;
   @state() _busy = false;
   @state() _error = '';
-  @state() _pirBusy = false;
+  // 'timeline' or 'report' while that part is being sent to the PIR
+  @state() _pirBusy = '';
+  @state() _confirmReplace = false;
   @state() _notice = '';
 
   _prevLoaderData = null;
@@ -85,28 +87,110 @@ export default class ReplayDetailPage extends AIUXElement {
     }
   }
 
-  async _sendToPir() {
+  async _sendToPir(part, body) {
     try {
-      this._pirBusy = true;
+      this._pirBusy = part;
       this._error = '';
       this._notice = '';
-      const {replay} = await api(`/replay/${this.loaderData.incident}/pir`, {method: 'POST'});
+      this._confirmReplace = false;
+      const path = part === 'report' ? 'pir/report' : 'pir';
+      const {replay} = await api(`/replay/${this.loaderData.incident}/${path}`, {
+        method: 'POST',
+        body
+      });
       this._replay = replay;
-      this._notice = i18n.getMessage(
-        '{0} replay events are in the post incident review timeline.',
-        replay.pir?.pushedCount || 0
-      );
+      this._notice =
+        part === 'report'
+          ? i18n.getMessage('The incident review is now the post incident review draft.')
+          : i18n.getMessage(
+              '{0} replay events are in the post incident review timeline.',
+              replay.pir?.pushedCount || 0
+            );
     } catch (error) {
       this._error = i18n.getMessage('Could not send the replay to the post incident review: {0}', error.message);
     } finally {
-      this._pirBusy = false;
+      this._pirBusy = '';
     }
+  }
+
+  // Text LuxLab did not write (the platform's starting summary or someone's edits) is only replaced after a confirmation
+  _sendReport(pir) {
+    if (pir.reportState === 'other' && !this._confirmReplace) {
+      this._confirmReplace = true;
+      return;
+    }
+    this._sendToPir('report', {replace: pir.reportState === 'other'});
   }
 
   _pirBlocker(pir) {
     if (pir.state !== 'draft') return i18n.getMessage('The post incident review is already published.');
     if (!pir.canWrite) return i18n.getMessage('You are not allowed to edit this post incident review.');
     return '';
+  }
+
+  _reportBlocker(replay) {
+    if (!replay.review) return i18n.getMessage('Write the incident review first.');
+    if (!replay.pir.canWriteReport) {
+      return i18n.getMessage(
+        'Only major incident managers, the assigned engineer and co-authors can edit the report.'
+      );
+    }
+    return '';
+  }
+
+  _renderPirButton(part, label, blocker, onClick) {
+    return html`<button
+      type="button"
+      class="aiux-btn aiux-btn-primary aiux-btn-sm shrink-0"
+      ?disabled=${!!blocker || !!this._pirBusy || this._busy}
+      title=${blocker || nothing}
+      @click=${onClick}
+    >
+      ${this._pirBusy === part
+        ? html`<span class="aiux-loading aiux-loading-spinner aiux-loading-xs"></span>
+            ${i18n.getMessage('Sending…')}`
+        : label}
+    </button>`;
+  }
+
+  _reportStatus(pir) {
+    if (!pir.reportOn) {
+      return pir.reportState === 'empty'
+        ? i18n.getMessage('The report draft is empty')
+        : i18n.getMessage('The report draft has the platform summary or text written in the PIR');
+    }
+    return html`${i18n.getMessage('Incident review sent')} ·
+      <luxlab-time value=${pir.reportOn}></luxlab-time
+      >${pir.reportState === 'other' ? ` · ${i18n.getMessage('edited in the PIR since')}` : nothing}`;
+  }
+
+  _renderReplaceConfirm(pir) {
+    return html`<div
+      class="aiux-alert aiux-alert-warning aiux-alert-soft flex flex-wrap items-center justify-between gap-2"
+      role="alert"
+    >
+      <span
+        >${pir.reportOn
+          ? i18n.getMessage('The report draft was edited in the PIR after LuxLab sent it. Replace those edits?')
+          : i18n.getMessage('The report draft has text LuxLab did not write. Replace it with the incident review?')}</span
+      >
+      <span class="flex gap-2">
+        <button
+          type="button"
+          class="aiux-btn aiux-btn-ghost aiux-btn-sm"
+          @click=${() => (this._confirmReplace = false)}
+        >
+          ${i18n.getMessage('Cancel')}
+        </button>
+        <button
+          type="button"
+          class="aiux-btn aiux-btn-warning aiux-btn-sm"
+          @click=${() => this._sendReport(pir)}
+        >
+          ${i18n.getMessage('Replace draft')}
+        </button>
+      </span>
+    </div>`;
   }
 
   // The replay feeds the platform's Post Incident Review; curation done there comes back on every rebuild
@@ -122,41 +206,43 @@ export default class ReplayDetailPage extends AIUXElement {
         : nothing;
     }
     const blocker = this._pirBlocker(pir);
-    return html`<div
-      class="flex flex-wrap items-center justify-between gap-3 rounded-box bg-base-200 px-4 py-3"
-    >
-      <div class="flex min-w-0 flex-col gap-1">
-        <p class="flex flex-wrap items-center gap-2 text-sm text-text-secondary">
-          <a
-            class="aiux-link aiux-link-primary font-medium"
-            href=${recordUrl('sn_sow_inc_post_incident_review', pir.sysId)}
-            target="_blank"
-            rel="noopener noreferrer"
-            >${i18n.getMessage('Post incident review')}</a
-          >
-          <span class="aiux-badge aiux-badge-sm aiux-badge-soft"
-            >${pir.state === 'draft' ? i18n.getMessage('Draft') : i18n.getMessage('Published')}</span
-          >
+    const reportBlocker = blocker || this._reportBlocker(replay);
+    return html`<div class="flex flex-col gap-3 rounded-box bg-base-200 px-4 py-3">
+      <p class="flex flex-wrap items-center gap-2 text-sm text-text-secondary">
+        <a
+          class="aiux-link aiux-link-primary font-medium"
+          href=${recordUrl('sn_sow_inc_post_incident_review', pir.sysId)}
+          target="_blank"
+          rel="noopener noreferrer"
+          >${i18n.getMessage('Post incident review')}</a
+        >
+        <span class="aiux-badge aiux-badge-sm aiux-badge-soft"
+          >${pir.state === 'draft' ? i18n.getMessage('Draft') : i18n.getMessage('Published')}</span
+        >
+        ${blocker ? html`<span class="text-xs text-text-tertiary">${blocker}</span>` : nothing}
+      </p>
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <p class="text-sm text-text-secondary">
+          <strong class="font-medium text-text-primary">${i18n.getMessage('Timeline')}</strong> ·
           ${pir.pushedOn
-            ? html`<span
-                >${i18n.getMessage('{0} replay events sent', pir.pushedCount)} ·
-                <luxlab-time value=${pir.pushedOn}></luxlab-time
-              ></span>`
-            : html`<span>${i18n.getMessage('No replay events sent yet')}</span>`}
+            ? html`${i18n.getMessage('{0} replay events sent', pir.pushedCount)} ·
+                <luxlab-time value=${pir.pushedOn}></luxlab-time>`
+            : i18n.getMessage('No replay events sent yet')}
         </p>
-        ${blocker ? html`<p class="text-xs text-text-tertiary">${blocker}</p>` : nothing}
+        ${this._renderPirButton('timeline', i18n.getMessage('Send timeline'), blocker, () =>
+          this._sendToPir('timeline')
+        )}
       </div>
-      <button
-        type="button"
-        class="aiux-btn aiux-btn-primary aiux-btn-sm"
-        ?disabled=${!!blocker || this._pirBusy || this._busy}
-        @click=${() => this._sendToPir()}
-      >
-        ${this._pirBusy
-          ? html`<span class="aiux-loading aiux-loading-spinner aiux-loading-xs"></span>
-              ${i18n.getMessage('Sending…')}`
-          : i18n.getMessage('Send to PIR')}
-      </button>
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <p class="text-sm text-text-secondary">
+          <strong class="font-medium text-text-primary">${i18n.getMessage('Report')}</strong> ·
+          ${this._reportStatus(pir)}
+        </p>
+        ${this._renderPirButton('report', i18n.getMessage('Send report'), reportBlocker, () =>
+          this._sendReport(pir)
+        )}
+      </div>
+      ${this._confirmReplace && !reportBlocker ? this._renderReplaceConfirm(pir) : nothing}
     </div>`;
   }
 

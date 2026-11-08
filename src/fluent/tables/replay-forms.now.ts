@@ -66,7 +66,10 @@ Form({
                         { field: 'pir_id', type: 'table_field' },
                         { field: 'pir_pushed_on', type: 'table_field' },
                     ],
-                    rightElements: [{ field: 'pir_pushed_count', type: 'table_field' }],
+                    rightElements: [
+                        { field: 'pir_pushed_count', type: 'table_field' },
+                        { field: 'pir_report_on', type: 'table_field' },
+                    ],
                 },
             ],
         },
