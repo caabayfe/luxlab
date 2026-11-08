@@ -9,3 +9,4 @@ Property({
     value: 'a7e8a78bff0221009b20ffffffffff17',
     description: 'sys_id of the knowledge base where approved Replay AI knowledge follow-ups are created as draft articles.',
 })
+
