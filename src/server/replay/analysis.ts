@@ -11,7 +11,8 @@ const GAP_MINUTES: { [priority: string]: number } = { '1': 30, '2': 60, '3': 240
 const DEFAULT_GAP_MINUTES = 480
 
 // Events that only describe the incident, not someone acting on it
-const PASSIVE_KINDS = ['sla_start', 'sla_breach', 'silent_gap']
+// PIR notes are written after the fact, so they cannot break a silence either
+const PASSIVE_KINDS = ['sla_start', 'sla_breach', 'silent_gap', 'pir_note']
 
 interface Snapshot {
     state: string
@@ -23,6 +24,12 @@ export function formatMinutes(minutes: number): string {
     const hours = Math.floor(minutes / 60)
     const rest = Math.round(minutes % 60)
     return hours ? `${hours}h ${rest}m` : `${rest}m`
+}
+
+// Reviews and the PIR timeline are blameless: engineers are described by role, never by name
+export function blamelessSummary(kind: string, summary: string, toValue: string): string {
+    if (kind === 'assigned_to') return toValue ? 'Engineer assigned' : 'Engineer unassigned'
+    return summary
 }
 
 function initialSnapshot(facts: IncidentFacts, events: TimelineEvent[]): Snapshot {
@@ -75,11 +82,12 @@ function silentGaps(events: TimelineEvent[], facts: IncidentFacts, end: number):
         if (at - previous > limit) {
             const minutes = (at - previous) / MINUTE_MS
             gaps.push({
+                key: `gap:${previous}`,
                 at: previous + 1,
                 source: 'analysis',
                 kind: 'silent_gap',
                 actor: '',
-                summary: `No updates for ${formatMinutes(minutes)}`,
+                summary: `No updates for ${formatMinutes(minutes)} (limit ${formatMinutes(limit / MINUTE_MS)} for P${facts.priority})`,
                 detail: `Nothing was logged on the incident or its tasks for ${formatMinutes(minutes)}, above the ${formatMinutes(limit / MINUTE_MS)} expected for P${facts.priority}.`,
                 keyMoment: false,
             })

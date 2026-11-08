@@ -354,6 +354,10 @@ declare global {
                         table: 'sys_ws_operation'
                         id: 'af161908a8d64c0c80379d0a9425ab66'
                     }
+                    'replay-api-pir': {
+                        table: 'sys_ws_operation'
+                        id: '6dc05438192244edb75a9c249f952ab6'
+                    }
                     'replay-api-review': {
                         table: 'sys_ws_operation'
                         id: '0e7eafde40134922a2e01eb11e66dfb5'
@@ -417,6 +421,10 @@ declare global {
                     'src_server_replay_form-actions_ts': {
                         table: 'sys_module'
                         id: '1a6d86ba7c7b471aaf3c8f48cbfa409d'
+                    }
+                    src_server_replay_pir_ts: {
+                        table: 'sys_module'
+                        id: '0787389986724e97a66dfe25de9bf69b'
                     }
                     src_server_replay_related_ts: {
                         table: 'sys_module'
@@ -484,6 +492,15 @@ declare global {
                         key: {
                             name: 'x_everi_luxlab_replay_action'
                             element: 'type'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '006ff56315644799afb932c472282aab'
+                        key: {
+                            name: 'x_everi_luxlab_replay'
+                            element: 'pir_pushed_count'
+                            language: 'en'
                         }
                     },
                     {
@@ -699,6 +716,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: '081530f3e74b4678973b9637b6cd5bda'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: '85890b6dc8ab49209d4ddf0d4eee61f0'
@@ -738,6 +756,14 @@ declare global {
                             }
                             element: '.split'
                             position: '2'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '0b4989dbe62446e3b91c89f5eb4e118b'
+                        key: {
+                            name: 'x_everi_luxlab_replay_event'
+                            element: 'hidden'
                         }
                     },
                     {
@@ -791,6 +817,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: '0e17ea9c1c044eb79a34dd88397e406e'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: '85890b6dc8ab49209d4ddf0d4eee61f0'
@@ -808,6 +835,28 @@ declare global {
                             }
                             element: 'phase'
                             position: '8'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '0e4b81cf143b40d5ac22b7199f48dad4'
+                        key: {
+                            sys_ui_section: {
+                                id: 'fd85efe16b2e4487b0a778690cdd5cb4'
+                                key: {
+                                    name: 'x_everi_luxlab_replay'
+                                    caption: 'Post incident review'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.begin_split'
+                            position: '0'
                         }
                     },
                     {
@@ -898,6 +947,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '1313d648f7c24078b727f97e0b994327'
+                        key: {
+                            sys_ui_section: {
+                                id: '85890b6dc8ab49209d4ddf0d4eee61f0'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_event'
+                                    caption: 'Event'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.split'
+                            position: '6'
+                        }
+                    },
+                    {
                         table: 'sys_choice_set'
                         id: '131a0b40f5354fe8802c291acf099d65'
                         key: {
@@ -926,6 +997,28 @@ declare global {
                             }
                             element: 'description'
                             position: '11'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '155a19b2a22b494ba7ea84a4d91f2a8b'
+                        key: {
+                            sys_ui_section: {
+                                id: '85890b6dc8ab49209d4ddf0d4eee61f0'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_event'
+                                    caption: 'Event'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'phase'
+                            position: '9'
                         }
                     },
                     {
@@ -971,6 +1064,14 @@ declare global {
                             }
                             element: 'incident'
                             position: '2'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '170d158c1c8b4df6a65f66b6904ddb8c'
+                        key: {
+                            name: 'x_everi_luxlab_replay_event'
+                            element: 'pir_flagged'
                         }
                     },
                     {
@@ -1075,6 +1176,39 @@ declare global {
                             }
                             element: 'reviewed_on'
                             position: '1'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_form_section'
+                        id: '1fdb9c7d41224c3e85f985cac996025b'
+                        key: {
+                            sys_ui_form: {
+                                id: '3d27a475f92045038ed0944d5643fb29'
+                                key: {
+                                    name: 'x_everi_luxlab_replay'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            sys_ui_section: {
+                                id: 'fd85efe16b2e4487b0a778690cdd5cb4'
+                                key: {
+                                    name: 'x_everi_luxlab_replay'
+                                    caption: 'Post incident review'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
                         }
                     },
                     {
@@ -1231,6 +1365,28 @@ declare global {
                     },
                     {
                         table: 'sys_ui_element'
+                        id: '279ad60fc7044c38a0e45d62cb80b0a7'
+                        key: {
+                            sys_ui_section: {
+                                id: '85890b6dc8ab49209d4ddf0d4eee61f0'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_event'
+                                    caption: 'Event'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.end_split'
+                            position: '13'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
                         id: '28df1e7cdf6f4d56b4b86a7389436ea5'
                         key: {
                             sys_ui_section: {
@@ -1301,6 +1457,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: '2c03439919e246c893f760a8e566f903'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: '85890b6dc8ab49209d4ddf0d4eee61f0'
@@ -1656,6 +1813,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '3ec836081e5c499ebdc569c556912718'
+                        key: {
+                            sys_ui_section: {
+                                id: 'fd85efe16b2e4487b0a778690cdd5cb4'
+                                key: {
+                                    name: 'x_everi_luxlab_replay'
+                                    caption: 'Post incident review'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'pir_pushed_on'
+                            position: '2'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '3f1c047754124b1a907b3a56e2ad6cf1'
                         key: {
@@ -1834,6 +2013,28 @@ declare global {
                     },
                     {
                         table: 'sys_ui_element'
+                        id: '490c00b9a76b4c13a3c08d844c3743d9'
+                        key: {
+                            sys_ui_section: {
+                                id: 'fd85efe16b2e4487b0a778690cdd5cb4'
+                                key: {
+                                    name: 'x_everi_luxlab_replay'
+                                    caption: 'Post incident review'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'pir_pushed_count'
+                            position: '4'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
                         id: '49198c8faa6f4048826d91b41d62e162'
                         key: {
                             sys_ui_section: {
@@ -1975,6 +2176,28 @@ declare global {
                     },
                     {
                         table: 'sys_ui_element'
+                        id: '4c63b2c4348d42e3b049c0539791799b'
+                        key: {
+                            sys_ui_section: {
+                                id: '85890b6dc8ab49209d4ddf0d4eee61f0'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_event'
+                                    caption: 'Event'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'kind'
+                            position: '8'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
                         id: '4d72dfc948914671aa3272bfb177aaf0'
                         key: {
                             sys_ui_section: {
@@ -2096,11 +2319,41 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '564bf85d006d4ba88cf140849662dc71'
+                        key: {
+                            sys_ui_section: {
+                                id: '85890b6dc8ab49209d4ddf0d4eee61f0'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_event'
+                                    caption: 'Event'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'summary'
+                            position: '14'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '5695be9d9bc348b6ae8f6c4fc43cfb64'
                         key: {
                             name: 'x_everi_luxlab_replay'
                             element: 'minutes_to_resolve'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '57dcdf85f7b64e3caaa5586ab7f283c0'
+                        key: {
+                            name: 'x_everi_luxlab_replay_event'
+                            element: 'event_key'
                         }
                     },
                     {
@@ -2191,6 +2444,28 @@ declare global {
                                 }
                             }
                             variable: 'ab5ef79893b64210aa5730f16489185a'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '5ce3d5538fd6482a80b317e345ecbbca'
+                        key: {
+                            sys_ui_section: {
+                                id: '85890b6dc8ab49209d4ddf0d4eee61f0'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_event'
+                                    caption: 'Event'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'actor'
+                            position: '10'
                         }
                     },
                     {
@@ -2472,6 +2747,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '6f6f8aae86944ff9a32eebd505212ba6'
+                        key: {
+                            name: 'x_everi_luxlab_replay_event'
+                            element: 'event_key'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_ws_query_parameter_map'
                         id: '701b40bdb88b410fb57fad472c461e50'
                         key: {
@@ -2513,6 +2797,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: '71eacb79432e4a1aa931031f7471b8c4'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: '85890b6dc8ab49209d4ddf0d4eee61f0'
@@ -2530,6 +2815,28 @@ declare global {
                             }
                             element: 'actor'
                             position: '9'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '71f9042ac2074189a2a3db433fd2099b'
+                        key: {
+                            sys_ui_section: {
+                                id: 'fd85efe16b2e4487b0a778690cdd5cb4'
+                                key: {
+                                    name: 'x_everi_luxlab_replay'
+                                    caption: 'Post incident review'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'pir_id'
+                            position: '1'
                         }
                     },
                     {
@@ -2574,6 +2881,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: '732a4150cc9d4a60b6185afb6fcc8ca8'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: '85890b6dc8ab49209d4ddf0d4eee61f0'
@@ -2648,6 +2956,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: '76c3cd810aed4964b8d67e87a8c7fea0'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: '85890b6dc8ab49209d4ddf0d4eee61f0'
@@ -2718,6 +3027,28 @@ declare global {
                                 }
                             }
                             element: 'finished_on'
+                            position: '5'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: '78b65b82e54e43c3949ae911c5005386'
+                        key: {
+                            sys_ui_section: {
+                                id: 'fd85efe16b2e4487b0a778690cdd5cb4'
+                                key: {
+                                    name: 'x_everi_luxlab_replay'
+                                    caption: 'Post incident review'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.end_split'
                             position: '5'
                         }
                     },
@@ -2989,6 +3320,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: '893f3f4a0c394e2baa6750be3df767ce'
+                        key: {
+                            sys_ui_section: {
+                                id: '85890b6dc8ab49209d4ddf0d4eee61f0'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_event'
+                                    caption: 'Event'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'detail'
+                            position: '17'
+                        }
+                    },
+                    {
                         table: 'sn_glider_source_artifact_m2m'
                         id: '89df9408022d4388ae6913633497163c'
                         key: {
@@ -3114,6 +3467,14 @@ declare global {
                             }
                             element: '.split'
                             position: '5'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '937a969f02014731b3903700a81f82cb'
+                        key: {
+                            name: 'x_everi_luxlab_replay'
+                            element: 'pir_id'
                         }
                     },
                     {
@@ -3249,6 +3610,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_documentation'
+                        id: '9d6ffff6ac0040f3bfad224ddedb71db'
+                        key: {
+                            name: 'x_everi_luxlab_replay'
+                            element: 'pir_id'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_ui_form_section'
                         id: '9d735e08879c4ac39ebfea8ab8b6a369'
                         key: {
@@ -3331,6 +3701,14 @@ declare global {
                         key: {
                             name: 'x_everi_luxlab_replay_action'
                             element: 'state'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '9fdf8e62c6834445a37562eeedf8d904'
+                        key: {
+                            name: 'x_everi_luxlab_replay'
+                            element: 'pir_pushed_on'
                         }
                     },
                     {
@@ -3648,6 +4026,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: 'b0ce831a13fc44cfb8875e103ecb509d'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: '85890b6dc8ab49209d4ddf0d4eee61f0'
@@ -3722,6 +4101,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: 'b3da3a6653994f20a23a934537cf1a8d'
+                        key: {
+                            sys_ui_section: {
+                                id: '85890b6dc8ab49209d4ddf0d4eee61f0'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_event'
+                                    caption: 'Event'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'pir_flagged'
+                            position: '12'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: 'b46c85647847485fb65368253e1b9eb3'
                         key: {
@@ -3752,6 +4153,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: 'b80a709456d14bf7af5590072b74247c'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: '85890b6dc8ab49209d4ddf0d4eee61f0'
@@ -3783,6 +4185,28 @@ declare global {
                                 }
                             }
                             sys_domain: 'global'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: 'b8359deff79d45ebb7f4a7fe982e9ebe'
+                        key: {
+                            sys_ui_section: {
+                                id: '85890b6dc8ab49209d4ddf0d4eee61f0'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_event'
+                                    caption: 'Event'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'hidden'
+                            position: '11'
                         }
                     },
                     {
@@ -4044,6 +4468,28 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_ui_element'
+                        id: 'cabfd96a6b2846f384cd32387255af70'
+                        key: {
+                            sys_ui_section: {
+                                id: '85890b6dc8ab49209d4ddf0d4eee61f0'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_event'
+                                    caption: 'Event'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'to_value'
+                            position: '16'
+                        }
+                    },
+                    {
                         table: 'sys_choice_set'
                         id: 'caccd543367a4af59a0ab6c300db078a'
                         key: {
@@ -4075,6 +4521,15 @@ declare global {
                     },
                     {
                         table: 'sys_documentation'
+                        id: 'cbcf1f99496b4607b17c3f64fe907a45'
+                        key: {
+                            name: 'x_everi_luxlab_replay'
+                            element: 'pir_pushed_on'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
                         id: 'cd5805a00a674981afbf75e550beb84b'
                         key: {
                             name: 'x_everi_luxlab_replay_action'
@@ -4085,6 +4540,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: 'cd606e9e42414678b6b4d21a75a75a4c'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: '85890b6dc8ab49209d4ddf0d4eee61f0'
@@ -4116,6 +4572,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: 'ce40a5a4064546e78c9c8884600e8052'
+                        key: {
+                            name: 'x_everi_luxlab_replay'
+                            element: 'pir_pushed_count'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: 'ce4e4c9928714adfbed9dcfda386ad76'
                         key: {
@@ -4135,6 +4599,15 @@ declare global {
                             }
                             element: 'problem'
                             position: '8'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'cf777a56915b486ea5443277d824e2dd'
+                        key: {
+                            name: 'x_everi_luxlab_replay_event'
+                            element: 'pir_flagged'
+                            language: 'en'
                         }
                     },
                     {
@@ -4342,6 +4815,7 @@ declare global {
                     {
                         table: 'sys_ui_element'
                         id: 'd6bb3d8c7a9a46a2a7825edc3ba3ab1c'
+                        deleted: true
                         key: {
                             sys_ui_section: {
                                 id: '85890b6dc8ab49209d4ddf0d4eee61f0'
@@ -4542,6 +5016,50 @@ declare global {
                         key: {
                             web_service_operation: '677dd28ff63a431a8ba569e671e17577'
                             web_service_query_parameter: '07811fe5c25e4639a89997a08ce0e0f0'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: 'defd5a2ff2774408a732498088b50b4e'
+                        key: {
+                            sys_ui_section: {
+                                id: '85890b6dc8ab49209d4ddf0d4eee61f0'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_event'
+                                    caption: 'Event'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'source'
+                            position: '7'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: 'df800c1f967e48f6a9686fccebd38bf1'
+                        key: {
+                            sys_ui_section: {
+                                id: '85890b6dc8ab49209d4ddf0d4eee61f0'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_event'
+                                    caption: 'Event'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'from_value'
+                            position: '15'
                         }
                     },
                     {
@@ -4770,6 +5288,28 @@ declare global {
                             }
                             element: '.end_split'
                             position: '10'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: 'e844fd6118954c6ea3b33d97e15a8ec2'
+                        key: {
+                            sys_ui_section: {
+                                id: '85890b6dc8ab49209d4ddf0d4eee61f0'
+                                key: {
+                                    name: 'x_everi_luxlab_replay_event'
+                                    caption: 'Event'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: 'event_key'
+                            position: '5'
                         }
                     },
                     {
@@ -5074,6 +5614,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'fa241d11c4354159acf6fb76d8fc3e64'
+                        key: {
+                            name: 'x_everi_luxlab_replay_event'
+                            element: 'source'
+                            value: 'pir'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: 'fac897bd530a4d1097463d9c107b4708'
                         key: {
@@ -5097,6 +5648,28 @@ declare global {
                             value: 'alert'
                             language: 'en'
                             dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_element'
+                        id: 'fcafaab43127429ab38e874b1c687ad6'
+                        key: {
+                            sys_ui_section: {
+                                id: 'fd85efe16b2e4487b0a778690cdd5cb4'
+                                key: {
+                                    name: 'x_everi_luxlab_replay'
+                                    caption: 'Post incident review'
+                                    view: {
+                                        id: 'Default view'
+                                        key: {
+                                            name: 'NULL'
+                                        }
+                                    }
+                                    sys_domain: 'global'
+                                }
+                            }
+                            element: '.split'
+                            position: '3'
                         }
                     },
                     {
@@ -5126,6 +5699,21 @@ declare global {
                                 }
                             }
                             variable: 'ab5ef79893b64210aa5730f16489185a'
+                        }
+                    },
+                    {
+                        table: 'sys_ui_section'
+                        id: 'fd85efe16b2e4487b0a778690cdd5cb4'
+                        key: {
+                            name: 'x_everi_luxlab_replay'
+                            caption: 'Post incident review'
+                            view: {
+                                id: 'Default view'
+                                key: {
+                                    name: 'NULL'
+                                }
+                            }
+                            sys_domain: 'global'
                         }
                     },
                     {
@@ -5161,6 +5749,15 @@ declare global {
                                     name: 'x_everi_luxlab.user'
                                 }
                             }
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: 'ff77fd074a624819b782f708855549df'
+                        key: {
+                            name: 'x_everi_luxlab_replay_event'
+                            element: 'hidden'
+                            language: 'en'
                         }
                     },
                 ]

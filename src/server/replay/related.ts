@@ -17,11 +17,12 @@ export function slaEvents(facts: IncidentFacts): TimelineEvent[] {
     sla.query()
     while (sla.next()) {
         const name = sla.getDisplayValue('sla')
+        const id = sla.getUniqueValue()
         const start = sla.getValue('start_time')
-        if (start) add({ at: epoch(start), source: 'sla', kind: 'sla_start', actor: '', summary: `SLA started: ${name}`, keyMoment: false })
+        if (start) add({ key: `sla:${id}:start`, at: epoch(start), source: 'sla', kind: 'sla_start', actor: '', summary: `SLA started: ${name}`, keyMoment: false })
         const breachAt = sla.getValue('planned_end_time')
         if (sla.getValue('has_breached') === '1' && breachAt) {
-            add({ at: epoch(breachAt), source: 'sla', kind: 'sla_breach', actor: '', summary: `SLA breached: ${name}`, keyMoment: true })
+            add({ key: `sla:${id}:breach`, at: epoch(breachAt), source: 'sla', kind: 'sla_breach', actor: '', summary: `SLA breached: ${name}`, keyMoment: true })
         }
     }
     return events
@@ -35,6 +36,7 @@ export function taskEvents(facts: IncidentFacts): TimelineEvent[] {
     while (task.next()) {
         const label = `${task.getValue('number')} (${task.getDisplayValue('assignment_group') || 'no group'})`
         events.push({
+            key: `task:${task.getUniqueValue()}:opened`,
             at: epoch(task.getValue('opened_at')),
             source: 'task',
             kind: 'task_opened',
@@ -44,7 +46,7 @@ export function taskEvents(facts: IncidentFacts): TimelineEvent[] {
         })
         const closed = task.getValue('closed_at')
         if (closed) {
-            events.push({ at: epoch(closed), source: 'task', kind: 'task_closed', actor: task.getDisplayValue('closed_by'), summary: `Task closed ${label}`, keyMoment: false })
+            events.push({ key: `task:${task.getUniqueValue()}:closed`, at: epoch(closed), source: 'task', kind: 'task_closed', actor: task.getDisplayValue('closed_by'), summary: `Task closed ${label}`, keyMoment: false })
         }
     }
     return events
@@ -57,6 +59,7 @@ export function childEvents(facts: IncidentFacts): TimelineEvent[] {
     child.query()
     while (child.next()) {
         events.push({
+            key: `child:${child.getUniqueValue()}`,
             at: epoch(child.getValue('opened_at')),
             source: 'child',
             kind: 'child_reported',
@@ -88,6 +91,7 @@ export function alertEvents(facts: IncidentFacts): TimelineEvent[] {
         while (alert.next()) {
             const first = alert.getValue('initial_remote_time') || alert.getValue('sys_created_on')
             events.push({
+                key: `alert:${alert.getUniqueValue()}`,
                 at: epoch(first),
                 source: 'alert',
                 kind: 'alert',
@@ -109,6 +113,7 @@ export function commsEvents(facts: IncidentFacts): TimelineEvent[] {
         plan.query()
         while (plan.next()) {
             events.push({
+                key: `comms:${plan.getUniqueValue()}`,
                 at: epoch(plan.getValue('sys_created_on')),
                 source: 'comms',
                 kind: 'comms_plan',

@@ -26,6 +26,8 @@ export default class ReplayDetailPage extends AIUXElement {
   @state() _replay = null;
   @state() _busy = false;
   @state() _error = '';
+  @state() _pirBusy = false;
+  @state() _notice = '';
 
   _prevLoaderData = null;
 
@@ -81,6 +83,81 @@ export default class ReplayDetailPage extends AIUXElement {
     } finally {
       this._busy = false;
     }
+  }
+
+  async _sendToPir() {
+    try {
+      this._pirBusy = true;
+      this._error = '';
+      this._notice = '';
+      const {replay} = await api(`/replay/${this.loaderData.incident}/pir`, {method: 'POST'});
+      this._replay = replay;
+      this._notice = i18n.getMessage(
+        '{0} replay events are in the post incident review timeline.',
+        replay.pir?.pushedCount || 0
+      );
+    } catch (error) {
+      this._error = i18n.getMessage('Could not send the replay to the post incident review: {0}', error.message);
+    } finally {
+      this._pirBusy = false;
+    }
+  }
+
+  _pirBlocker(pir) {
+    if (pir.state !== 'draft') return i18n.getMessage('The post incident review is already published.');
+    if (!pir.canWrite) return i18n.getMessage('You are not allowed to edit this post incident review.');
+    return '';
+  }
+
+  // The replay feeds the platform's Post Incident Review; curation done there comes back on every rebuild
+  _renderPir(replay) {
+    const pir = replay.pir;
+    if (!pir) {
+      return replay.incident.majorState
+        ? html`<p class="text-sm text-text-tertiary">
+            ${i18n.getMessage(
+              'The post incident review is created when the major incident is resolved and accepted.'
+            )}
+          </p>`
+        : nothing;
+    }
+    const blocker = this._pirBlocker(pir);
+    return html`<div
+      class="flex flex-wrap items-center justify-between gap-3 rounded-box bg-base-200 px-4 py-3"
+    >
+      <div class="flex min-w-0 flex-col gap-1">
+        <p class="flex flex-wrap items-center gap-2 text-sm text-text-secondary">
+          <a
+            class="aiux-link aiux-link-primary font-medium"
+            href=${recordUrl('sn_sow_inc_post_incident_review', pir.sysId)}
+            target="_blank"
+            rel="noopener noreferrer"
+            >${i18n.getMessage('Post incident review')}</a
+          >
+          <span class="aiux-badge aiux-badge-sm aiux-badge-soft"
+            >${pir.state === 'draft' ? i18n.getMessage('Draft') : i18n.getMessage('Published')}</span
+          >
+          ${pir.pushedOn
+            ? html`<span
+                >${i18n.getMessage('{0} replay events sent', pir.pushedCount)} ·
+                <luxlab-time value=${pir.pushedOn}></luxlab-time
+              ></span>`
+            : html`<span>${i18n.getMessage('No replay events sent yet')}</span>`}
+        </p>
+        ${blocker ? html`<p class="text-xs text-text-tertiary">${blocker}</p>` : nothing}
+      </div>
+      <button
+        type="button"
+        class="aiux-btn aiux-btn-primary aiux-btn-sm"
+        ?disabled=${!!blocker || this._pirBusy || this._busy}
+        @click=${() => this._sendToPir()}
+      >
+        ${this._pirBusy
+          ? html`<span class="aiux-loading aiux-loading-spinner aiux-loading-xs"></span>
+              ${i18n.getMessage('Sending…')}`
+          : i18n.getMessage('Send to PIR')}
+      </button>
+    </div>`;
   }
 
   _renderStat(label, value) {
@@ -196,7 +273,7 @@ export default class ReplayDetailPage extends AIUXElement {
           ${this._renderStat(i18n.getMessage('Silent gaps'), replay.silentGaps)}
           ${this._renderStat(i18n.getMessage('Events'), replay.events.length)}
         </div>
-        ${this._renderPhases(replay)}
+        ${this._renderPhases(replay)} ${this._renderPir(replay)}
       </div>
     </section>`;
   }
@@ -227,6 +304,11 @@ export default class ReplayDetailPage extends AIUXElement {
       ${this._error
         ? html`<div class="aiux-alert aiux-alert-error aiux-alert-soft" role="alert">
             ${this._error}
+          </div>`
+        : nothing}
+      ${this._notice
+        ? html`<div class="aiux-alert aiux-alert-success aiux-alert-soft" role="status">
+            ${this._notice}
           </div>`
         : nothing}
       ${!replay && this._busy

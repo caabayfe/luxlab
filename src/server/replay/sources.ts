@@ -51,6 +51,7 @@ export function loadFacts(incident: GlideRecord<'incident'>): IncidentFacts {
 export function recordEvents(incident: GlideRecord<'incident'>, facts: IncidentFacts): TimelineEvent[] {
     const events: TimelineEvent[] = [
         {
+            key: 'record:opened',
             at: facts.openedAt,
             source: 'record',
             kind: 'opened',
@@ -62,6 +63,7 @@ export function recordEvents(incident: GlideRecord<'incident'>, facts: IncidentF
     if (facts.resolvedAt) {
         const code = incident.getDisplayValue('close_code')
         events.push({
+            key: 'record:resolved',
             at: facts.resolvedAt,
             source: 'record',
             kind: 'resolved',
@@ -72,7 +74,7 @@ export function recordEvents(incident: GlideRecord<'incident'>, facts: IncidentF
         })
     }
     if (facts.closedAt) {
-        events.push({ at: facts.closedAt, source: 'record', kind: 'closed', actor: '', summary: 'Closed', keyMoment: false })
+        events.push({ key: 'record:closed', at: facts.closedAt, source: 'record', kind: 'closed', actor: '', summary: 'Closed', keyMoment: false })
     }
     return events
 }
@@ -126,6 +128,7 @@ export function auditEvents(facts: IncidentFacts): TimelineEvent[] {
         const fromValue = displayOf(field, fromRaw)
         const toValue = displayOf(field, toRaw)
         events.push({
+            key: `audit:${audit.getUniqueValue()}`,
             at,
             source: 'audit',
             kind: initial ? `initial_${field}` : field,
@@ -154,6 +157,7 @@ export function journalEvents(facts: IncidentFacts): TimelineEvent[] {
         const text = journal.getValue('value') || ''
         const isNote = journal.getValue('element') === 'work_notes'
         events.push({
+            key: `journal:${journal.getUniqueValue()}`,
             at: epoch(journal.getValue('sys_created_on')),
             source: 'journal',
             kind: isNote ? 'work_note' : 'comment',

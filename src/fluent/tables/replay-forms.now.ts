@@ -57,6 +57,19 @@ Form({
                 { layout: 'one-column', elements: [{ field: 'review', type: 'table_field' }] },
             ],
         },
+        {
+            caption: 'Post incident review',
+            content: [
+                {
+                    layout: 'two-column',
+                    leftElements: [
+                        { field: 'pir_id', type: 'table_field' },
+                        { field: 'pir_pushed_on', type: 'table_field' },
+                    ],
+                    rightElements: [{ field: 'pir_pushed_count', type: 'table_field' }],
+                },
+            ],
+        },
     ],
 })
 
@@ -74,12 +87,15 @@ Form({
                         { field: 'occurred_at', type: 'table_field' },
                         { field: 'sequence', type: 'table_field' },
                         { field: 'key_moment', type: 'table_field' },
+                        { field: 'event_key', type: 'table_field' },
                     ],
                     rightElements: [
                         { field: 'source', type: 'table_field' },
                         { field: 'kind', type: 'table_field' },
                         { field: 'phase', type: 'table_field' },
                         { field: 'actor', type: 'table_field' },
+                        { field: 'hidden', type: 'table_field' },
+                        { field: 'pir_flagged', type: 'table_field' },
                     ],
                 },
                 {
