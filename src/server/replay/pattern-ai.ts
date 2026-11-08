@@ -132,15 +132,45 @@ export function startProposal(patternId: string): BriefingRunDto {
     })
 }
 
+// The problem description is a plain text field, so the proposal's Markdown would show literally
+function plainText(markdown: string): string {
+    return markdown
+        .replace(/^#{1,6}\s+(.*)$/gm, (_match, heading: string) => heading.toUpperCase())
+        .replace(/\*\*(.+?)\*\*/g, '$1')
+        .replace(/__(.+?)__/g, '$1')
+        .replace(/`([^`]+)`/g, '$1')
+        .replace(/^(\s*)[-*]\s+/gm, '$1• ')
+}
+
+// Patterns keep group names; the resolving group owns the problem
+function groupId(name: string): string {
+    if (!name) return ''
+    const group = new GlideRecord('sys_user_group')
+    return group.get('name', name) ? group.getUniqueValue() : ''
+}
+
+// Links the incidents that are not already tied to another problem
+function linkIncidents(problemId: string, incidentIds: string[]) {
+    incidentIds.forEach((incidentId) => {
+        const incident = new GlideRecordSecure('incident')
+        if (!incident.get('sys_id', incidentId) || incident.getValue('problem_id') || !incident.canWrite()) return
+        incident.setValue('problem_id', problemId)
+        incident.update()
+    })
+}
+
 function createProblem(pattern: GlideRecord): string {
     const evidence = patternDto(pattern).incidents
     const problem = new GlideRecordSecure('problem')
     problem.initialize()
     problem.setValue('short_description', pattern.getValue('title'))
-    problem.setValue('description', `${pattern.getValue('proposal')}\n\nIncidents: ${evidence.map((item) => item.number).join(', ')}`)
+    problem.setValue('description', `${plainText(pattern.getValue('proposal') || '')}\n\nIncidents: ${evidence.map((item) => item.number).join(', ')}`)
+    const group = groupId(pattern.getValue('target') || pattern.getValue('group') || '')
+    if (group) problem.setValue('assignment_group', group)
     if (evidence.length) problem.setValue('first_reported_by_task', evidence[0].sysId)
     const id = problem.insert()
     if (!id) throw new Error('You are not allowed to create problem records')
+    linkIncidents(id, evidence.map((item) => item.sysId))
     return id
 }
 
