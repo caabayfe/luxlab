@@ -42,6 +42,13 @@ export const x_everi_luxlab_replay = Table({
         review: StringColumn({ label: 'AI incident review', maxLength: 16000 }),
         reviewed_on: DateTimeColumn({ label: 'Review written on' }),
         follow_ups_on: DateTimeColumn({ label: 'Follow-ups suggested on' }),
+        // A sys_id rather than a reference, so LuxLab installs where SOW Incident (sn_sow_inc) is missing
+        pir_id: StringColumn({ label: 'Post incident review', maxLength: 32 }),
+        pir_pushed_on: DateTimeColumn({ label: 'Sent to PIR on' }),
+        pir_pushed_count: IntegerColumn({ label: 'Events sent to PIR' }),
+        // The PIR report draft as it read back after LuxLab wrote it; a different draft means someone edited it there
+        pir_report: StringColumn({ label: 'Report sent to PIR', maxLength: 65000 }),
+        pir_report_on: DateTimeColumn({ label: 'Report sent to PIR on' }),
     },
     index: [{ name: 'replay_incident', unique: true, element: 'incident' }],
 })

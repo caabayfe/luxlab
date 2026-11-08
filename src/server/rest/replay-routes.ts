@@ -4,6 +4,7 @@ import { buildReplay, loadReplay, readableIncident } from '../replay/store.ts'
 import { decideFollowUp, suggestFollowUps, writeReview } from '../replay/ai.ts'
 import { canDecide } from '../replay/follow-ups.ts'
 import { AnalysisKind, startAnalysis } from '../replay/analyst.ts'
+import { pushToPir, writePirReport } from '../replay/pir.ts'
 
 function firstParam(request: RESTAPIRequest, name: string): string {
     const raw = request.queryParams[name]
@@ -68,6 +69,31 @@ export function decide(request: RESTAPIRequest, response: RESTAPIResponse) {
         decideFollowUp(request.pathParams.action, decision === 'approve')
     } catch (e) {
         return failed(response, 400, e)
+    }
+    response.setBody({ replay: loadReplay(incident) } as any)
+}
+
+// Rebuilds first so the curation done in the PIR since the last build is respected, then sends the key moments
+export function sendToPir(request: RESTAPIRequest, response: RESTAPIResponse) {
+    const incident = readableIncident(request.pathParams.incident)
+    if (!incident) return notFound(response)
+    try {
+        buildReplay(incident)
+        pushToPir(incident.getUniqueValue())
+    } catch (e) {
+        return failed(response, (e && e.status) || 500, e)
+    }
+    response.setBody({ replay: loadReplay(incident) } as any)
+}
+
+// Writes the incident review into the PIR report draft; replace confirms overwriting text LuxLab did not write
+export function sendReportToPir(request: RESTAPIRequest, response: RESTAPIResponse) {
+    const incident = readableIncident(request.pathParams.incident)
+    if (!incident) return notFound(response)
+    try {
+        writePirReport(incident.getUniqueValue(), (request.body.data as any)?.replace === true)
+    } catch (e) {
+        return failed(response, (e && e.status) || 500, e)
     }
     response.setBody({ replay: loadReplay(incident) } as any)
 }

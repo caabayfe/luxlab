@@ -18,6 +18,8 @@ export const x_everi_luxlab_replay_event = Table({
     schema: {
         replay: ReferenceColumn({ label: 'Replay', referenceTable: 'x_everi_luxlab_replay', mandatory: true, cascadeRule: 'delete' }),
         sequence: IntegerColumn({ label: 'Sequence' }),
+        // Derived from the source row (e.g. audit:<sys_id>), so it survives rebuilds and matches PIR timeline events
+        event_key: StringColumn({ label: 'Event key', maxLength: 120 }),
         occurred_at: DateTimeColumn({ label: 'Occurred at' }),
         source: ChoiceColumn({
             label: 'Source',
@@ -32,6 +34,7 @@ export const x_everi_luxlab_replay_event = Table({
                 alert: { label: 'Alert' },
                 comms: { label: 'Communication' },
                 analysis: { label: 'Analysis' },
+                pir: { label: 'Post incident review' },
             },
         }),
         kind: StringColumn({ label: 'Kind', maxLength: 40 }),
@@ -53,6 +56,8 @@ export const x_everi_luxlab_replay_event = Table({
         to_value: StringColumn({ label: 'To', maxLength: 255 }),
         detail: StringColumn({ label: 'Detail', maxLength: 4000 }),
         key_moment: BooleanColumn({ label: 'Key moment', default: false }),
+        hidden: BooleanColumn({ label: 'Hidden in PIR', default: false }),
+        pir_flagged: BooleanColumn({ label: 'Flagged in PIR', default: false }),
     },
     index: [{ name: 'replay_event_replay', unique: false, element: 'replay' }],
 })

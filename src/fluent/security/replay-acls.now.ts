@@ -30,6 +30,15 @@ Acl({
     description: 'LuxLab users can read the follow-ups proposed for incident replays.',
 })
 
+Acl({
+    $id: Now.ID['pattern-read-acl'],
+    type: 'record',
+    table: 'x_everi_luxlab_pattern',
+    operation: 'read',
+    roles: [luxlabUser],
+    description: 'LuxLab users can read the response patterns mined from incident replays.',
+})
+
 // Runs are written by the briefing API; the API itself only returns a user's own runs
 Acl({
     $id: Now.ID['briefing-run-read-acl'],

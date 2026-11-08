@@ -25,12 +25,33 @@ export class LuxlabReplayTimeline extends AIUXElement {
     this._open = this._open === sequence ? null : sequence;
   }
 
+  // Curation done in the Post Incident Review
+  _renderPirBadge(event) {
+    if (event.hidden) {
+      return html`<span class="aiux-badge aiux-badge-sm aiux-badge-ghost"
+        >${i18n.getMessage('Hidden in PIR')}</span
+      >`;
+    }
+    if (event.pirFlagged) {
+      return html`<span class="aiux-badge aiux-badge-sm aiux-badge-soft aiux-badge-info"
+        >${i18n.getMessage('Flagged in PIR')}</span
+      >`;
+    }
+    if (event.source === 'pir') {
+      return html`<span class="aiux-badge aiux-badge-sm aiux-badge-soft aiux-badge-secondary"
+        >${i18n.getMessage('PIR note')}</span
+      >`;
+    }
+    return nothing;
+  }
+
   _renderEvent(event) {
     const gap = event.kind === 'silent_gap';
     const open = this._open === event.sequence;
     return html`<li
       class=${classMap({
         'grid grid-cols-[6.5rem_1fr] gap-3 border-l-4 py-2 pl-3': true,
+        'opacity-60': event.hidden,
         'border-warning bg-warning/5': gap,
         'border-primary': event.keyMoment && !gap,
         'border-base-300': !event.keyMoment && !gap
@@ -56,6 +77,7 @@ export class LuxlabReplayTimeline extends AIUXElement {
           <span class=${classMap({'break-words': true, 'font-semibold': event.keyMoment})}
             >${event.summary}</span
           >
+          ${this._renderPirBadge(event)}
         </p>
         ${event.actor
           ? html`<p class="text-xs text-text-tertiary">${event.actor}</p>`
@@ -85,7 +107,9 @@ export class LuxlabReplayTimeline extends AIUXElement {
 
   render() {
     const shown = this._keyOnly
-      ? this.events.filter(event => event.keyMoment || event.kind === 'silent_gap')
+      ? this.events.filter(
+          event => !event.hidden && (event.keyMoment || event.kind === 'silent_gap')
+        )
       : this.events;
     return html`<section class="aiux-card bg-base-100 shadow-sm" aria-labelledby="timeline-title">
       <div class="aiux-card-body gap-3">

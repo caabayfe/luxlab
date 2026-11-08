@@ -1,7 +1,8 @@
 import { GlideDateTime, GlideRecord, GlideRecordSecure } from '@servicenow/glide'
 import { PHASES } from './types.ts'
-import { formatMinutes } from './analysis.ts'
+import { blamelessSummary, formatMinutes } from './analysis.ts'
 import { buildReplay } from './store.ts'
+import { followUpsOf } from './follow-ups.ts'
 
 // Keeps the prompt within a predictable size on very chatty incidents
 const MAX_EVENTS = 150
@@ -16,9 +17,18 @@ const INCIDENT_FIELDS = [
     'category',
     'cmdb_ci',
     'business_service',
+    'location',
+    'business_impact',
     'assignment_group',
     'close_code',
     'close_notes',
+] as const
+
+// Records the PIR's technical overview and action items draw on
+const RELATED_FIELDS = [
+    { field: 'problem_id', label: 'problem' },
+    { field: 'rfc', label: 'change request' },
+    { field: 'caused_by', label: 'caused by change' },
 ] as const
 
 export interface ReplayContext {
@@ -27,6 +37,7 @@ export interface ReplayContext {
     metrics?: string
     phases?: string
     timeline?: string
+    followUps?: string
 }
 
 function minutesBetween(from: string, to: string): number {
@@ -39,11 +50,8 @@ function clip(text: string, max: number): string {
     return flat.length > max ? `${flat.substring(0, max - 1)}…` : flat
 }
 
-// The review is blameless: people are described by role, never by name
 function eventLine(event: GlideRecord, impactStart: string): string {
-    const kind = event.getValue('kind')
-    let summary = event.getValue('summary') || ''
-    if (kind === 'assigned_to') summary = event.getValue('to_value') ? 'Engineer assigned' : 'Engineer unassigned'
+    const summary = blamelessSummary(event.getValue('kind'), event.getValue('summary') || '', event.getValue('to_value') || '')
     const detail = event.getValue('source') === 'journal' ? '' : clip(event.getValue('detail') || '', MAX_NOTE)
     const marker = event.getValue('key_moment') === '1' ? ' [KEY]' : ''
     const offset = formatMinutes(minutesBetween(impactStart, event.getValue('occurred_at')))
@@ -59,7 +67,22 @@ function incidentText(incident: GlideRecordSecure<'incident'>): string {
     })
     const major = incident.getDisplayValue('major_incident_state')
     if (major) lines.push(`major incident state: ${major}`)
+    RELATED_FIELDS.forEach(({ field, label }) => {
+        if (!incident.getValue(field)) return
+        const description = incident.getDisplayValue(`${field}.short_description` as any)
+        lines.push(`${label}: ${incident.getDisplayValue(field)}${description ? ` (${clip(description, 300)})` : ''}`)
+    })
     return lines.join('\n')
+}
+
+// Approved follow-ups already exist as records; proposed ones still wait for a LuxLab manager
+function followUpsText(replayId: string): string {
+    return followUpsOf(replayId)
+        .map((followUp) => {
+            const record = followUp.problem || followUp.knowledge
+            return `- [${followUp.state}] ${followUp.type}${record ? ` ${record.number}` : ''}: ${clip(followUp.title, 160)}`
+        })
+        .join('\n')
 }
 
 function metricsText(replay: GlideRecord): string {
@@ -82,15 +105,23 @@ function phasesText(replay: GlideRecord): string {
         .join(', ')
 }
 
+// Events hidden in the PIR are left out; on long incidents key moments and gaps are kept before routine events
 function timelineText(replayId: string, impactStart: string): string {
     const event = new GlideRecord('x_everi_luxlab_replay_event')
     event.addQuery('replay', replayId)
     event.orderBy('sequence')
-    event.setLimit(MAX_EVENTS)
     event.query()
-    const lines: string[] = []
-    while (event.next()) lines.push(eventLine(event, impactStart))
-    return lines.join('\n')
+    const lines: { line: string; important: boolean }[] = []
+    while (event.next()) {
+        // Filtered here rather than in the query: rows built before the column existed have no value
+        if (event.getValue('hidden') === '1') continue
+        lines.push({ line: eventLine(event, impactStart), important: event.getValue('key_moment') === '1' || event.getValue('kind') === 'silent_gap' })
+    }
+    if (lines.length <= MAX_EVENTS) return lines.map((entry) => entry.line).join('\n')
+    const important = lines.filter((entry) => entry.important).length
+    let routine = Math.max(0, MAX_EVENTS - important)
+    const kept = lines.filter((entry) => entry.important || routine-- > 0).slice(0, MAX_EVENTS)
+    return `${kept.map((entry) => entry.line).join('\n')}\n(${lines.length - kept.length} routine events omitted)`
 }
 
 function readyReplay(incident: GlideRecordSecure<'incident'>): GlideRecord | null {
@@ -113,5 +144,6 @@ export function replayContext(incidentNumber: string): ReplayContext {
         metrics: metricsText(replay),
         phases: phasesText(replay),
         timeline: timelineText(replay.getUniqueValue(), replay.getValue('impact_start')),
+        followUps: followUpsText(replay.getUniqueValue()) || 'none yet',
     }
 }

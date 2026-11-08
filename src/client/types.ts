@@ -70,6 +70,9 @@ export interface ReplayEvent {
     toValue: string
     detail: string
     keyMoment: boolean
+    // Curation read back from the Post Incident Review; the cockpit does not show it yet
+    hidden?: boolean
+    pirFlagged?: boolean
 }
 
 export type FollowUpType = 'problem' | 'knowledge' | 'action'
@@ -108,6 +111,7 @@ export interface Replay {
     reviewedOn: string
     followUpsOn: string
     followUps: ReplayFollowUp[]
+    pir?: { sysId: string; state: string; canWrite: boolean; pushedOn: string; pushedCount: number } | null
     canDecide: boolean
 }
 

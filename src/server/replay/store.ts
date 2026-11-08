@@ -4,6 +4,8 @@ import { auditEvents, journalEvents, loadFacts, recordEvents } from './sources.t
 import { alertEvents, childEvents, commsEvents, slaEvents, taskEvents } from './related.ts'
 import { analyse } from './analysis.ts'
 import { canDecide, followUpsOf, ReplayActionDto } from './follow-ups.ts'
+import { applyPirCuration, PirDto, pirStatus } from './pir.ts'
+import { PatternLink, patternsOfIncident } from './pattern-store.ts'
 
 const REPLAY = 'x_everi_luxlab_replay'
 const EVENT = 'x_everi_luxlab_replay_event'
@@ -20,6 +22,8 @@ export interface ReplayEventDto {
     toValue: string
     detail: string
     keyMoment: boolean
+    hidden: boolean
+    pirFlagged: boolean
 }
 
 export interface ReplayDto {
@@ -42,6 +46,8 @@ export interface ReplayDto {
     followUpsOn: string
     followUps: ReplayActionDto[]
     canDecide: boolean
+    pir: PirDto | null
+    patterns: PatternLink[]
 }
 
 // Source tables like sys_audit are read without ACLs, so access is gated on the incident itself
@@ -74,6 +80,7 @@ function saveEvents(replayId: string, events: TimelineEvent[]) {
         row.initialize()
         row.setValue('replay', replayId)
         row.setValue('sequence', index + 1)
+        row.setValue('event_key', event.key)
         row.setValue('occurred_at', dateTime(event.at))
         row.setValue('source', event.source)
         row.setValue('kind', event.kind)
@@ -84,6 +91,8 @@ function saveEvents(replayId: string, events: TimelineEvent[]) {
         row.setValue('to_value', (event.toValue || '').substring(0, 255))
         row.setValue('detail', event.detail || '')
         row.setValue('key_moment', event.keyMoment)
+        row.setValue('hidden', !!event.hidden)
+        row.setValue('pir_flagged', !!event.pirFlagged)
         row.insert()
     })
 }
@@ -117,6 +126,8 @@ export function buildReplay(incident: GlideRecordSecure<'incident'>): void {
             ...alertEvents(facts),
             ...commsEvents(facts),
         ]
+        // Before the analysis, so PIR notes get a phase and flagged notes count as key moments
+        replay.setValue('pir_id', applyPirCuration(facts.sysId, collected))
         // Initial-value rows only seed the analysis; they are not moments in the story
         const { events, analysis } = analyse(facts, collected)
         const story = events.filter((event) => !event.kind.startsWith('initial_'))
@@ -152,6 +163,8 @@ function eventsOf(replayId: string): ReplayEventDto[] {
             toValue: row.getValue('to_value') || '',
             detail: row.getValue('detail') || '',
             keyMoment: row.getValue('key_moment') === '1',
+            hidden: row.getValue('hidden') === '1',
+            pirFlagged: row.getValue('pir_flagged') === '1',
         })
     }
     return events
@@ -187,5 +200,7 @@ export function loadReplay(incident: GlideRecordSecure<'incident'>): ReplayDto |
         followUpsOn: replay.getValue('follow_ups_on') || '',
         followUps: followUpsOf(replay.getUniqueValue()),
         canDecide: canDecide(),
+        pir: pirStatus(incident.getUniqueValue(), replay),
+        patterns: patternsOfIncident(incident.getUniqueValue()),
     }
 }

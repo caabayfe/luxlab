@@ -199,7 +199,26 @@ function finalAnswer(planId: string): string {
         const text = (message.getValue('message') || '').trim()
         if (!plainText && text && !/^[{[]/.test(text)) plainText = text
     }
-    return plainText
+    return plainText || shownAnswer(planId)
+}
+
+// Some runs log no agent messages at all; the answer is then the text the agent sent to "show output to user"
+function shownAnswer(planId: string): string {
+    const task = new GlideRecord('sn_aia_execution_task')
+    task.addQuery('execution_plan', planId)
+    task.addQuery('type', 'gen_ai')
+    task.orderByDesc('order')
+    task.orderByDesc('sys_created_on')
+    task.query()
+    while (task.next()) {
+        const output = parse(task.getValue('output') || '')
+        const answer = output && typeof output.result === 'string' ? parse(output.result) : null
+        const actions: any[] = answer && Array.isArray(answer.Action) ? answer.Action : []
+        const shown = actions.find((action) => action && action.Name === 'show output to user')
+        const text = shown && shown['Action Inputs'] && shown['Action Inputs'].prompt
+        if (text) return String(text).trim()
+    }
+    return ''
 }
 
 // Agents end some answers with "References: {"<label>":"<url>"}"; turn it into markdown links
