@@ -1,5 +1,6 @@
 import { GlideDateTime, GlideRecord } from '@servicenow/glide'
 import { IncidentFacts, TimelineEvent } from './types.ts'
+import { COACH_NOTE_PREFIX } from './analysis.ts'
 
 // Field changes worth replaying; journal fields are read from sys_journal_field instead
 const AUDITED_FIELDS = ['state', 'assignment_group', 'assigned_to', 'priority', 'hold_reason', 'major_incident_state', 'impact']
@@ -156,11 +157,12 @@ export function journalEvents(facts: IncidentFacts): TimelineEvent[] {
     while (journal.next()) {
         const text = journal.getValue('value') || ''
         const isNote = journal.getValue('element') === 'work_notes'
+        const isCoach = isNote && text.indexOf(COACH_NOTE_PREFIX) === 0
         events.push({
             key: `journal:${journal.getUniqueValue()}`,
             at: epoch(journal.getValue('sys_created_on')),
             source: 'journal',
-            kind: isNote ? 'work_note' : 'comment',
+            kind: isCoach ? 'coach_note' : isNote ? 'work_note' : 'comment',
             actor: journal.getValue('sys_created_by') || '',
             summary: `${isNote ? 'Work note' : 'Customer update'}: ${clip(text.replace(/\s+/g, ' '), 140)}`,
             detail: clip(text, 4000),

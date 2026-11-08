@@ -1,6 +1,7 @@
 import { GlideRecord } from '@servicenow/glide'
 import { RUN } from '../briefing/agents.ts'
 import { toolById } from '../briefing/tools.ts'
+import { COMMS_SKILL } from '../coach/coach.ts'
 
 // The platform meters every skill execution and agent run in sys_gen_ai_usage_log; LuxLab only reads it
 const USAGE_LOG = 'sys_gen_ai_usage_log'
@@ -149,7 +150,7 @@ function skillNames(): { [configId: string]: string } {
     return names
 }
 
-// Skill runs (incident form buttons) are metered one usage record per execution
+// Skill runs (incident form buttons, the live coach's Draft update) are metered one usage record per execution
 function skillRows(days: number): UsageRow[] {
     const names = skillNames()
     const rows: { [configId: string]: UsageRow } = {}
@@ -158,12 +159,13 @@ function skillRows(days: number): UsageRow[] {
     usage.query()
     while (usage.next()) {
         const configId = usage.getValue('skill_config_id') || ''
+        const name = names[configId] || 'LuxLab skill'
         const row =
             rows[configId] ||
             (rows[configId] = {
-                feature: 'Incident Replay',
+                feature: name === COMMS_SKILL ? 'Live Coach' : 'Incident Replay',
                 kind: 'skill',
-                name: names[configId] || 'LuxLab skill',
+                name,
                 runs: 0,
                 failed: 0,
                 metered: 0,

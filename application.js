@@ -14,6 +14,11 @@ export default {
         action: {type: 'navigate', path: '/home'}
       },
       {
+        icon: 'heartbeat',
+        title: i18n.getMessage('War Room'),
+        action: {type: 'navigate', path: '/live'}
+      },
+      {
         icon: 'ai-sparkle',
         title: i18n.getMessage('Daily Briefing'),
         action: {type: 'navigate', path: '/briefing'}

@@ -11,8 +11,11 @@ const GAP_MINUTES: { [priority: string]: number } = { '1': 30, '2': 60, '3': 240
 const DEFAULT_GAP_MINUTES = 480
 
 // Events that only describe the incident, not someone acting on it
-// PIR notes are written after the fact, so they cannot break a silence either
-export const PASSIVE_KINDS = ['sla_start', 'sla_breach', 'silent_gap', 'pir_note']
+// PIR notes are written after the fact, and coach notes are LuxLab's own nudges, so neither can break a silence
+export const PASSIVE_KINDS = ['sla_start', 'sla_breach', 'silent_gap', 'pir_note', 'coach_note']
+
+// Work notes the live coach posts start with this, so they are told apart from the team's own notes
+export const COACH_NOTE_PREFIX = '[LuxLab coach]'
 
 interface Snapshot {
     state: string

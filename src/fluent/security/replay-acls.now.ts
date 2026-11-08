@@ -49,3 +49,12 @@ Acl({
     script: `answer = current.user == gs.getUserID() || gs.hasRole('x_everi_luxlab.manager');`,
     description: 'LuxLab users can read their own Daily Briefing runs; managers can read all of them.',
 })
+
+Acl({
+    $id: Now.ID['nudge-read-acl'],
+    type: 'record',
+    table: 'x_everi_luxlab_nudge',
+    operation: 'read',
+    roles: [luxlabUser],
+    description: 'LuxLab users can read what the live coach did about its nudges.',
+})

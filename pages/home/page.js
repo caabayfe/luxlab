@@ -13,6 +13,8 @@ import './components/luxlab-world-clocks.js';
 const {acl, title} = decorators;
 
 const PAGE_SIZE = 5;
+// Live incidents listed on the Overview; the war room shows them all
+const LIVE_SHOWN = 4;
 const STALE_AFTER_DAYS = 7;
 
 const PRIORITY_COLORS = {
@@ -64,13 +66,15 @@ export default class HomePage extends AIUXElement {
   `;
 
   static async loader() {
-    const [overview, attention] = await Promise.allSettled([
+    const [overview, attention, live] = await Promise.allSettled([
       api('/cockpit/overview'),
-      attentionPage(1)
+      attentionPage(1),
+      api('/coach/live')
     ]);
     return {
       overview: overview.status === 'fulfilled' ? overview.value : null,
       attention: attention.status === 'fulfilled' ? attention.value : null,
+      live: live.status === 'fulfilled' ? live.value : null,
       error:
         overview.status === 'rejected'
           ? overview.reason?.message || 'Unknown error'
@@ -325,8 +329,55 @@ export default class HomePage extends AIUXElement {
     </section>`;
   }
 
+  // Live incidents and the most urgent nudge of each, as a way into the war room
+  _renderLive(live) {
+    const active = live ? live.incidents.filter(incident => !incident.stale) : [];
+    if (!active.length) return nothing;
+    const breached = active.filter(incident => incident.level === 'breach').length;
+    return html`<section
+      class="aiux-card border-2 bg-base-100 shadow-sm ${breached ? 'border-error' : 'border-base-300'}"
+      aria-labelledby="live-now-title"
+    >
+      <div class="aiux-card-body gap-3">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <h2 id="live-now-title" class="flex items-center gap-2 text-base font-semibold text-text-primary">
+            <span class="inline-block size-2.5 rounded-full bg-error" aria-hidden="true"></span>
+            ${i18n.getMessage('Live now')}
+            <span class="text-sm font-normal text-text-tertiary"
+              >${i18n.getMessage('{0} being worked · {1} breached', String(active.length), String(breached))}</span
+            >
+          </h2>
+          <button type="button" class="aiux-btn aiux-btn-primary aiux-btn-sm" @click=${() => navigate('/live')}>
+            ${i18n.getMessage('Open war room')}
+          </button>
+        </div>
+        <ul class="flex flex-col divide-y divide-base-200">
+          ${active.slice(0, LIVE_SHOWN).map(incident => {
+            const nudge = incident.nudges[0];
+            return html`<li class="flex flex-wrap items-center gap-2 py-2">
+              <span class="aiux-badge aiux-badge-sm ${priorityBadge(incident.priority)}">P${incident.priority}</span>
+              <button
+                type="button"
+                class="aiux-link aiux-link-hover text-sm font-semibold text-text-primary"
+                @click=${() => navigate(`/replay/${incident.sysId}`)}
+              >
+                ${incident.number}
+              </button>
+              <span class="min-w-0 flex-1 truncate text-sm text-text-secondary">${incident.shortDescription}</span>
+              ${nudge
+                ? html`<span class="text-xs font-semibold ${nudge.level === 'breach' ? 'text-error' : 'text-warning'}"
+                    >${nudge.message}</span
+                  >`
+                : html`<span class="text-xs text-success">${i18n.getMessage('On track')}</span>`}
+            </li>`;
+          })}
+        </ul>
+      </div>
+    </section>`;
+  }
+
   render() {
-    const {overview, error} = this.loaderData || {};
+    const {overview, live, error} = this.loaderData || {};
     return html`<div class="mx-auto flex max-w-7xl flex-col gap-6 p-4 lg:p-8">
       <header class="flex flex-wrap items-end justify-between gap-4">
         <div>
@@ -350,7 +401,7 @@ export default class HomePage extends AIUXElement {
             i18n.getMessage('Could not load the cockpit: {0}', error)}
           </div>`
         : nothing}
-      ${overview ? this._renderKpis(overview) : nothing}
+      ${this._renderLive(live)} ${overview ? this._renderKpis(overview) : nothing}
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-5">
         ${this._renderAttention()} ${this._renderBriefingTeaser()}
       </div>

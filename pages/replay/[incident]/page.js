@@ -14,6 +14,7 @@ import {
 } from '../../../utils/format.js';
 import {setDocumentTitle} from '../../../utils/document-title.js';
 import '../../../components/luxlab-time.js';
+import '../../../components/luxlab-coach-card.js';
 import './components/luxlab-replay-ai.js';
 import './components/luxlab-replay-timeline.js';
 
@@ -30,6 +31,8 @@ export default class ReplayDetailPage extends AIUXElement {
   @state() _pirBusy = '';
   @state() _confirmReplace = false;
   @state() _notice = '';
+  // The live coach while the incident is open; null once resolved
+  @state() _coach = null;
 
   _prevLoaderData = null;
 
@@ -42,18 +45,25 @@ export default class ReplayDetailPage extends AIUXElement {
   // Only reads the stored replay; a first-time build is a write, so the browser starts it
   static async loader(ctx) {
     const incident = ctx.params.incident;
-    try {
-      const {replay} = await api(`/replay/${incident}`);
-      return {incident, replay, error: ''};
-    } catch (error) {
-      return {incident, replay: null, error: error.message || 'Unknown error'};
-    }
+    const [replay, coach] = await Promise.allSettled([
+      api(`/replay/${incident}`),
+      api(`/coach/incidents/${incident}`)
+    ]);
+    return {
+      incident,
+      replay: replay.status === 'fulfilled' ? replay.value.replay : null,
+      coach: coach.status === 'fulfilled' ? coach.value.coach : null,
+      // The server time the coach's clocks count from
+      now: coach.status === 'fulfilled' ? coach.value.now : 0,
+      error: replay.status === 'rejected' ? replay.reason?.message || 'Unknown error' : ''
+    };
   }
 
   willUpdate() {
     if (this.loaderData !== this._prevLoaderData) {
       this._prevLoaderData = this.loaderData;
       this._replay = this.loaderData?.replay || null;
+      this._coach = this.loaderData?.coach || null;
       this._error = this.loaderData?.error || '';
     }
   }
@@ -382,6 +392,24 @@ export default class ReplayDetailPage extends AIUXElement {
     </section>`;
   }
 
+  _renderCoach() {
+    if (!this._coach) return nothing;
+    return html`<section class="aiux-card bg-base-100 shadow-sm" aria-labelledby="coach-title">
+      <div class="aiux-card-body gap-3">
+        <h2 id="coach-title" class="flex items-center gap-2 text-lg font-semibold text-text-primary">
+          <span class="inline-block size-2 rounded-full bg-error" aria-hidden="true"></span>
+          ${i18n.getMessage('Live coach')}
+        </h2>
+        <luxlab-coach-card
+          embedded
+          .coach=${this._coach}
+          server-now=${this.loaderData?.now || 0}
+          @luxlab-coach:update=${e => (this._coach = e.detail.coach)}
+        ></luxlab-coach-card>
+      </div>
+    </section>`;
+  }
+
   render() {
     const replay = this._replay;
     return html`<div class="mx-auto flex max-w-7xl flex-col gap-6 p-4 lg:p-8">
@@ -427,7 +455,7 @@ export default class ReplayDetailPage extends AIUXElement {
           </div>`
         : nothing}
       ${replay
-        ? html`${this._renderHeader(replay)}
+        ? html`${this._renderHeader(replay)} ${this._renderCoach()}
           ${replay.status === 'ready'
             ? html`<luxlab-replay-ai
                 .replay=${replay}
