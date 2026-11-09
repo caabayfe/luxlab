@@ -95,7 +95,9 @@ A good demo needs an incident going live while you watch:
 - **Automated notes**: an Otto triage agent (`itsm.aia.worker`, identity type `ai_agent`) posts work notes. Notes by AI-agent identities or `system` do not break the silence clock.
 - **Insert audit rows** hold initial values, so they don't count as activity either.
 - **Journal writes**: `setValue('work_notes')` from module code is silently dropped. The coach assigns the field instead.
-- **New skills need Activate** in Now Assist Admin after install; until then Draft update is refused as "no permission".
+- **New skills need Activate** in Now Assist Admin after install; until then Draft update is refused as "no permission". The app now checks activation before running a skill and names the Now Assist Admin page in the error; AI usage lists each skill's activation. Activation survives later installs, so only a fresh instance needs it.
+- **Drafter language**: asked to match the short description, gpt-5.4-mini answered in English; a `language` field inside the replay context didn't help either. Prompt v3 names the language through a GetLanguage tool (last customer update, then short description, description, caller's preferred language) and drafts came out in Spanish.
+- **Page errors**: aiuxFetch throws on 4xx before `api()` reads the body, so pages showed "Request failed with status code 400". `api()` now reads the message from the thrown error.
 
 ## Decisions (2026-11-08)
 

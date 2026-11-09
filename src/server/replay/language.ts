@@ -1,8 +1,8 @@
-import { GlideRecordSecure } from '@servicenow/glide'
+import { GlideRecord, GlideRecordSecure } from '@servicenow/glide'
 
 // Common words that rarely appear in the other languages; enough to tell apart a one-line short description
 const STOPWORDS: { [language: string]: string[] } = {
-    Spanish: ['el', 'la', 'los', 'las', 'del', 'de', 'que', 'por', 'para', 'con', 'una', 'un', 'se', 'al', 'y', 'es', 'está', 'están', 'llegan', 'funciona', 'sin', 'desde', 'usuarios', 'acceso', 'caído', 'lento'],
+    Spanish: ['el', 'la', 'en', 'nadie', 'puede', 'pueden', 'no', 'llega', 'los', 'las', 'del', 'de', 'que', 'por', 'para', 'con', 'una', 'un', 'se', 'al', 'y', 'es', 'está', 'están', 'llegan', 'funciona', 'sin', 'desde', 'usuarios', 'acceso', 'caído', 'lento'],
     English: ['the', 'of', 'and', 'to', 'is', 'are', 'not', 'for', 'with', 'from', 'users', 'cannot', "can't", 'unable', 'down', 'slow', 'failing', 'working', 'access'],
     Portuguese: ['os', 'as', 'do', 'da', 'dos', 'das', 'não', 'em', 'um', 'uma', 'com', 'está', 'estão', 'usuários', 'acesso', 'lento'],
     French: ['le', 'les', 'des', 'du', 'et', 'est', 'sont', 'pas', 'pour', 'avec', 'une', 'utilisateurs', 'accès', 'lent'],
@@ -37,10 +37,31 @@ function textLanguage(text: string): string {
     return scores[ranked[0]] > 0 && scores[ranked[0]] > scores[ranked[1]] ? ranked[0] : ''
 }
 
-// The language customers were written to: the incident's own text first, then the caller's preferred language
+function lastCustomerUpdate(incidentId: string): string {
+    const entry = new GlideRecord('sys_journal_field')
+    entry.addQuery('name', 'incident')
+    entry.addQuery('element_id', incidentId)
+    entry.addQuery('element', 'comments')
+    entry.orderByDesc('sys_created_on')
+    entry.setLimit(1)
+    entry.query()
+    return entry.next() ? entry.getValue('value') || '' : ''
+}
+
+// The language customers already read, in order: the last customer update, the short description, the description,
+// then the caller's preferred language. Each text is judged alone, so an English description can't outvote the rest
 export function incidentLanguage(incident: GlideRecordSecure<'incident'>): string {
-    const detected = textLanguage(`${incident.getValue('short_description') || ''} ${incident.getValue('description') || ''}`)
-    if (detected) return detected
+    const texts = [lastCustomerUpdate(incident.getUniqueValue()), incident.getValue('short_description'), incident.getValue('description')]
+    for (const text of texts) {
+        const detected = text ? textLanguage(text) : ''
+        if (detected) return detected
+    }
     const code = String(incident.getValue('caller_id.preferred_language' as any) || '').toLowerCase()
     return LANGUAGE_CODES[code.substring(0, 2)] || DEFAULT_LANGUAGE
+}
+
+// Language tool of the Comms Drafter, so the prompt can name the language outright
+export function incidentLanguageOf(incidentNumber: string): string {
+    const incident = new GlideRecordSecure('incident')
+    return incidentNumber && incident.get('number', incidentNumber.trim()) ? incidentLanguage(incident) : DEFAULT_LANGUAGE
 }
