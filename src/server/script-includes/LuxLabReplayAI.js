@@ -19,6 +19,11 @@ LuxLabReplayAI.prototype = {
         return this._context.replayContext(String(incidentNumber || ''));
     },
 
+    // Language tool of the Comms Drafter: the language the incident's customers read
+    getLanguage: function (incidentNumber) {
+        return require(LUXLAB_MODULES + 'language.ts').incidentLanguageOf(String(incidentNumber || ''));
+    },
+
     // Save tools of the LuxLab Replay Analyst agent
     saveReview: function (incidentNumber, review) {
         return this._ai.saveReview(String(incidentNumber || ''), String(review || ''));

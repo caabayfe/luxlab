@@ -25,6 +25,18 @@ function skillConfigId(capability: string): string {
     return config.get('skill_id', capability) ? config.getUniqueValue() : ''
 }
 
+// Where an admin turns a skill on; the install ships skills inactive and activation survives later installs
+export function skillSetupPath(configId: string): string {
+    return `/now/now-assist-admin/skill-guided-setup/${configId}`
+}
+
+// Activation in Now Assist Admin flips this status record, which the app installs as inactive;
+// without one the platform decides on its own
+export function skillActive(configId: string): boolean {
+    const status = new GlideRecord('sn_nowassist_skill_config_status')
+    return !status.get('skill_config', configId) || status.getValue('active') === '1'
+}
+
 // Skill responses arrive either as an object or as a JSON string carrying model_output
 function modelOutput(response: any): string {
     if (response && typeof response === 'object') {
@@ -43,9 +55,16 @@ function modelOutput(response: any): string {
 export function runSkill(skillName: string, incidentNumber: string): string {
     const id = capabilityId(skillName)
     if (!id) throw new Error(`Skill "${skillName}" is not installed`)
+    const configId = skillConfigId(id)
+    // Checked up front: the platform's own refusal only says the user lacks permission
+    if (!skillActive(configId)) {
+        throw new Error(
+            `"${skillName}" is not activated on this instance yet. An admin can activate it in Now Assist Admin: ${skillSetupPath(configId)}`
+        )
+    }
     // executeSecure applies the skill's user access and role mapping, as the platform's generated UI actions do
     const result: any = (OneExtendUtil as any).executeSecure({
-        executionRequests: [{ payload: { incident_number: incidentNumber }, capabilityId: id, meta: { skillConfigId: skillConfigId(id) } }],
+        executionRequests: [{ payload: { incident_number: incidentNumber }, capabilityId: id, meta: { skillConfigId: configId } }],
         mode: 'sync',
     })
     // Refusals before execution (e.g. the caller lacks the skill's execution role) come back at the top level

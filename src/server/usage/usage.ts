@@ -2,6 +2,7 @@ import { GlideRecord } from '@servicenow/glide'
 import { RUN } from '../briefing/agents.ts'
 import { toolById } from '../briefing/tools.ts'
 import { COMMS_SKILL } from '../coach/coach.ts'
+import { skillActive, skillSetupPath } from '../replay/ai.ts'
 
 // The platform meters every skill execution and agent run in sys_gen_ai_usage_log; LuxLab only reads it
 const USAGE_LOG = 'sys_gen_ai_usage_log'
@@ -27,9 +28,18 @@ export interface UsageRow {
     maxToolActions: number
 }
 
+// A fresh install leaves every skill inactive until an admin activates it in Now Assist Admin
+export interface SkillStatus {
+    feature: string
+    name: string
+    active: boolean
+    setupPath: string
+}
+
 export interface UsageDto {
     days: number
     rows: UsageRow[]
+    skills: SkillStatus[]
     assists: number
     trialAssists: number
     // Assists at this period's pace over 30 days
@@ -150,6 +160,22 @@ function skillNames(): { [configId: string]: string } {
     return names
 }
 
+function skillFeature(name: string): string {
+    return name === COMMS_SKILL ? 'Live Coach' : 'Incident Replay'
+}
+
+function skillStatuses(): SkillStatus[] {
+    const names = skillNames()
+    return Object.keys(names)
+        .map((configId) => ({
+            feature: skillFeature(names[configId]),
+            name: names[configId],
+            active: skillActive(configId),
+            setupPath: skillSetupPath(configId),
+        }))
+        .sort((a, b) => a.feature.localeCompare(b.feature) || a.name.localeCompare(b.name))
+}
+
 // Skill runs (incident form buttons, the live coach's Draft update) are metered one usage record per execution
 function skillRows(days: number): UsageRow[] {
     const names = skillNames()
@@ -163,7 +189,7 @@ function skillRows(days: number): UsageRow[] {
         const row =
             rows[configId] ||
             (rows[configId] = {
-                feature: name === COMMS_SKILL ? 'Live Coach' : 'Incident Replay',
+                feature: skillFeature(name),
                 kind: 'skill',
                 name,
                 runs: 0,
@@ -190,6 +216,7 @@ export function usage(days: number): UsageDto {
     return {
         days,
         rows,
+        skills: skillStatuses(),
         assists,
         trialAssists: rows.reduce((sum, row) => sum + row.trialAssists, 0),
         monthlyAssists: Math.round((assists * MONTH_DAYS) / days),

@@ -3,6 +3,7 @@ import { PHASES } from './types.ts'
 import { blamelessSummary, formatMinutes } from './analysis.ts'
 import { buildReplay } from './store.ts'
 import { followUpsOf } from './follow-ups.ts'
+import { incidentLanguage } from './language.ts'
 
 // Keeps the prompt within a predictable size on very chatty incidents
 const MAX_EVENTS = 150
@@ -34,6 +35,8 @@ const RELATED_FIELDS = [
 export interface ReplayContext {
     error?: string
     incident?: string
+    // Language of the incident's text, for anything written back to its customers
+    language?: string
     metrics?: string
     phases?: string
     timeline?: string
@@ -141,6 +144,7 @@ export function replayContext(incidentNumber: string): ReplayContext {
     if (!replay) return { error: `The replay for ${incidentNumber} could not be built` }
     return {
         incident: incidentText(incident),
+        language: incidentLanguage(incident),
         metrics: metricsText(replay),
         phases: phasesText(replay),
         timeline: timelineText(replay.getUniqueValue(), replay.getValue('impact_start')),

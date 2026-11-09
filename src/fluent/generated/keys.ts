@@ -364,6 +364,14 @@ declare global {
                         table: 'sys_generative_ai_config'
                         id: 'e8990319b0a7451f917e3e48b1654ba8'
                     }
+                    comms_drafter_prompt_v2: {
+                        table: 'sys_generative_ai_config'
+                        id: '1289886449e84b99832aa874833e36a0'
+                    }
+                    comms_drafter_prompt_v3: {
+                        table: 'sys_generative_ai_config'
+                        id: '91f77c5b2e5941e9a284d3b4f9b1e987'
+                    }
                     comms_drafter_skill: {
                         table: 'sys_one_extend_capability'
                         id: '2d8c5f4520f74f4982f3ffde7e2f995c'
@@ -675,6 +683,10 @@ declare global {
                     'src_server_replay_form-actions_ts': {
                         table: 'sys_module'
                         id: '1a6d86ba7c7b471aaf3c8f48cbfa409d'
+                    }
+                    src_server_replay_language_ts: {
+                        table: 'sys_module'
+                        id: 'f44d7784f0b3405083646de42bac854b'
                     }
                     src_server_replay_markdown_ts: {
                         table: 'sys_module'
@@ -2055,6 +2067,21 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_one_extend_resource_attribute_mapping'
+                        id: '2d467d99538e4993aeb1517ec354e211'
+                        key: {
+                            resource_mapping: {
+                                id: 'c2780e3e0be64b1f98fc665766aa3fc7'
+                                key: {
+                                    parent_capability: '2d8c5f4520f74f4982f3ffde7e2f995c'
+                                    resource_capability: '51d095f77f211210210ca65c4d866591'
+                                    resource_name: 'GetLanguage'
+                                }
+                            }
+                            resource_attribute_name: '0bd1117b7f211210210ca65c4d8665ed'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '2e66d43930994d9e9312c7d2ceb27abf'
                         key: {
@@ -2574,6 +2601,21 @@ declare global {
                             }
                             element: 'sequence'
                             position: '3'
+                        }
+                    },
+                    {
+                        table: 'sys_one_extend_resource_attribute_mapping'
+                        id: '41ebd12b8b32493c960289384a29d49d'
+                        key: {
+                            resource_mapping: {
+                                id: 'c2780e3e0be64b1f98fc665766aa3fc7'
+                                key: {
+                                    parent_capability: '2d8c5f4520f74f4982f3ffde7e2f995c'
+                                    resource_capability: '51d095f77f211210210ca65c4d866591'
+                                    resource_name: 'GetLanguage'
+                                }
+                            }
+                            resource_attribute_name: 'a3911d3b7f211210210ca65c4d86651b'
                         }
                     },
                     {
@@ -4433,6 +4475,13 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_one_extend_resource_edge'
+                        id: '892cfb099f574da48af42442b26ee29b'
+                        key: {
+                            internal_name: 'GetLanguage__LuxLab Comms Drafter'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '893f3f4a0c394e2baa6750be3df767ce'
                         key: {
@@ -4649,6 +4698,13 @@ declare global {
                         id: '93a88a2801d84cd8ac11b1aee2a42180'
                         key: {
                             ui_action: '723843cb8b3d4a0eb47d6e566bafa681'
+                        }
+                    },
+                    {
+                        table: 'sys_generative_ai_prompt_config'
+                        id: '94bad1b5d6bb42e482ae1d034800c481'
+                        key: {
+                            ai_config: '91f77c5b2e5941e9a284d3b4f9b1e987'
                         }
                     },
                     {
@@ -5741,6 +5797,15 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_one_extend_resource_mapping'
+                        id: 'c2780e3e0be64b1f98fc665766aa3fc7'
+                        key: {
+                            parent_capability: '2d8c5f4520f74f4982f3ffde7e2f995c'
+                            resource_capability: '51d095f77f211210210ca65c4d866591'
+                            resource_name: 'GetLanguage'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: 'c29178389322466a9e41d04716b87954'
                         key: {
@@ -6588,6 +6653,13 @@ declare global {
                             }
                             element: '.begin_split'
                             position: '0'
+                        }
+                    },
+                    {
+                        table: 'sys_generative_ai_prompt_config'
+                        id: 'e109fb0955734002a3b1af581d614d08'
+                        key: {
+                            ai_config: '1289886449e84b99832aa874833e36a0'
                         }
                     },
                     {
