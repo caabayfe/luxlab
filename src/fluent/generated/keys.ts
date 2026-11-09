@@ -364,6 +364,10 @@ declare global {
                         table: 'sys_generative_ai_config'
                         id: 'e8990319b0a7451f917e3e48b1654ba8'
                     }
+                    comms_drafter_prompt_v2: {
+                        table: 'sys_generative_ai_config'
+                        id: '1289886449e84b99832aa874833e36a0'
+                    }
                     comms_drafter_skill: {
                         table: 'sys_one_extend_capability'
                         id: '2d8c5f4520f74f4982f3ffde7e2f995c'
@@ -675,6 +679,10 @@ declare global {
                     'src_server_replay_form-actions_ts': {
                         table: 'sys_module'
                         id: '1a6d86ba7c7b471aaf3c8f48cbfa409d'
+                    }
+                    src_server_replay_language_ts: {
+                        table: 'sys_module'
+                        id: 'f44d7784f0b3405083646de42bac854b'
                     }
                     src_server_replay_markdown_ts: {
                         table: 'sys_module'
@@ -6588,6 +6596,13 @@ declare global {
                             }
                             element: '.begin_split'
                             position: '0'
+                        }
+                    },
+                    {
+                        table: 'sys_generative_ai_prompt_config'
+                        id: 'e109fb0955734002a3b1af581d614d08'
+                        key: {
+                            ai_config: '1289886449e84b99832aa874833e36a0'
                         }
                     },
                     {

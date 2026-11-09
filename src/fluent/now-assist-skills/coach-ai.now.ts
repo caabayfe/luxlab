@@ -59,8 +59,8 @@ export const commsDrafter = NowAssistSkillConfig(
                                 model: 'gpt-5.4-mini',
                                 temperature: 0.3,
                                 maxTokens: 800,
-                                // Published prompts are frozen: change them by adding a new draft version
-                                promptState: 'published',
+                                // Replaced by v2, which names the language: from the short description alone it answered in English
+                                promptState: 'archived',
                                 prompt: (p) => `## Role
 You are the communications lead of a live major incident. Your task is to write the next customer update.
 
@@ -79,6 +79,34 @@ Timeline lines read "T+<time since impact start> (<phase>) [KEY] <event> — <de
 
 ## Output
 Plain text only, 50 to 110 words, in the language of the incident's short description. No headings, no bullet points, no greeting, no signature.`,
+                            },
+                            {
+                                $id: Now.ID['comms_drafter_prompt_v2'],
+                                version: 2,
+                                model: 'gpt-5.4-mini',
+                                temperature: 0.3,
+                                maxTokens: 800,
+                                // Published versions can't be edited: change the prompt by adding a new version
+                                promptState: 'published',
+                                prompt: (p) => `## Role
+You are the communications lead of a live major incident. Your task is to write the next customer update.
+
+## Context
+Incident number: ${p.input['incident number']}
+Replay of the incident so far (incident fields, the customers' language, metrics and the timeline): ${p.tool.GetReplay.output}
+
+Timeline lines read "T+<time since impact start> (<phase>) [KEY] <event> — <detail>". Work notes are internal; customer updates are what customers already saw.
+
+## Instructions
+1. Write the whole update in the language given in the replay's "language" field, even when the timeline is in another language. If the field is missing, use the language of the incident's short description.
+2. If the replay contains an "error" field, reply with one sentence saying the update could not be drafted, then stop.
+3. Write for the affected users, not for engineers: plain language, no internal group names, no people's names, no ticket jargon.
+4. Use only facts from the replay. Never promise a fix time unless the timeline states one; say the investigation continues instead.
+5. Do not repeat what the previous customer update already said, unless nothing changed; then say so honestly.
+6. End with when the next update will come: in 30 minutes for priority 1, in 1 hour otherwise.
+
+## Output
+Plain text only, 50 to 110 words, in that language. No headings, no bullet points, no greeting, no signature.`,
                             },
                         ],
                     },
