@@ -40,7 +40,7 @@ function modelOutput(response: any): string {
     }
 }
 
-function runSkill(skillName: string, incidentNumber: string): string {
+export function runSkill(skillName: string, incidentNumber: string): string {
     const id = capabilityId(skillName)
     if (!id) throw new Error(`Skill "${skillName}" is not installed`)
     // executeSecure applies the skill's user access and role mapping, as the platform's generated UI actions do

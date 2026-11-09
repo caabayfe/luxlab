@@ -17,6 +17,10 @@ declare global {
                         table: 'sys_security_acl'
                         id: '48ec5cf559984eca839737fa7bd0054a'
                     }
+                    'aiux-acl|x-everi-luxlab-live-page|read|allow_if|x_everi_luxlab.user': {
+                        table: 'sys_security_acl'
+                        id: 'b1ce970941224b30bd7a093de0c34c46'
+                    }
                     'aiux-acl|x-everi-luxlab-patterns-page|read|allow_if|x_everi_luxlab.user': {
                         table: 'sys_security_acl'
                         id: '181b2ebe68214dcc8c5edcd9545a3ce9'
@@ -50,6 +54,10 @@ declare global {
                         table: 'sys_aix_dependency'
                         id: '5e288d2b28b63e009b1884d80ed1bc25'
                     }
+                    'aiux-dependency|luxlab-coach-card.js': {
+                        table: 'sys_aix_dependency'
+                        id: 'dcfcc4640b5b48f4a62f12f87d47d2b7'
+                    }
                     'aiux-dependency|luxlab-time.js': {
                         table: 'sys_aix_dependency'
                         id: 'c008481f193445d8b7ed9498beb463d8'
@@ -61,6 +69,10 @@ declare global {
                     'aiux-experience-page-rel|x-everi-luxlab-home-page': {
                         table: 'sys_aix_experience_page_rel'
                         id: '3b5c8257547e5f3fd57711921e4b1cda'
+                    }
+                    'aiux-experience-page-rel|x-everi-luxlab-live-page': {
+                        table: 'sys_aix_experience_page_rel'
+                        id: 'ddcdd0e99aebdfde77ad7cfa628a3ee4'
                     }
                     'aiux-experience-page-rel|x-everi-luxlab-patterns-page': {
                         table: 'sys_aix_experience_page_rel'
@@ -114,6 +126,18 @@ declare global {
                         table: 'sys_aix_m2m_widget_dependency'
                         id: 'ec0d4fceeae65474d7af027c0e13e8d5'
                     }
+                    'aiux-m2m-widget-dep|x-everi-luxlab-live-page|document-title.js': {
+                        table: 'sys_aix_m2m_widget_dependency'
+                        id: '4c7115dd2992dfce415ddfae047400e9'
+                    }
+                    'aiux-m2m-widget-dep|x-everi-luxlab-live-page|format.js': {
+                        table: 'sys_aix_m2m_widget_dependency'
+                        id: 'a7aa98a16343fb326a252fa9218d45d5'
+                    }
+                    'aiux-m2m-widget-dep|x-everi-luxlab-live-page|luxlab-coach-card.js': {
+                        table: 'sys_aix_m2m_widget_dependency'
+                        id: '40f110b1759bf68d290223acd357ee45'
+                    }
                     'aiux-m2m-widget-dep|x-everi-luxlab-patterns-page|document-title.js': {
                         table: 'sys_aix_m2m_widget_dependency'
                         id: 'd50e207bfa91de0210b09765a7031705'
@@ -141,6 +165,10 @@ declare global {
                     'aiux-m2m-widget-dep|x-everi-luxlab-replay-detail-page|luxlab-agent-run.js': {
                         table: 'sys_aix_m2m_widget_dependency'
                         id: '26d8a5b5ab23f31000616039d8a83e82'
+                    }
+                    'aiux-m2m-widget-dep|x-everi-luxlab-replay-detail-page|luxlab-coach-card.js': {
+                        table: 'sys_aix_m2m_widget_dependency'
+                        id: 'fe412a23f4507130500b1501fe336774'
                     }
                     'aiux-m2m-widget-dep|x-everi-luxlab-replay-detail-page|luxlab-time.js': {
                         table: 'sys_aix_m2m_widget_dependency'
@@ -170,6 +198,10 @@ declare global {
                         table: 'sys_aix_widget'
                         id: 'f70d65196b9d207d5a2760812f866daa'
                     }
+                    'aiux-page-widget|x-everi-luxlab-live-page': {
+                        table: 'sys_aix_widget'
+                        id: '3e6047dc4fb6978d0534774c0a2dd0af'
+                    }
                     'aiux-page-widget|x-everi-luxlab-patterns-page': {
                         table: 'sys_aix_widget'
                         id: '6eac465ffce697e0cf95989c7f71ff15'
@@ -193,6 +225,10 @@ declare global {
                     'aiux-page|x-everi-luxlab-home-page': {
                         table: 'sys_aix_page'
                         id: '03618f05ddf1f3064a10ad47fbd4c7cb'
+                    }
+                    'aiux-page|x-everi-luxlab-live-page': {
+                        table: 'sys_aix_page'
+                        id: '587779f4f692d9f79817a275799863d3'
                     }
                     'aiux-page|x-everi-luxlab-patterns-page': {
                         table: 'sys_aix_page'
@@ -256,6 +292,42 @@ declare global {
                         table: 'sys_security_acl'
                         id: '8353b59b0a37412181517c523f86845d'
                     }
+                    'coach-api': {
+                        table: 'sys_ws_definition'
+                        id: '31a20396c8bd49a3b816f42de37f3e24'
+                    }
+                    'coach-api-act': {
+                        table: 'sys_ws_operation'
+                        id: 'c51cd92d5bba4f559123056b76e2843c'
+                    }
+                    'coach-api-dismiss': {
+                        table: 'sys_ws_operation'
+                        id: 'ef7f04b61ce54a6eb3b62492e7eb957f'
+                    }
+                    'coach-api-draft': {
+                        table: 'sys_ws_operation'
+                        id: 'c195319927d943b3ba2f586e1cdb82a6'
+                    }
+                    'coach-api-incident': {
+                        table: 'sys_ws_operation'
+                        id: '01956369a381432590198408db5825c1'
+                    }
+                    'coach-api-live': {
+                        table: 'sys_ws_operation'
+                        id: '18264545dc2f4d9fbe66ba9ff837d9f9'
+                    }
+                    'coach-api-post': {
+                        table: 'sys_ws_operation'
+                        id: 'ab803ba1c7cb45d2abb7de1f6683addc'
+                    }
+                    'coach-api-v1': {
+                        table: 'sys_ws_version'
+                        id: 'daf87230f15d4101bb6edf4bfdf7217b'
+                    }
+                    'coach-work-notes-property': {
+                        table: 'sys_properties'
+                        id: 'f0e1064948b5485494ccea95a8b99624'
+                    }
                     'cockpit-api': {
                         table: 'sys_ws_definition'
                         id: '8378f6cf95b24fea9add07d8862ce5b4'
@@ -283,6 +355,42 @@ declare global {
                     'cockpit-api-v1': {
                         table: 'sys_ws_version'
                         id: '7377f76c414d4df3ac50ef2529d27f8f'
+                    }
+                    comms_drafter_incident_number_input: {
+                        table: 'sys_one_extend_definition_attribute'
+                        id: '6c6bad5f8ca94c97b3bea54509f7fdf7'
+                    }
+                    comms_drafter_prompt_v1: {
+                        table: 'sys_generative_ai_config'
+                        id: 'e8990319b0a7451f917e3e48b1654ba8'
+                    }
+                    comms_drafter_skill: {
+                        table: 'sys_one_extend_capability'
+                        id: '2d8c5f4520f74f4982f3ffde7e2f995c'
+                    }
+                    comms_drafter_skill__output_error: {
+                        table: 'sys_one_extend_definition_attribute'
+                        id: '3cc34b0c750a495faf481aee2d4ada33'
+                    }
+                    comms_drafter_skill__output_errorcode: {
+                        table: 'sys_one_extend_definition_attribute'
+                        id: '834080dd2ab24a57b3da10f0a642c5fe'
+                    }
+                    comms_drafter_skill__output_provider: {
+                        table: 'sys_one_extend_definition_attribute'
+                        id: 'a29856e6efde4802a81c50f876d83cf5'
+                    }
+                    comms_drafter_skill__output_response: {
+                        table: 'sys_one_extend_definition_attribute'
+                        id: 'b5b13d6b4dca4a8eaf2f5037d37a9bfe'
+                    }
+                    comms_drafter_skill__output_status: {
+                        table: 'sys_one_extend_definition_attribute'
+                        id: 'a7e1350271784ce9b68645442e906dad'
+                    }
+                    comms_drafter_user_access: {
+                        table: 'sys_security_acl'
+                        id: '77cff468c311492d8f8cd97790cc7cc7'
                     }
                     follow_up_advisor_incident_number_input: {
                         table: 'sys_one_extend_definition_attribute'
@@ -368,6 +476,10 @@ declare global {
                         table: 'sys_properties'
                         id: '2f1cd377a9844758b6e10e7c37536af8'
                     }
+                    'live-coach-job': {
+                        table: 'sysauto_script'
+                        id: '3c22778a85d349119cd6ad71e3ff9f30'
+                    }
                     'luxlab-agent-runtime-si': {
                         table: 'sys_script_include'
                         id: '82a7b0d3406f4f2eb0f0d4c11ce824f3'
@@ -387,6 +499,10 @@ declare global {
                     'luxlab-replay-ai-si': {
                         table: 'sys_script_include'
                         id: '390b5cb55d774557bb36d31f950a1fc7'
+                    }
+                    'nudge-read-acl': {
+                        table: 'sys_security_acl'
+                        id: '78d7f6d1867646fdaa407049a29eccaa'
                     }
                     package_json: {
                         table: 'sys_module'
@@ -508,6 +624,10 @@ declare global {
                         table: 'sys_module'
                         id: '04b6353a0b594d48a1292129bad76b33'
                     }
+                    src_server_coach_coach_ts: {
+                        table: 'sys_module'
+                        id: '6614bc2913b44b60a11bf59a377776e6'
+                    }
                     src_server_cockpit_attention_ts: {
                         table: 'sys_module'
                         id: '299beb89febd4b54b62f81d15f76168e'
@@ -519,6 +639,10 @@ declare global {
                     src_server_cockpit_scope_ts: {
                         table: 'sys_module'
                         id: '70751692ba864c7e9b9aae3499eb8f02'
+                    }
+                    'src_server_jobs_live-coach_js': {
+                        table: 'sys_module'
+                        id: '94016cb6979049ea9d364682547ed75c'
                     }
                     'src_server_jobs_response-patterns_js': {
                         table: 'sys_module'
@@ -591,6 +715,10 @@ declare global {
                     'src_server_rest_briefing-routes_ts': {
                         table: 'sys_module'
                         id: '2f12aa59aec04163a9f572edda3d77ab'
+                    }
+                    'src_server_rest_coach-routes_ts': {
+                        table: 'sys_module'
+                        id: '240571026d1543889d0a5e9e353af41b'
                     }
                     'src_server_rest_cockpit-routes_ts': {
                         table: 'sys_module'
@@ -698,6 +826,26 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '00d66e3d15a54fcfb0eb49fad1dfbcb0'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'kind'
+                            value: 'pattern'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '010d1b966a6e4424811bee9d3f48aeec'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'acted_by'
+                            language: 'en'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '01aa458a84f548e0a66bd8d4ced87066'
                         key: {
@@ -802,6 +950,15 @@ declare global {
                         key: {
                             name: 'x_everi_luxlab_briefing_run'
                             element: 'execution_ms'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '054d5ff9f3c044cbb1cde627884cf27f'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'NULL'
                             language: 'en'
                         }
                     },
@@ -951,6 +1108,19 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: '08193689af604b69a5eefaeff0d79f76'
+                        key: {
+                            sys_security_acl: 'b1ce970941224b30bd7a093de0c34c46'
+                            sys_user_role: {
+                                id: '5c0007ba3bd44ee0b384483df02f5ceb'
+                                key: {
+                                    name: 'x_everi_luxlab.user'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '0923cbcc9261400fbcec45eacdd55989'
                         key: {
@@ -970,6 +1140,22 @@ declare global {
                             }
                             element: '.split'
                             position: '2'
+                        }
+                    },
+                    {
+                        table: 'sys_generative_ai_prompt_config'
+                        id: '0a6ce02b40714272b95983007683fb3d'
+                        key: {
+                            ai_config: 'e8990319b0a7451f917e3e48b1654ba8'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '0af40b65383c4a49bdd95aeecabd9982'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'level'
+                            language: 'en'
                         }
                     },
                     {
@@ -1084,6 +1270,21 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_one_extend_resource_attribute_mapping'
+                        id: '0e9a89af8c784bce803e92739a945def'
+                        key: {
+                            resource_mapping: {
+                                id: '8627fdfa424848c6b24429bc192adf59'
+                                key: {
+                                    parent_capability: '2d8c5f4520f74f4982f3ffde7e2f995c'
+                                    resource_capability: '51d095f77f211210210ca65c4d866591'
+                                    resource_name: 'GetReplay'
+                                }
+                            }
+                            resource_attribute_name: 'a3911d3b7f211210210ca65c4d86651b'
+                        }
+                    },
+                    {
                         table: 'sys_index'
                         id: '0ee8a75f4df246e2aef391897992e61e'
                         key: {
@@ -1130,6 +1331,17 @@ declare global {
                     },
                     {
                         table: 'sys_choice'
+                        id: '10ac118bcd0e4511a65d6ea85637d25d'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'kind'
+                            value: 'sla'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
                         id: '11aed5c22e7549d0bba5286e07b14c8e'
                         key: {
                             name: 'x_everi_luxlab_pattern'
@@ -1137,6 +1349,14 @@ declare global {
                             value: 'monitoring'
                             language: 'en'
                             dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '11ca91e481804cb0ae892317122a566d'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'state'
                         }
                     },
                     {
@@ -1454,6 +1674,13 @@ declare global {
                         }
                     },
                     {
+                        table: 'ua_table_licensing_config'
+                        id: '1eb73921603b4ff4bd8662520c00dd82'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                        }
+                    },
+                    {
                         table: 'sys_ui_form_section'
                         id: '1fdb9c7d41224c3e85f985cac996025b'
                         key: {
@@ -1487,6 +1714,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_one_extend_resource_mapping'
+                        id: '1fedf16b7b0c4d3ba6c33488c78165b1'
+                        key: {
+                            parent_capability: '2d8c5f4520f74f4982f3ffde7e2f995c'
+                            resource_capability: '2d8c5f4520f74f4982f3ffde7e2f995c'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '20b461ed9d0840a086664dd3327307d4'
                         key: {
@@ -1506,6 +1741,13 @@ declare global {
                             }
                             element: 'review'
                             position: '5'
+                        }
+                    },
+                    {
+                        table: 'sys_one_extend_resource_edge'
+                        id: '20eefc941e894d1191cbc3ac2aaaecde'
+                        key: {
+                            internal_name: 'GetReplay__LuxLab Comms Drafter'
                         }
                     },
                     {
@@ -1720,6 +1962,14 @@ declare global {
                             name: 'x_everi_luxlab_briefing_run'
                             element: 'agent'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_choice_set'
+                        id: '29c868d7525a470da0f30b7d91494663'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'kind'
                         }
                     },
                     {
@@ -1948,6 +2198,15 @@ declare global {
                     },
                     {
                         table: 'sys_documentation'
+                        id: '34bb9ec302084656988ebbdc7789d490'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'state'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
                         id: '35a47b6f05594bb3a98df42ebddcf122'
                         key: {
                             name: 'x_everi_luxlab_replay'
@@ -1977,6 +2236,13 @@ declare global {
                             name: 'x_everi_luxlab_briefing_run'
                             element: 'finished_on'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_db_object'
+                        id: '369f99d494f040b3a568d8c8148b0c78'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
                         }
                     },
                     {
@@ -2030,6 +2296,17 @@ declare global {
                             }
                             element: '.begin_split'
                             position: '0'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '3748e58967b5421081d136799757861b'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'state'
+                            value: 'acted'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -2102,6 +2379,23 @@ declare global {
                         key: {
                             name: 'x_everi_luxlab_replay'
                             element: 'built_on'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '3af4340499084ee8b63855ad1100c595'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'message'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '3c1a1e23326248429f8ad6c3dd4658f1'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'acted_by'
                         }
                     },
                     {
@@ -2280,6 +2574,26 @@ declare global {
                             }
                             element: 'sequence'
                             position: '3'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '427340183c5b44a1865424a384fb3148'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'kind'
+                            value: 'silence'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '42fa761dfd434497ba5bf25c57920167'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'incident'
+                            language: 'en'
                         }
                     },
                     {
@@ -2465,6 +2779,20 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_one_extend_definition_config'
+                        id: '49d424ede6154b83973f216da2dfb82d'
+                        key: {
+                            definition: {
+                                id: '78bad4f0c7cb4d6c8c9d875c595da2af'
+                                key: {
+                                    capability: '2d8c5f4520f74f4982f3ffde7e2f995c'
+                                    api: 'a55c1c6f530221106b38ddeeff7b12b1'
+                                }
+                            }
+                            capability: '2d8c5f4520f74f4982f3ffde7e2f995c'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '49fca2564bae461cac92ad249f00e0b5'
                         key: {
@@ -2499,6 +2827,14 @@ declare global {
                             name: 'x_everi_luxlab_pattern'
                             element: 'target'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_gen_ai_feature_mapping'
+                        id: '4b3b98c767194732b68db1dd44a29d87'
+                        key: {
+                            feature_name: 'LuxLab Comms Drafter'
+                            document: '2d8c5f4520f74f4982f3ffde7e2f995c'
                         }
                     },
                     {
@@ -2720,6 +3056,21 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_one_extend_resource_attribute_mapping'
+                        id: '54a02f05fa9a44d2bd8ca8b104bcb06e'
+                        key: {
+                            resource_mapping: {
+                                id: '8627fdfa424848c6b24429bc192adf59'
+                                key: {
+                                    parent_capability: '2d8c5f4520f74f4982f3ffde7e2f995c'
+                                    resource_capability: '51d095f77f211210210ca65c4d866591'
+                                    resource_name: 'GetReplay'
+                                }
+                            }
+                            resource_attribute_name: '0bd1117b7f211210210ca65c4d8665ed'
+                        }
+                    },
+                    {
                         table: 'sys_choice'
                         id: '54b38e09d03846edaa198db86c63e3b9'
                         key: {
@@ -2786,6 +3137,14 @@ declare global {
                         key: {
                             name: 'x_everi_luxlab_replay'
                             element: 'minutes_to_resolve'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '57189db54fdb4351852ba07646bc78bd'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'work_note_posted'
                         }
                     },
                     {
@@ -2907,6 +3266,13 @@ declare global {
                             }
                             element: 'resolved_at'
                             position: '8'
+                        }
+                    },
+                    {
+                        table: 'sys_agent_access_role_configuration'
+                        id: '5ca926bcdbaa4ab4bdc2a4cbff37a652'
+                        key: {
+                            agent: 'b471334b71c14d51914b2abfbeaa9791'
                         }
                     },
                     {
@@ -3176,6 +3542,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '656244619cc04b508ee4d1ddfbd44af0'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'kind'
+                            value: 'routing'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_gen_ai_skill_applicability'
                         id: '6583bb28b1d84cdf9a6a81846c400025'
                         key: {
@@ -3206,6 +3583,15 @@ declare global {
                     },
                     {
                         table: 'sys_documentation'
+                        id: '667579dda55c4c1d9ad34447a2c642e2'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'key'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
                         id: '6696e8d09d0a440394f14ca7da54605d'
                         key: {
                             name: 'x_everi_luxlab_replay_action'
@@ -3231,6 +3617,17 @@ declare global {
                                 }
                             }
                             variable: 'f09e3f9893b64210aa5730f16489189f'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '68e48d6fe5ab4e5d8f6100101a8024b6'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'state'
+                            value: 'dismissed'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -3513,6 +3910,19 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_security_acl_role'
+                        id: '76ec8c3139274329afbb1b3852f5e898'
+                        key: {
+                            sys_security_acl: '78d7f6d1867646fdaa407049a29eccaa'
+                            sys_user_role: {
+                                id: '5c0007ba3bd44ee0b384483df02f5ceb'
+                                key: {
+                                    name: 'x_everi_luxlab.user'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_agent_access_role_mapping'
                         id: '77e280c11a974af283a79e632bcf1670'
                         key: {
@@ -3590,11 +4000,57 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_one_extend_capability_definition'
+                        id: '78bad4f0c7cb4d6c8c9d875c595da2af'
+                        key: {
+                            capability: '2d8c5f4520f74f4982f3ffde7e2f995c'
+                            api: 'a55c1c6f530221106b38ddeeff7b12b1'
+                        }
+                    },
+                    {
+                        table: 'sys_agent_access_role_mapping'
+                        id: '79b427d793ac4f2b92419423e717dabc'
+                        key: {
+                            agent_access_config: {
+                                id: '5ca926bcdbaa4ab4bdc2a4cbff37a652'
+                                key: {
+                                    agent: 'b471334b71c14d51914b2abfbeaa9791'
+                                }
+                            }
+                            role: {
+                                id: 'f89a6898a5074ccba9c9b6769d51f78c'
+                                key: {
+                                    name: 'itil'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: '7a825046facb453cbdc95f5cbcc5de72'
                         key: {
                             name: 'x_everi_luxlab_replay_event'
                             element: 'phase'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '7affa30c620547239f474d93a4405749'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'acted_on'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: '7b44924f031f483aa1f0108aa57da4fc'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'level'
+                            value: 'warn'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -3604,6 +4060,14 @@ declare global {
                             agent: 'd2602a3d15094a38ab199cf0674f0bbc'
                             tool: '139d880d954d4de3af37dab9527c798b'
                             name: 'Get response pattern'
+                        }
+                    },
+                    {
+                        table: 'sys_choice_set'
+                        id: '7c010ff5ca5347e8bbf3a1348a200a70'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'state'
                         }
                     },
                     {
@@ -3683,6 +4147,15 @@ declare global {
                             value: 'waiting'
                             language: 'en'
                             dependent_value: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
+                        id: '7e2d3d16008b4ac590d8638f0656bb0a'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'kind'
+                            language: 'en'
                         }
                     },
                     {
@@ -3826,6 +4299,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: '83d36e82f60e4e6db6548c3eb30d00e0'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'level'
+                            value: 'breach'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_ui_element'
                         id: '844785004c9b4bc8814c2b9d26e7b4fe'
                         key: {
@@ -3884,6 +4368,15 @@ declare global {
                                 }
                             }
                             sys_domain: 'global'
+                        }
+                    },
+                    {
+                        table: 'sys_one_extend_resource_mapping'
+                        id: '8627fdfa424848c6b24429bc192adf59'
+                        key: {
+                            parent_capability: '2d8c5f4520f74f4982f3ffde7e2f995c'
+                            resource_capability: '51d095f77f211210210ca65c4d866591'
+                            resource_name: 'GetReplay'
                         }
                     },
                     {
@@ -3962,6 +4455,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: '896fddb9b4bf442e8f20882fa62111c0'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'acted_on'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '897724e5c2f24257aaea026296a258a5'
                         key: {
@@ -3976,6 +4477,14 @@ declare global {
                         key: {
                             application_file: '4615b83f00924dd1ad9e1a3aa7b38f8d'
                             source_artifact: '38b601c434a04cc686667e4076f10ce2'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: '8a6c2f96e3494701906f9712c9dfe14c'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'NULL'
                         }
                     },
                     {
@@ -4232,6 +4741,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice_set'
+                        id: '980656b7c4e84f2ea6b3e37a8aeeedf2'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'level'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: '99a174973a01484daec3e5ab258a80df'
                         key: {
@@ -4385,6 +4902,14 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_dictionary'
+                        id: '9f3548df7f754ce2be61bf4a022fb9fe'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'message'
+                        }
+                    },
+                    {
                         table: 'sys_choice_set'
                         id: '9f4cf5d0c6cc45ca8b10ae731d4f6f80'
                         key: {
@@ -4413,6 +4938,14 @@ declare global {
                         key: {
                             name: 'x_everi_luxlab_replay_event'
                             element: 'NULL'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'a29f96d4fb6a4ffdbe52ab56db86c53f'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'incident'
                         }
                     },
                     {
@@ -4549,6 +5082,18 @@ declare global {
                                 }
                             }
                             sys_domain: 'global'
+                        }
+                    },
+                    {
+                        table: 'sn_nowassist_skill_config_status'
+                        id: 'a72c1fd7a75540f3a38c72d2669a157c'
+                        key: {
+                            skill_config: {
+                                id: 'b471334b71c14d51914b2abfbeaa9791'
+                                key: {
+                                    skill_id: '2d8c5f4520f74f4982f3ffde7e2f995c'
+                                }
+                            }
                         }
                     },
                     {
@@ -4930,11 +5475,26 @@ declare global {
                         }
                     },
                     {
+                        table: 'sn_nowassist_skill_config'
+                        id: 'b471334b71c14d51914b2abfbeaa9791'
+                        key: {
+                            skill_id: '2d8c5f4520f74f4982f3ffde7e2f995c'
+                        }
+                    },
+                    {
                         table: 'sys_index'
                         id: 'b47df276cab14727bf187eb9626fb816'
                         key: {
                             logical_table_name: 'x_everi_luxlab_replay_event'
                             col_name_string: 'replay'
+                        }
+                    },
+                    {
+                        table: 'sys_index'
+                        id: 'b6ceff4e5bc7435f99ffebe66fb54623'
+                        key: {
+                            logical_table_name: 'x_everi_luxlab_nudge'
+                            col_name_string: 'incident,key'
                         }
                     },
                     {
@@ -5281,6 +5841,17 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_choice'
+                        id: 'c70cae07357e46c1b8828d87e847f7c7'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'kind'
+                            value: 'comms'
+                            language: 'en'
+                            dependent_value: 'NULL'
+                        }
+                    },
+                    {
                         table: 'sys_documentation'
                         id: 'c7dbaca5f2084c02a415753bf145acbe'
                         key: {
@@ -5357,6 +5928,17 @@ declare global {
                             name: 'x_everi_luxlab_replay'
                             element: 'pir_pushed_on'
                             language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_choice'
+                        id: 'cd5335dc4ae04291884f1f4a4ba4c1d6'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'state'
+                            value: 'open'
+                            language: 'en'
+                            dependent_value: 'NULL'
                         }
                     },
                     {
@@ -6010,6 +6592,15 @@ declare global {
                     },
                     {
                         table: 'sys_documentation'
+                        id: 'e174452883d14e31a7eb699d32e0618b'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'work_note_posted'
+                            language: 'en'
+                        }
+                    },
+                    {
+                        table: 'sys_documentation'
                         id: 'e19a0a55db27430a8648e212d9256a5b'
                         key: {
                             name: 'x_everi_luxlab_replay'
@@ -6422,6 +7013,20 @@ declare global {
                         }
                     },
                     {
+                        table: 'sys_gen_ai_strategy_mapping'
+                        id: 'eee59531eb5b466196b2674e6c2ab392'
+                        key: {
+                            strategy: 'CAPABILITY_EXECUTION'
+                            feature: {
+                                id: '4b3b98c767194732b68db1dd44a29d87'
+                                key: {
+                                    feature_name: 'LuxLab Comms Drafter'
+                                    document: '2d8c5f4520f74f4982f3ffde7e2f995c'
+                                }
+                            }
+                        }
+                    },
+                    {
                         table: 'sys_dictionary'
                         id: 'ef123ae624cc479d8575287b21d2aba9'
                         key: {
@@ -6470,6 +7075,22 @@ declare global {
                         key: {
                             parent_capability: '27c932b1fbbe47659e6b0bdea0f45737'
                             resource_capability: '27c932b1fbbe47659e6b0bdea0f45737'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'f2a4cf93f3154dbdaf0646b1003e839b'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'key'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'f36109d33f51479d8a7d3acb0b5e3265'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'kind'
                         }
                     },
                     {
@@ -6525,6 +7146,14 @@ declare global {
                         key: {
                             web_service_operation: '95dba7c761424db6abf3eb0b9273964a'
                             web_service_query_parameter: '2ee65f51719e42098fb2dafe36ce0a15'
+                        }
+                    },
+                    {
+                        table: 'sys_dictionary'
+                        id: 'f64a723eeac84885a1bce349a637a2fa'
+                        key: {
+                            name: 'x_everi_luxlab_nudge'
+                            element: 'level'
                         }
                     },
                     {

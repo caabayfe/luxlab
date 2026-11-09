@@ -10,3 +10,12 @@ Property({
     description: 'sys_id of the knowledge base where approved Replay AI knowledge follow-ups are created as draft articles.',
 })
 
+
+// The live coach's scheduled job posts breached clocks and routing or pattern hints as work notes on live P1/P2 incidents
+Property({
+    $id: Now.ID['coach-work-notes-property'],
+    name: 'x_everi_luxlab.coach.work_notes',
+    type: 'boolean',
+    value: 'true',
+    description: 'When true, the LuxLab live coach posts its nudges as work notes on live P1/P2 incidents (one per nudge).',
+})

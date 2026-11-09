@@ -1,9 +1,10 @@
 // Bridge for scripts that cannot import modules: the Replay AI skills' tool, the Replay and Pattern Analyst agents' tools,
-// the incident form buttons and the response patterns job
+// the incident form buttons, the response patterns job and the live coach job
 var LuxLabReplayAI = Class.create();
 
 // Same <scope>/<package>/<version>/<source path> form the SDK generates for REST routes; follow package.json's version
 var LUXLAB_MODULES = 'x_everi_luxlab/luxlab/0.0.1/src/server/replay/';
+var LUXLAB_COACH = 'x_everi_luxlab/luxlab/0.0.1/src/server/coach/coach.ts';
 
 LuxLabReplayAI.prototype = {
     initialize: function () {
@@ -39,6 +40,11 @@ LuxLabReplayAI.prototype = {
     // Nightly response patterns job: replay what is missing for up to maxMs, then mine
     refreshPatterns: function (maxMs) {
         return require(LUXLAB_MODULES + 'patterns.ts').refreshPatterns(maxMs);
+    },
+
+    // Live coach job: post the due nudges as work notes; returns how many were posted
+    refreshNudges: function () {
+        return require(LUXLAB_COACH).refreshNudges();
     },
 
     // Incident form buttons: run the skill, save the result on the replay, return an HTML message

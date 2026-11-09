@@ -70,7 +70,7 @@ export default class UsagePage extends AIUXElement {
             </h1>
             <p class="text-sm text-text-tertiary">
               ${i18n.getMessage(
-                'The assists the platform metered for each LuxLab AI feature, read from its Now Assist usage log. Replays, response patterns and the cockpit use no AI.'
+                'The assists the platform metered for each LuxLab AI feature, read from its Now Assist usage log. Replays, response patterns, the live coach clocks and the cockpit use no AI.'
               )}
             </p>
           </div>
